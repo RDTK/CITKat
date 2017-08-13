@@ -7,7 +7,7 @@ from subprocess import call
 import os
 
 
-class BowerInstall(install):
+class YarnInstall(install):
     @staticmethod
     def which(program):
         for path in os.environ["PATH"].split(os.pathsep):
@@ -48,6 +48,6 @@ setup(
         # 'flask-bootstrap>=4, <5'  # Waiting for release...
     ],
     cmdclass={
-        'install': BowerInstall,
+        'install': YarnInstall,
     }
 )
