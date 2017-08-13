@@ -7,7 +7,7 @@ from subprocess import call
 import os
 
 
-class YarnInstall(install):
+class NpmInstall(install):
     @staticmethod
     def which(program):
         for path in os.environ["PATH"].split(os.pathsep):
@@ -18,7 +18,7 @@ class YarnInstall(install):
         return None
 
     def run(self):
-        yarn = self.which("yarn")
+        yarn = self.which("npm")
         if yarn:
             os.chdir('citkat/static')
             call([yarn, 'install'])
@@ -26,8 +26,7 @@ class YarnInstall(install):
             install.run(self)
         else:
             print(
-                "Error: yarn executable not found. \n"
-                "Try 'npm install --global yarn' or have a look at https://yarnpkg.com/en/docs/install")
+                "Error: npm executable not found.")
             exit(1)
 
 
@@ -48,6 +47,6 @@ setup(
         # 'flask-bootstrap>=4, <5'  # Waiting for release...
     ],
     cmdclass={
-        'install': YarnInstall,
+        'install': NpmInstall,
     }
 )

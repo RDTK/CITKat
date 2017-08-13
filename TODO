@@ -1,5 +1,7 @@
-* Integrate Flask-Bootstrap v.4.0.0-Beta
-* Make Flask serve /static
+* replace all CDN content by /static/...
+* integrate Flask-Bootstrap v.4.0.0-Beta
+* make Flask serve /static
+* make Flask serve working dir
 * implement ReST interface for backlinks
 * make templates use static/stylesheet/*.xml files
-* Automate XSD to HTML documentation
+* automate XSD to HTML documentation
