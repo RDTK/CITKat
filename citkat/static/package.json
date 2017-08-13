@@ -1,7 +1,6 @@
 {
   "name": "citkat",
   "version": "0.1.0",
-  "main": "index.js",
   "license": "GPL-3.0",
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
