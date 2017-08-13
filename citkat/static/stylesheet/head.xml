@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <script><![CDATA[
+// Fix for IE10 on Windows Phone 8 only:
+// https://getbootstrap.com/docs/4.0/getting-started/browsers-devices/#internet-explorer-10-in-windows-phone-8
+// Copyright 2014-2017 The Bootstrap Authors
+// Copyright 2014-2017 Twitter, Inc.
+// Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+(function () {
+  if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+    var msViewportStyle = document.createElement('style')
+    msViewportStyle.appendChild(
+      document.createTextNode(
+        '@-ms-viewport{width:auto!important}'
+      )
+    )
+    document.head.appendChild(msViewportStyle)
+  }
+})();
+]]>
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dark.min.css"-->
+    <!--integrity="sha256-GVo4WKmO61/tVmRyEKLvRm2Nnq7mdFCaOim/9HbNpaM=" crossorigin="anonymous"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"
+          integrity="sha256-3YM6A3pH4QFCl9WbSU8oXF5N6W/2ylvW0o2g+Z6TmLQ=" crossorigin="anonymous"/>
+    <!-- Optional icons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/octicons.min.css"-->
+    <!--integrity="sha256-4eCms8tUm+iL29tUvmRhNRnz/7lNI4oTtQzqa/uM2dI=" crossorigin="anonymous"/>-->
+    <link rel="stylesheet" href="../../static/css/CITKat.css"/>
+</head>

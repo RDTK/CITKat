@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xs3p/xs3p.xsl"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" targetNamespace="https://toolkit.cit-ec.uni-bielefeld.de/CITKat"
+           xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
+    <xs:element name="catalog" type="catalogType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"
+                              source="https://toolkit.cit-ec.uni-bielefeld.de/tutorials/writingrecipes#tutcatalog">The
+                Root-element of the document.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="distributionType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Allowd fragment typres are: project, person, hardware, dataset,
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="extendsType" name="extends" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Distribution might extend other distributions</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="accessType" name="access">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Distribution access, public or private</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="dependenciesType" name="dependencies"/>
+        </xs:sequence>
+        <xs:attribute type="xs:token" name="name"/>
+        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="keywords"/>
+    </xs:complexType>
+    <xs:simpleType name="accessType">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="private|public"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="catalogType">
+        <xs:choice>
+            <xs:element type="distributionType" name="distribution">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">The distribution element links all entity types by
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="personType" name="person"/>
+            <xs:element type="publicationType" name="publication">
+                <xs:annotation>
+                    <!-- TODO: Documentation publicationType -->
+                    <xs:documentation xml:lang="en"></xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="projectType" name="project"/>
+            <xs:element type="hardwareType" name="hardware"/>
+            <xs:element type="datasetType" name="dataset"/>
+            <xs:element type="experimentType" name="experiment">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">The experiment entity comes from a project entity, that has a
+                        "experiment" in its
+                        file name. Attributes and
+                        sub-elements have the same type as the project-entity.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute type="xs:anyURI" name="buildServerBaseURL"/>
+    </xs:complexType>
+    <xs:complexType name="linkedFragmentType">
+        <xs:simpleContent>
+            <xs:extension base="xs:anyURI">
+                <xs:attribute type="linkedFragmentTypeType" name="type" use="required"/>
+                <xs:attribute type="xs:token" name="role"/>
+                <xs:attribute type="xs:token" name="name"/>
+                <xs:attribute type="xs:token" name="version"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="linkedFragmentTypeType">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="project|person|hardware|dataset|experiment|publication"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="publicationType">
+        <xs:annotation>
+            <xs:appinfo>
+                <xs:assert
+                        test="@title and ((@provider and @id and not(@url)) or (not(@provider) and not(@id) and @url))"/>
+            </xs:appinfo>
+            <xs:documentation xml:lang="en">Restricted to the following attribute combinations: @title AND ((@id AND
+                @provider) OR
+                @url)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:token" name="provider"/>
+        <xs:attribute type="xs:token" name="id"/>
+        <xs:attribute type="xs:anyURI" name="url"/>
+        <xs:attribute type="xs:token" name="title"/>
+    </xs:complexType>
+    <xs:complexType name="projectType">
+        <xs:sequence>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
+            <xs:element type="dependenciesType" name="dependencies" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:token" name="name"/>
+        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="keywords"/>
+    </xs:complexType>
+    <xs:complexType name="hardwareType">
+        <xs:sequence>
+            <xs:element type="linkedFragmentType" name="linkedFragment" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="xs:string" name="description" minOccurs="0"
+                        default="No description provided."/>
+            <xs:element type="resourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="xs:token" name="modelType" minOccurs="0"/>
+            <xs:element type="xs:token" name="serialNumber" minOccurs="0"/>
+            <xs:element type="xs:token" name="fieldOfApplication" minOccurs="0"/>
+            <xs:element type="xs:token" name="acronym" minOccurs="0"/>
+            <xs:element type="xs:token" name="manufacturer" minOccurs="0"/>
+            <xs:any minOccurs="0" processContents="skip"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute type="xs:string" name="version"/>
+        <xs:attribute type="xs:token" name="keywords"/>
+    </xs:complexType>
+    <xs:complexType name="dependenciesType">
+        <xs:sequence>
+            <xs:element type="systemType" name="system" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="xs:string" name="directDependency" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">directDependency, atm this information comes from a project, that is
+                        not an
+                        experiment.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="experimentType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="description" minOccurs="0" maxOccurs="1"
+                        default="No description provided."/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:token" name="name"/>
+        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="keywords"/>
+    </xs:complexType>
+    <xs:complexType name="repositoriesType">
+        <xs:sequence>
+            <xs:element type="repositoryType" name="repository" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="repositoryType">
+        <xs:simpleContent>
+            <xs:extension base="xs:token">
+                <xs:attribute type="xs:token" name="gpgkey"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="systemType">
+        <xs:sequence>
+            <xs:element type="repositoriesType" name="repositories" minOccurs="0"/>
+            <xs:element type="xs:token" name="dependency" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:token" name="name"/>
+        <xs:attribute type="xs:token" name="version"/>
+    </xs:complexType>
+    <xs:complexType name="extendsType">
+        <xs:simpleContent>
+            <xs:extension base="xs:token">
+                <xs:attribute type="xs:token" name="name"/>
+                <xs:attribute type="xs:token" name="version"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="personType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="description" minOccurs="0"/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="xs:token" name="surname" minOccurs="0"/>
+            <xs:element type="xs:token" name="forename" minOccurs="0"/>
+            <xs:element type="xs:token" name="email" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:token" name="provider"/>
+        <xs:attribute type="xs:token" name="id"/>
+        <xs:attribute type="xs:anyURI" name="url"/>
+    </xs:complexType>
+    <xs:complexType name="datasetType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="description" minOccurs="0"
+                        default="No description provided."/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute type="xs:token" name="name"/>
+        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="keywords"/>
+    </xs:complexType>
+    <xs:complexType name="resourceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:anyURI">
+                <xs:attribute name="title" use="required" type="xs:token"/>
+                <xs:attribute name="type" use="required" type="xs:token"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,3 @@
+[submodule "xs3p"]
+	path = xs3p
+	url = https://github.com/nexero/xs3p.git

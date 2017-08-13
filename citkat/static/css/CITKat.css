@@ -1,0 +1,14 @@
+/* make code blocks wrap with small screens */
+pre {
+    white-space: pre-wrap;
+    /*word-break: break-all;*/
+    word-wrap: break-word;
+}
+
+a[data-toggle=collapse][aria-expanded=false]::after {
+    content: ' ▹';
+}
+
+a[data-toggle=collapse][aria-expanded=true]::after {
+    content: ' ▾';
+}

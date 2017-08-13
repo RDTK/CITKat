@@ -1,0 +1,4 @@
+recursive-include citkat/templates *
+recursive-include citkat/static *
+prune citkat/static/node_modules
+recursive-include citkat/static/node_modules */dist/jquery.slim.min.* */dist/js/bootstrap.min.* */dist/popper.min.* */dist/css/bootstrap*.min.*

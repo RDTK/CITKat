@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="../../../stylesheet/CITKat.xsl"?>
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins">
+    <project name="FullProjectNameWith" version="Version">
+        <linkedFragment type="person" role="maintainer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="committer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="committer">flier@techfak.uni-bielefeld.de</linkedFragment>
+
+        <linkedFragment type="publication">provider-publicationid</linkedFragment>
+
+        <description>Lorem ipsum dolor sit amet, vix choro primis definitiones ne, id his omnium recusabo, at vim
+            nostrud discere omnesque. Labore labores evertitur ius ei, noster dolorem quo ei, nobis dignissim intellegat
+            sit at. Mel sale volutpat deseruisse in, et nemore viderer delicata pri, euismod similique cu qui. No habeo
+            bonorum dolorem nam, altera consequat ad per. Id sit mundi nusquam reprimique, sea impetus verterem mandamus
+            ea, ubique diceret persequeris eos ad. Qui ullum harum erroribus ea, ea mandamus democritum consectetuer
+            sit, nostro tamquam numquam sed in. Ei mel enim corrumpit, te epicuri officiis intellegebat quo.
+
+            Voluptaria ullamcorper sit te, utinam sanctus facilisi qui ne. No mea brute laudem omnesque. Ne eos adhuc
+            soleat, ut mea putent facete. Ea qui illud libris, cum vidisse saperet deterruisset at. Mei consul
+            liberavisse an, ad mundi graeci tibique sed, modus nostrud intellegebat te est.
+        </description>
+        <dependencies>
+            <system name="ubuntu" version="14.04">
+                <repositories>
+                    <repository gpgkey="632F147022EDFACF36871AD3A73FB0BAC82EB818">deb http://archive.ubuntu.com/ubuntu/
+                        trusty multiverse
+                    </repository>
+                </repositories>
+                <dependency>mesa-utils</dependency>
+            </system>
+            <system name="ubuntu" version="16.04">
+                <repositories>
+                    <repository gpgkey="632F147022EDFACF36871AD3A73FB0BAC82EB818">deb http://archive.ubuntu.com/ubuntu/
+                        xenial multiverse
+                    </repository>
+                </repositories>
+                <dependency>mesa-utils</dependency>
+            </system>
+            <!-- directDependency, atm this information comes from a project, that is not an experiment. -->
+            <directDependency>rsb-23</directDependency>
+        </dependencies>
+    </project>
+</catalog>

@@ -1,0 +1,5 @@
+* Integrate Flask-Bootstrap v.4.0.0-Beta
+* Make Flask serve /static
+* implement ReST interface for backlinks
+* make templates use static/stylesheet/*.xml files
+* Automate XSD to HTML documentation
