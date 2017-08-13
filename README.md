@@ -7,11 +7,8 @@ $ ./setup.py install --prefix=$HOME/.local
 will install CITKat into your home folder and adds `citkat` to your `$PATH` environment.
 
 ### Dependencies
-Besides the pip-dependencies (which will be resolved automatically for you) you'll have to install `npm` and `yarn`. 
-Use your distribution's package manager to install `npm` and the following line in order to install `yarn`:
-```shell
-$ npm install --global yarn
-```
+Besides the pip-dependencies (which will be resolved automatically for you) you'll have to install `npm`. 
+The best way is to use your distribution's package manager to install `npm` 
 
 ## Usage
 TODO
