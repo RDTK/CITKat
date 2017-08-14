@@ -44,23 +44,24 @@
 
     <xsl:template name="getBacklink">
         <xsl:message>INFO: Calling 'getBacklink' template</xsl:message>
-        <xsl:copy-of select="document('/static/templates/backlinks.xml')/body/*"/>
-        <div class="backlink">
-            <h5>OldWay:</h5>
-            <xsl:text disable-output-escaping="yes">{{ getBacklink(type="</xsl:text>
-            <xsl:value-of select="name(*[1])"/><!-- select the distribution/hardware/project/... tag name -->
-            <xsl:text disable-output-escaping="yes">",</xsl:text>
-            <xsl:for-each select="child::node()/@*">
-                <xsl:value-of select="name()"/>
-                <xsl:text disable-output-escaping="yes">="</xsl:text>
-                <xsl:value-of select="."/>
-                <xsl:text disable-output-escaping="yes">"</xsl:text>
-                <xsl:if test="position() != last()">
-                    <xsl:text disable-output-escaping="yes">,</xsl:text>
-                </xsl:if>
+        <xsl:element name="div">
+            <xsl:attribute name="class">
+                <xsl:text disable-output-escaping="yes">backlink</xsl:text>
+            </xsl:attribute>
+            <xsl:for-each select="/c:catalog/child::node()/@*">
+                <xsl:attribute name="{local-name()}">
+                    <xsl:value-of select="."/>
+                </xsl:attribute>
             </xsl:for-each>
-            <xsl:text disable-output-escaping="yes">) }}</xsl:text>
-        </div>
+            <xsl:attribute name="type">
+                <xsl:value-of select="name(*[1])"/>
+            </xsl:attribute>
+        </xsl:element>
+        <xsl:element name="script">
+            <xsl:attribute name="src">
+                <xsl:text disable-output-escaping="yes">/static/js/backlink.js</xsl:text>
+            </xsl:attribute>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template name="makeTitle">
@@ -127,6 +128,12 @@
 
                     <xsl:if test="not(c:distribution)">
                         <xsl:call-template name="getBacklink"/>
+                    </xsl:if>
+                    <xsl:if test="(c:distribution
+                                 | c:project
+                                 | c:experiment)
+                                 and /c:catalog/@buildServerBaseURL">
+                        <xsl:call-template name="jenkinsApi"/>
                     </xsl:if>
                     <xsl:if test="c:distribution">
                         <h3>Replication</h3>
@@ -359,6 +366,31 @@
         <pre>
             <code class="shell">$ $HOME/citk/jenkins/job-configurator --on-error=continue -d $HOME/citk/dist/distributions/<xsl:value-of select="c:distribution/@name"/><xsl:text disable-output-escaping="yes">-</xsl:text><xsl:value-of select="c:distribution/@version"/>.distribution -m toolkit -u YOUR_USERNAME -p YOUR_PASSWORD -D toolkit.volume=$HOME/citk/systems</code>
         </pre>
+    </xsl:template>
+
+    <xsl:template name="jenkinsApi">
+        <xsl:element name="div">
+            <xsl:attribute name="id">
+                <xsl:text disable-output-escaping="yes">jenkinsState</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="buildServerBaseURL">
+                <xsl:value-of select="/c:catalog/@buildServerBaseURL"/>
+            </xsl:attribute>
+            <xsl:attribute name="type">
+                <xsl:value-of select="name(*[1])"/>
+            </xsl:attribute>
+            <xsl:attribute name="name">
+                <xsl:value-of select="/c:catalog/child::node()/@name"/>
+            </xsl:attribute>
+            <xsl:attribute name="version">
+                <xsl:value-of select="/c:catalog/child::node()/@version"/>
+            </xsl:attribute>
+        </xsl:element>
+        <xsl:element name="script">
+            <xsl:attribute name="src">
+                <xsl:text disable-output-escaping="yes">/static/js/jenkins-api.js</xsl:text>
+            </xsl:attribute>
+        </xsl:element>
     </xsl:template>
 
 </xsl:stylesheet>
