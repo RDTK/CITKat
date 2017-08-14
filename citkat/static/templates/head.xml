@@ -26,4 +26,7 @@
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/octicons.min.css"-->
     <!--integrity="sha256-4eCms8tUm+iL29tUvmRhNRnz/7lNI4oTtQzqa/uM2dI=" crossorigin="anonymous"/>-->
     <link rel="stylesheet" href="/static/css/CITKat.css"/>
+    <link rel="icon" type="image/png" href="/static/img/favicon-16x16.png" sizes="16x16"/>
+    <link rel="icon" type="image/png" href="/static/img/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="/static/img/favicon-48x48.png" sizes="48x48"/>
 </head>
