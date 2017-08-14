@@ -32,8 +32,8 @@
             </xs:element>
             <xs:element type="dependenciesType" name="dependencies"/>
         </xs:sequence>
-        <xs:attribute type="xs:token" name="name"/>
-        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="name" use="required"/>
+        <xs:attribute type="xs:token" name="version" use="required"/>
         <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:simpleType name="accessType">
@@ -69,7 +69,7 @@
                 </xs:annotation>
             </xs:element>
         </xs:choice>
-        <xs:attribute type="xs:anyURI" name="buildServerBaseURL"/>
+        <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
         <!--<xs:attribute type="xs:token" name="m">-->
             <!--<xs:annotation>-->
                 <!--<xs:documentation xml:lang="en">build-generator's template, e.g. '-m toolkit'</xs:documentation>-->
@@ -116,8 +116,8 @@
             <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
             <xs:element type="dependenciesType" name="dependencies" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute type="xs:token" name="name"/>
-        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="name" use="required"/>
+        <xs:attribute type="xs:token" name="version" use="required"/>
         <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:complexType name="hardwareType">
@@ -133,8 +133,8 @@
             <xs:element type="xs:token" name="manufacturer" minOccurs="0"/>
             <xs:any minOccurs="0" processContents="skip"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="name"/>
-        <xs:attribute type="xs:string" name="version"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="version" use="required"/>
         <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:complexType name="dependenciesType">
@@ -157,8 +157,8 @@
             <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute type="xs:token" name="name"/>
-        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="name" use="required"/>
+        <xs:attribute type="xs:token" name="version" use="required"/>
         <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:complexType name="repositoriesType">
@@ -178,14 +178,14 @@
             <xs:element type="repositoriesType" name="repositories" minOccurs="0"/>
             <xs:element type="xs:token" name="dependency" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute type="xs:token" name="name"/>
+        <xs:attribute type="xs:token" name="name" use="required"/>
         <xs:attribute type="xs:token" name="version"/>
     </xs:complexType>
     <xs:complexType name="extendsType">
         <xs:simpleContent>
             <xs:extension base="xs:token">
-                <xs:attribute type="xs:token" name="name"/>
-                <xs:attribute type="xs:token" name="version"/>
+                <xs:attribute type="xs:token" name="name" use="required"/>
+                <xs:attribute type="xs:token" name="version" use="required"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -209,8 +209,8 @@
             <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute type="xs:token" name="name"/>
-        <xs:attribute type="xs:token" name="version"/>
+        <xs:attribute type="xs:token" name="name" use="required"/>
+        <xs:attribute type="xs:token" name="version" use="required"/>
         <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:complexType name="resourceType">
