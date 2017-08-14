@@ -274,6 +274,22 @@
                             <code class="shell">
                                 <xsl:choose>
                                     <xsl:when test="@name = 'ubuntu'">
+                                        <xsl:if test="c:repositories/c:repository">
+                                            <xsl:choose>
+                                            <xsl:when test="@version = '14.04'">
+                                                <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends software-properties-common&#xa;</xsl:text>
+                                            </xsl:when>
+                                            <xsl:when test="@version = 'trusty'">
+                                                <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends software-properties-common&#xa;</xsl:text>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends software-properties-common&#xa;</xsl:text>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                        </xsl:if>
                                         <xsl:for-each select="c:repositories/c:repository">
                                             <xsl:text disable-output-escaping="yes">$ sudo add-apt-repository "</xsl:text>
                                             <xsl:value-of select="normalize-space(.)"/>
