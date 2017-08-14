@@ -107,13 +107,15 @@
                         </xsl:call-template>
                         <xsl:text disable-output-escaping="yes"> Details </xsl:text>
                     </h1>
-                    <h2>
-                        <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="child::node()/@name"/>
-                        </xsl:call-template>
-                        <xsl:text disable-output-escaping="yes">-</xsl:text>
-                        <xsl:value-of select="child::node()/@version"/>
-                    </h2>
+                    <xsl:if test="child::node()/@name and child::node()/@version">
+                        <h2>
+                            <xsl:call-template name="capitalizeFirstLetter">
+                                <xsl:with-param name="in" select="child::node()/@name"/>
+                            </xsl:call-template>
+                            <xsl:text disable-output-escaping="yes"> - </xsl:text>
+                            <xsl:value-of select="child::node()/@version"/>
+                        </h2>
+                    </xsl:if>
                     <xsl:for-each select="child::node()/c:description">
                         <xsl:apply-templates select="."/>
                     </xsl:for-each>
