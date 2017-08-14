@@ -44,7 +44,7 @@
 
     <xsl:template name="getBacklink">
         <xsl:message>INFO: Calling 'getBacklink' template</xsl:message>
-        <xsl:copy-of select="document('backlinks.xml')/body/*"/>
+        <xsl:copy-of select="document('/static/templates/backlinks.xml')/body/*"/>
         <div class="backlink">
             <h5>OldWay:</h5>
             <xsl:text disable-output-escaping="yes">{{ getBacklink(type="</xsl:text>
@@ -92,15 +92,15 @@
             <head>
                 <!--loading html5shiv must be placed within xsl:comment, so only MS Internet Exploder will load the script -->
                 <!--<xsl:comment xmlns:xsl="http://www.w3.org/1999/XSL/Transform">[if lt IE 9]>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js">&lt;/script>&lt;![endif]</xsl:comment>-->
-                <xsl:copy-of select="document('head.xml')/head/*"/>
+                <xsl:copy-of select="document('/static/templates/head.xml')/head/*"/>
                 <title>
                     <xsl:call-template name="makeTitle"/>
                 </title>
             </head>
             <body>
                 <div class="container">
-                    <xsl:copy-of select="document('nav.xml')/body/*"/>
-                    <xsl:copy-of select="document('header.xml')/body/*"/>
+                    <xsl:copy-of select="document('/static/templates/nav.xml')/body/*"/>
+                    <xsl:copy-of select="document('/static/templates/header.xml')/body/*"/>
                     <h1>
                         <xsl:call-template name="capitalizeFirstLetter">
                             <xsl:with-param name="in" select="name(*[1])"/>
@@ -130,7 +130,7 @@
                         <h3>Replication</h3>
                         <xsl:call-template name="generateDistribution"/>
                     </xsl:if>
-                    <xsl:copy-of select="document('footer.xml')/body/*"/>
+                    <xsl:copy-of select="document('/static/templates/footer.xml')/body/*"/>
                 </div>
             </body>
         </html>
