@@ -3,27 +3,42 @@
 
 from setuptools import setup
 from setuptools.command.install import install
+from setuptools.command.develop import develop
 from subprocess import call
 import os
 
 
-class NpmInstall(install):
-    @staticmethod
-    def which(program):
-        for path in os.environ["PATH"].split(os.pathsep):
-            path = path.strip('"')
-            exe_file = os.path.join(path, program)
-            if os.path.isfile(exe_file) and os.access(exe_file, os.X_OK):
-                return exe_file
-        return None
+def which(program):
+    for path in os.environ["PATH"].split(os.pathsep):
+        path = path.strip('"')
+        exe_file = os.path.join(path, program)
+        if os.path.isfile(exe_file) and os.access(exe_file, os.X_OK):
+            return exe_file
+    return None
 
+
+class NpmInstall(install):
     def run(self):
-        yarn = self.which("npm")
-        if yarn:
+        npm = which("npm")
+        if npm:
             os.chdir('citkat/static')
-            call([yarn, 'install'])
+            call([npm, 'install'])
             os.chdir('../../')
             install.run(self)
+        else:
+            print(
+                "Error: npm executable not found.")
+            exit(1)
+
+
+class NpmDevelop(develop):
+    def run(self):
+        npm = which("npm")
+        if npm:
+            os.chdir('citkat/static')
+            call([npm, 'install'])
+            os.chdir('../../')
+            develop.run(self)
         else:
             print(
                 "Error: npm executable not found.")
@@ -48,5 +63,6 @@ setup(
     ],
     cmdclass={
         'install': NpmInstall,
+        'develop': NpmDevelop,
     }
 )

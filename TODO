@@ -5,3 +5,8 @@
 * implement ReST interface for backlinks
 * make templates use static/stylesheet/*.xml files
 * automate XSD to HTML documentation
+* implement search interface (naive solution)
+
+>1.0:
+* Use Flask-script and  for running incremental build-generator updates on changed files or one specific file: `python manage.py update [file]`
+* optimize search interface (using cache or database)
