@@ -64,5 +64,10 @@ setup(
     cmdclass={
         'install': NpmInstall,
         'develop': NpmDevelop,
-    }
+    },
+    entry_points={
+        'console_scripts': [
+            'citkat = citkat.citkat:main',
+        ],
+    },
 )
