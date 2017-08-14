@@ -45,8 +45,8 @@
     <xsl:template name="getBacklink">
         <xsl:message>INFO: Calling 'getBacklink' template</xsl:message>
         <xsl:element name="div">
-            <xsl:attribute name="class">
-                <xsl:text disable-output-escaping="yes">backlink</xsl:text>
+            <xsl:attribute name="id">
+                <xsl:text disable-output-escaping="yes">backlinks</xsl:text>
             </xsl:attribute>
             <xsl:for-each select="/c:catalog/child::node()/@*">
                 <xsl:attribute name="{local-name()}">

@@ -70,6 +70,11 @@
             </xs:element>
         </xs:choice>
         <xs:attribute type="xs:anyURI" name="buildServerBaseURL"/>
+        <!--<xs:attribute type="xs:token" name="m">-->
+            <!--<xs:annotation>-->
+                <!--<xs:documentation xml:lang="en">build-generator's template, e.g. '-m toolkit'</xs:documentation>-->
+            <!--</xs:annotation>-->
+        <!--</xs:attribute>-->
     </xs:complexType>
     <xs:complexType name="linkedFragmentType">
         <xs:simpleContent>
