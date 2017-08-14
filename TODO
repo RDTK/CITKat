@@ -1,7 +1,7 @@
-* replace all CDN content by /static/...
+* -replace all CDN content by /static/...- done.
 * integrate Flask-Bootstrap v.4, https://github.com/mbr/flask-bootstrap/pull/164
-* make Flask serve /static
-* make Flask serve working dir
+* -make Flask serve /static- done.
+* -make Flask serve working dir- done.
 * implement ReST interface for backlinks
 * make templates use static/stylesheet/*.xml files, therefor use **content** of the root tag, not the root tag itself
 * automate XSD to HTML documentation
@@ -10,3 +10,4 @@
 >1.0:
 * Use Flask-script and  for running incremental build-generator updates on changed files or one specific file: `python manage.py update [file]`
 * optimize search interface (using cache or database)
+* make Flask serve working dir files, add config param
