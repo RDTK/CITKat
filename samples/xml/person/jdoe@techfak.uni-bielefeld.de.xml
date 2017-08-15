@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
-<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins">
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
+         build-generator-template="toolkit">
     <person provider="unibi" id="91130" url="http://ekvv.uni-bielefeld.de/ws/pevz/PersonKontaktdaten.xml?persId=91130"/>
 </catalog>

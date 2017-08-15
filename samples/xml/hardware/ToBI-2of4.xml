@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
-<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins">
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
+         build-generator-template="toolkit">
     <hardware name="ToBI" version="2of4">
         <!-- allow any number of attributes <xs:anyAttribute/> -->
         <description>Ut elitr ponderum reprimique nam. Electram hendrerit usu ut, recusabo elaboraret ex ius. Justo

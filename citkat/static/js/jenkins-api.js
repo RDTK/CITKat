@@ -11,29 +11,59 @@
         request.send(null)
     }
 
-    var fragment = document.querySelector('#jenkinsState');
-    var url = fragment.getAttribute('buildserverbaseurl');
+    var jenkinsDiv = document.querySelector('#jenkinsState');
+    var catalog = document.querySelector('#catalog');
+    var url = catalog.getAttribute('buildserverbaseurl');
     var urlParam =
         '/api/json?&tree=' +
         'healthReport[' +
-            'score' +
+        'score' +
         '],' +
         'lastSuccessfulBuild[' +
-            'timestamp' +
+        'timestamp' +
         '],' +
         'lastFailedBuild[' +
-            'timestamp' +
+        'timestamp' +
         ']';
-    var type = '';
-    if (fragment.getAttribute('type') === 'distribution') {
-        type = '-orchestration';
-    }
-    var name = fragment.getAttribute('name');
-    var version = fragment.getAttribute('version');
+
     if (url[-1] !== '/') {
         url += '/';
     }
-    url = url + 'job/' + name + '-' + version + '-toolkit' + type + urlParam;
+    url = url + 'job/'
+    if (catalog.getAttribute('type') === 'distribution') {
+        url = url
+            + catalog.getAttribute('name')
+            + '-'
+            + catalog.getAttribute('version')
+            + '-'
+            + catalog.getAttribute('build-generator-template')
+            + '-orchestration'
+            + urlParam;
+    } else {
+        function getQueryParams(qs) {
+            qs = qs.split('+').join(' ');
+            var params = {},
+                tokens,
+                re = /[?&]?([^=]+)=([^&]*)/g;
+            while (tokens = re.exec(qs)) {
+                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+            }
+            return params;
+        }
+
+        var params = getQueryParams(document.location.search);
+        if (params && 'jobs' in params) {
+            url = url
+                + catalog.getAttribute('name')
+                + '-'
+                + catalog.getAttribute('version')
+                + '-'
+                + catalog.getAttribute('build-generator-template')
+                + '-'
+                + params['jobs']
+                + urlParam;
+        }
+    }
     console.log(url)
-    // TODO: load json from jenkins server, build corresponding domFragment
+    // TODO: load json from jenkins server, build corresponding domFragment, TEST!
 })();

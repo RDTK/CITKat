@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
-<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins">
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
+         build-generator-template="toolkit">
     <dataset name="foodata" version="2001-10-26T21:32:52.12679">
         <description>Ut elitr ponderum reprimique nam. Electram hendrerit usu ut, recusabo elaboraret ex ius. Justo
             luptatum ea quo. At vix dicat causae fastidii, eu eos ferri tincidunt, cu quo iudico perpetua liberavisse.

@@ -102,43 +102,67 @@
                 <div class="container">
                     <xsl:copy-of select="document('/static/templates/nav.xml')/body/*"/>
                     <xsl:copy-of select="document('/static/templates/header.xml')/body/*"/>
-                    <h1>
-                        <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="name(*[1])"/>
-                        </xsl:call-template>
-                        <xsl:text disable-output-escaping="yes"> Details </xsl:text>
-                    </h1>
-                    <xsl:if test="child::node()/@name and child::node()/@version">
-                        <h2>
+                    <xsl:element name="div">
+                        <xsl:attribute name="id">
+                            <xsl:text disable-output-escaping="yes">catalog</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="type">
+                            <xsl:value-of select="name(*[1])"/>
+                        </xsl:attribute>
+                        <xsl:if test="c:distribution 
+                                    | c:project
+                                    | c:experiment">
+                            <xsl:attribute name="build-generator-template">
+                                <xsl:value-of select="/c:catalog/@build-generator-template"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="buildserverbaseurl">
+                                <xsl:value-of select="/c:catalog/@buildServerBaseURL"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="name">
+                                <xsl:value-of select="child::node()/@name"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="version">
+                                <xsl:value-of select="child::node()/@version"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <h1>
                             <xsl:call-template name="capitalizeFirstLetter">
-                                <xsl:with-param name="in" select="child::node()/@name"/>
+                                <xsl:with-param name="in" select="name(*[1])"/>
                             </xsl:call-template>
-                            <xsl:text disable-output-escaping="yes"> - </xsl:text>
-                            <xsl:value-of select="child::node()/@version"/>
-                        </h2>
-                    </xsl:if>
-                    <xsl:for-each select="child::node()/c:description">
-                        <xsl:apply-templates select="."/>
-                    </xsl:for-each>
+                            <xsl:text disable-output-escaping="yes"> Details </xsl:text>
+                        </h1>
+                        <xsl:if test="child::node()/@name and child::node()/@version">
+                            <h2>
+                                <xsl:call-template name="capitalizeFirstLetter">
+                                    <xsl:with-param name="in" select="child::node()/@name"/>
+                                </xsl:call-template>
+                                <xsl:text disable-output-escaping="yes"> - </xsl:text>
+                                <xsl:value-of select="child::node()/@version"/>
+                            </h2>
+                        </xsl:if>
+                        <xsl:for-each select="child::node()/c:description">
+                            <xsl:apply-templates select="."/>
+                        </xsl:for-each>
 
-                    <!--TODO: replace with less generic selector:-->
-                    <xsl:for-each select="child::node()">
-                        <xsl:apply-templates select="."/>
-                    </xsl:for-each>
+                        <!--TODO: replace with less generic selector:-->
+                        <xsl:for-each select="child::node()">
+                            <xsl:apply-templates select="."/>
+                        </xsl:for-each>
 
-                    <xsl:if test="not(c:distribution)">
-                        <xsl:call-template name="getBacklink"/>
-                    </xsl:if>
-                    <xsl:if test="(c:distribution
-                                 | c:project
-                                 | c:experiment)
-                                 and /c:catalog/@buildServerBaseURL">
-                        <xsl:call-template name="jenkinsApi"/>
-                    </xsl:if>
-                    <xsl:if test="c:distribution">
-                        <h3>Replication</h3>
-                        <xsl:call-template name="generateDistribution"/>
-                    </xsl:if>
+                        <xsl:if test="not(c:distribution)">
+                            <xsl:call-template name="getBacklink"/>
+                        </xsl:if>
+                        <xsl:if test="c:distribution
+                                     | c:project
+                                     | c:experiment">
+                            <xsl:call-template name="jenkinsApi"/>
+                        </xsl:if>
+                        <xsl:if test="c:distribution">
+                            <h3>Replication</h3>
+                            <xsl:call-template name="generateDistribution"/>
+                        </xsl:if>
+                    </xsl:element>
+                    <xsl:copy-of select="document('/static/templates/linkParams.xml')/body/*"/>
                     <xsl:copy-of select="document('/static/templates/footer.xml')/body/*"/>
                 </div>
             </body>
@@ -146,10 +170,10 @@
     </xsl:template>
 
     <xsl:template match="c:description">
-        <p>
-            <h3>General Information</h3>
+        <h3>General Information</h3>
+        <xsl:element name="p">
             <xsl:value-of select="."/>
-        </p>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="c:linkedFragment">
@@ -163,6 +187,11 @@
                     <xsl:value-of select="."/>
                     <xsl:text>.xml</xsl:text>
                 </xsl:attribute>
+                <xsl:if test="@type = 'experiment'">
+                    <xsl:attribute name="class">
+                        <xsl:text disable-output-escaping="yes">ref</xsl:text>
+                    </xsl:attribute>
+                </xsl:if>
                 <xsl:value-of select="."/>
             </xsl:element>
         </li>
@@ -222,6 +251,9 @@
                     <xsl:text disable-output-escaping="yes">../project/</xsl:text>
                     <xsl:value-of select="."/>
                     <xsl:text>.xml</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="class">
+                    <xsl:text disable-output-escaping="yes">ref</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="."/>
             </xsl:element>
@@ -372,9 +404,6 @@
         <xsl:element name="div">
             <xsl:attribute name="id">
                 <xsl:text disable-output-escaping="yes">jenkinsState</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="buildServerBaseURL">
-                <xsl:value-of select="/c:catalog/@buildServerBaseURL"/>
             </xsl:attribute>
             <xsl:attribute name="type">
                 <xsl:value-of select="name(*[1])"/>

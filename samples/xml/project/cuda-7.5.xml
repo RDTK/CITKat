@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
-<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins">
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
+         build-generator-template="toolkit">
     <project name="cuda" version="7.5">
         <linkedFragment type="person" role="maintainer">sschulz@techfak.uni-bielefeld.de</linkedFragment>
         <linkedFragment type="person" role="committer">sschulz@techfak.uni-bielefeld.de</linkedFragment>
