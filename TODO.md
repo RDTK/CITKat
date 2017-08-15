@@ -7,10 +7,10 @@
 * make templates use static/stylesheet/*.xml files, therefor use _content_ of the root tag, not the root tag itself
 * automate XSD to HTML documentation
 * implement search interface (naive solution)
-* attribute buildServerBaseURL: for distributions only!s
-  * rework xsd
-  * add url param to all ankers in a distribution
-  * clone url param to all other types via js  
+* ~~attribute buildServerBaseURL: for distributions only!~~ no. attribute for all.  
+  * ~~rework xsd~~ done. made attribute mandatory
+  * ~~add url param to all ankers in a distribution~~ done. added url param to all artifacts, that are build with jenkins 
+  * ~~clone url param to all other types via js~~ done.  
 
 
 ## after 1.0:
@@ -19,3 +19,4 @@
 * optimize search interface (using cache or database)
 * make Flask serve working dir files, add config param
 * minify all css and js, merge into one file?
+* replace URL params by cookies or (better) by Window.sessionStorage (which store data per tab/window) (however: it might be a better solution, to just keep GET params)

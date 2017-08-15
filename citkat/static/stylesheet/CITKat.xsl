@@ -99,12 +99,15 @@
                 </title>
             </head>
             <body>
-                <div class="container">
+                <div class="container" style="padding-left: 0; padding-right: 0; "><!--first container doesn't need padding!-->
                     <xsl:copy-of select="document('/static/templates/nav.xml')/body/*"/>
                     <xsl:copy-of select="document('/static/templates/header.xml')/body/*"/>
                     <xsl:element name="div">
                         <xsl:attribute name="id">
                             <xsl:text disable-output-escaping="yes">catalog</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="class">
+                            <xsl:text disable-output-escaping="yes">container</xsl:text>
                         </xsl:attribute>
                         <xsl:attribute name="type">
                             <xsl:value-of select="name(*[1])"/>

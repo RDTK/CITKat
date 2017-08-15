@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <body>
-    <div id="footer">
+    <div id="footer" class="container">
         <div id="copyright">
             © Bielefeld University
             <script>
