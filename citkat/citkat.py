@@ -7,8 +7,7 @@ from flask_restful.inputs import regex
 from mmap import mmap, ACCESS_READ
 from glob import glob
 from lxml import etree
-from StringIO import StringIO
-
+from re import findall, MULTILINE
 
 app = Flask(__name__)
 api = Api(app)
@@ -39,25 +38,14 @@ class Backlink(Resource):
         return_list = []
         for file_path in glob('*/*.xml'):
             with open(file_path, 'ro') as f:
-                # s = mmap(f.fileno(), 0, access=ACCESS_READ)
-                # HTML workaround for faulty lxml parser:
-                s = f.read()
-                # print(type(s))
-                doc = etree.HTML(s)
-                # doc = etree.parse(file)
-                for elem in doc.xpath("/html/body/catalog//text()[. = '" + filename_wo_suffix + "']/.."):
+                s = mmap(f.fileno(), 0, access=ACCESS_READ)
+                for line in findall('<[\w= \"-]*>' + filename_wo_suffix + '<[\w/"-]*>', s, MULTILINE):
+                    elem = etree.fromstring(line)
                     return_dict = dict(elem.attrib)
                     if not 'type' in return_dict:
                         return_dict['type'] = 'directDependency'
                     return_dict['path'] = file_path
                     return_list.append(return_dict)
-                # # print s
-                # lines = findall('>' + filename_wo_suffix + '</(directDependency|linkedFragment)>', s, MULTILINE)
-                # if lines:
-                #     return [file_path, lines], 200
-                # # if (s.find('<directDependency>' + filename_wo_suffix + '</directDependency>') != -1) or (
-                # #     s.find('>' + filename_wo_suffix + '</linkedFragment>') != -1):
-                # #     return_list.append(file_path)
         return return_list, 200
 
 
