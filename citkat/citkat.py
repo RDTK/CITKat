@@ -18,17 +18,18 @@ class Backlink(Resource):
     def __init__(self):
         from re import UNICODE
         expr_recipe_type = '^(distribution|project|experiment|hardware|publication|person|dataset){1}$'
-        expr_filename = '^[^\.][\w\-\.@]+(?<!.xml)(?<!.html)(?<!.htm)$'
+        expr_filename = '^[^\.][\w\-\.@:]+(?<!.xml)(?<!.html)(?<!.htm)$'
         self.valType = regex(expr_recipe_type, UNICODE)
         self.valFilename = regex(expr_filename, UNICODE)
 
     def get(self, filename_wo_suffix, recipe_type):
         """
         find backlinks
-        TODO: speed up things
+
+        TODO: differentiate between distributions and (project|experiment)
         :param filename_wo_suffix:
         :param recipe_type:
-        :return:
+        :return: json list with backlinks dict
         """
         try:
             self.valFilename(filename_wo_suffix)
@@ -42,11 +43,14 @@ class Backlink(Resource):
                 for line in findall('<[\w= \"-]*>' + filename_wo_suffix + '<[\w/"-]*>', s, MULTILINE):
                     elem = etree.fromstring(line)
                     return_dict = dict(elem.attrib)
-                    if not 'type' in return_dict:
+                    if 'type' not in return_dict:
                         return_dict['type'] = 'directDependency'
                     return_dict['path'] = file_path
                     return_list.append(return_dict)
-        return return_list, 200
+        if return_list:
+            return return_list, 200
+        else:
+            return return_list, 404
 
 
 api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:filename_wo_suffix>')

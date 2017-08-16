@@ -4,10 +4,10 @@
 * ~~make Flask serve /static~~ done.
 * ~~make Flask serve working dir~~ done.
 * implement linkedFragments in XSL
-* implement ReST interface for backlinks
+* ~~implement ReST interface for backlinks~~ mostly done.
 * make templates use static/stylesheet/*.xml files, therefor use _content_ of the root tag, not the root tag itself
 * automate XSD to HTML documentation
-* implement search interface (naive solution)
+* ~~implement search interface (naive solution)~~ done.
 * ~~attribute buildServerBaseURL: for distributions only!~~ no. attribute for all.  
   * ~~rework xsd~~ done. made attribute mandatory
   * ~~add url param to all ankers in a distribution~~ done. added url param to all artifacts, that are build with jenkins 
@@ -15,6 +15,7 @@
 * hardware and dataset: remove description doublet
 * create better (real world) sample data, integrate with real jenkins
 * (mockup build-generator output for user study)
+* Person|Puclication|dataset|experiment|hardware details
 
 
 
