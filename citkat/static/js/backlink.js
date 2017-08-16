@@ -11,6 +11,7 @@
         request.send(null)
     }
 
-    var fragment = document.querySelector('#backlinks')
+    var catalog = document.querySelector('#catalog');
+    var backlinksDiv = document.querySelector('#backlinks');
     // TODO: create ReST request, add backlinks to domFragment
 })();

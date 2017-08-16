@@ -59,7 +59,8 @@ setup(
         'flask>=0.12.2, <0.13',
         'flask_restful>=0.3.5, <0.4',
         'flask_bower>=1.3.0',
-        'Flask-AutoIndex'
+        'Flask-AutoIndex',
+        'lxml'
         # 'flask-bootstrap>=4, <5'  # Waiting for release...
     ],
     cmdclass={
