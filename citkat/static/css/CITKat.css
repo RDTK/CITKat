@@ -12,3 +12,7 @@ a[data-toggle=collapse][aria-expanded=false]::after {
 a[data-toggle=collapse][aria-expanded=true]::after {
     content: ' ▾';
 }
+
+code.hljs {
+    background: #f8f9fa;
+}
