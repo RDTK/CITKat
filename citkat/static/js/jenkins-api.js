@@ -17,13 +17,13 @@
     var urlParam =
         '/api/json?&tree=' +
         'healthReport[' +
-        'score' +
+            'score' +
         '],' +
-        'lastSuccessfulBuild[' +
-        'timestamp' +
+            'lastSuccessfulBuild[' +
+            'timestamp' +
         '],' +
         'lastFailedBuild[' +
-        'timestamp' +
+            'timestamp' +
         ']';
 
     if (url[-1] !== '/') {

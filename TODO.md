@@ -12,10 +12,12 @@
   * ~~rework xsd~~ done. made attribute mandatory
   * ~~add url param to all ankers in a distribution~~ done. added url param to all artifacts, that are build with jenkins 
   * ~~clone url param to all other types via js~~ done.  
-* hardware and dataset: remove description doublet
+* hardware and dataset: remove doublets
 * create better (real world) sample data, integrate with real jenkins
 * (mockup build-generator output for user study)
 * Person|Puclication|dataset|experiment|hardware details
+* list pages
+* integrate images
 
 
 
