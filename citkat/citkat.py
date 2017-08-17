@@ -58,7 +58,7 @@ class Backlink(Resource):
         if return_list:
             return return_list, 200
         else:
-            return return_list, 400
+            return return_list, 404
 
 
 api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:name>/<string:version>')
