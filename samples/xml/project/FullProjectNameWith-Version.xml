@@ -3,12 +3,6 @@
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
          build-generator-template="toolkit">
     <project name="FullProjectNameWith" version="Version">
-        <linkedFragment type="person" role="maintainer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="person" role="committer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="person" role="committer">flier@techfak.uni-bielefeld.de</linkedFragment>
-
-        <linkedFragment type="publication">provider-publicationid</linkedFragment>
-
         <description>Lorem ipsum dolor sit amet, vix choro primis definitiones ne, id his omnium recusabo, at vim
             nostrud discere omnesque. Labore labores evertitur ius ei, noster dolorem quo ei, nobis dignissim intellegat
             sit at. Mel sale volutpat deseruisse in, et nemore viderer delicata pri, euismod similique cu qui. No habeo
@@ -40,5 +34,11 @@
             <!-- directDependency, atm this information comes from a project, that is not an experiment. -->
             <directDependency>rsb-23</directDependency>
         </dependencies>
+        <linkedFragment type="person" role="maintainer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="committer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="committer">flier@techfak.uni-bielefeld.de</linkedFragment>
+
+        <linkedFragment type="publication">provider-publicationid</linkedFragment>
+
     </project>
 </catalog>

@@ -4,13 +4,6 @@
          build-generator-template="toolkit">
 
     <distribution name="sample_1" version="0.9">
-        <linkedFragment type="person" role="maintainer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="publication">provider-publicationid</linkedFragment>
-        <linkedFragment type="experiment">experimentname-version</linkedFragment>
-        <linkedFragment type="dataset">dataset-version</linkedFragment>
-        <linkedFragment type="hardware">hardware-version</linkedFragment>
-
-        <access>public</access>
         <dependencies>
             <system name="ubuntu" version="14.04">
                 <repositories>
@@ -28,5 +21,10 @@
                 <dependency>ros-core</dependency>
             </system>
         </dependencies>
+        <linkedFragment type="person" role="maintainer">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="publication">provider-publicationid</linkedFragment>
+        <linkedFragment type="experiment">experimentname-version</linkedFragment>
+        <linkedFragment type="dataset">dataset-version</linkedFragment>
+        <linkedFragment type="hardware">hardware-version</linkedFragment>
     </distribution>
 </catalog>

@@ -3,9 +3,6 @@
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
          build-generator-template="toolkit">
     <project name="cuda" version="7.5">
-        <linkedFragment type="person" role="maintainer">sschulz@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="person" role="committer">sschulz@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="person" role="committer">smz@techfak.uni-bielefeld.de</linkedFragment>
 
         <description>Lorem ipsum dolor sit amet, vix choro primis definitiones ne, id his omnium recusabo, at vim
             nostrud discere omnesque. Labore labores evertitur ius ei, noster dolorem quo ei, nobis dignissim intellegat
@@ -30,5 +27,8 @@
             ut has, et modo honestatis his. Pro cu alienum delicata dissentias. Sed cibo everti in, eu duo phaedrum
             intellegebat. Pri ad purto audire oblique. Usu explicari assentior id, viris pericula vulputate an qui.
         </description>
+        <linkedFragment type="person" role="maintainer">sschulz@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="committer">sschulz@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="committer">smz@techfak.uni-bielefeld.de</linkedFragment>
     </project>
 </catalog>
