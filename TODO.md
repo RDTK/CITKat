@@ -3,7 +3,7 @@
 * integrate Flask-Bootstrap v.4, https://github.com/mbr/flask-bootstrap/pull/164
 * ~~make Flask serve /static~~ done.
 * ~~make Flask serve working dir~~ done.
-* implement linkedFragments in XSL
+* ~~implement linkedFragments in XSL~~ done.
 * ~~implement ReST interface for backlinks~~ mostly done.
 * make templates use static/stylesheet/*.xml files, therefor use _content_ of the root tag, not the root tag itself
 * automate XSD to HTML documentation
@@ -18,6 +18,11 @@
 * Person|Puclication|dataset|experiment|hardware details
 * list pages
 * integrate images
+* keywords
+* linked recipe
+* more experiment information
+* differentiate between recipe-maintainer and maintainer
+* __fix backlinks__ !!!! ()
 
 
 
