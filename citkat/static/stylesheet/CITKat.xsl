@@ -143,14 +143,10 @@
                                 <xsl:value-of select="child::node()/@version"/>
                             </h2>
                         </xsl:if>
-                        <xsl:for-each select="child::node()/c:description">
-                            <xsl:apply-templates select="."/>
-                        </xsl:for-each>
 
-                        <!--TODO: replace with less generic selector:-->
-                        <xsl:for-each select="child::node()">
-                            <xsl:apply-templates select="."/>
-                        </xsl:for-each>
+                        <xsl:apply-templates select="child::node()/c:description"/>
+
+                        <xsl:apply-templates select="child::node()"/>
 
                         <xsl:if test="not(c:distribution)">
                             <xsl:call-template name="getBacklink"/>
@@ -159,10 +155,6 @@
                                      | c:project
                                      | c:experiment">
                             <xsl:call-template name="jenkinsApi"/>
-                        </xsl:if>
-                        <xsl:if test="c:distribution">
-                            <h3>Replication</h3>
-                            <xsl:call-template name="generateDistribution"/>
                         </xsl:if>
                     </xsl:element>
                     <xsl:copy-of select="document('/static/templates/linkParams.xml')/body/*"/>
@@ -173,10 +165,14 @@
     </xsl:template>
 
     <xsl:template match="c:description">
-        <h3>General Information</h3>
-        <xsl:element name="p">
-            <xsl:value-of select="."/>
-        </xsl:element>
+        <xsl:call-template name="log_template_info"/>
+        <!-- workaround for doublet description in dataset and hardware-->
+        <xsl:if test="position() = 1">
+            <h3>General Information</h3>
+            <xsl:element name="p">
+                <xsl:value-of select="text()"/>
+            </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="c:linkedFragment">
@@ -229,24 +225,31 @@
             <div id="systemDependencies" data-children=".system">
                 <xsl:apply-templates select="c:dependencies/c:system"/>
             </div>
+
+            <xsl:if test="local-name() = 'distribution'">
+                <h3>Replication</h3>
+                <xsl:call-template name="generateDistribution"/>
+            </xsl:if>
         </xsl:if>
         <xsl:if test="c:dependencies/c:directDependency">
             <div id="directDependencies">
                 <h5>Direct dependencies:</h5>
                 <ul>
                     <xsl:apply-templates select="c:dependencies/c:directDependency"/>
+                    <xsl:apply-templates select="c:linkedFragment[@type = 'experiment']
+                                               | c:linkedFragment[@type = 'dataset']"/>
                 </ul>
             </div>
         </xsl:if>
-        <h5>Linked Fragments:</h5>
+        <h5>TODO Linked Fragments:</h5>
         <div id="linkedFragments">
             <ul>
-                <xsl:apply-templates select="c:linkedFragment"/>
+                <xsl:apply-templates select="c:linkedFragment[@type != 'experiment' and @type != 'dataset']"/>
             </ul>
         </div>
     </xsl:template>
 
-    <xsl:template match="c:dependencies/c:directDependency">
+    <xsl:template match="c:directDependency">
         <xsl:call-template name="log_template_info"/>
         <li>
             <xsl:element name="a">
@@ -263,7 +266,7 @@
         </li>
     </xsl:template>
 
-    <xsl:template match="c:dependencies/c:system">
+    <xsl:template match="c:system">
         <xsl:call-template name="log_template_info"/>
             <div class="system">
                 <xsl:element name="a">
@@ -383,15 +386,16 @@
     </xsl:template>
 
     <xsl:template name="generateDistribution">
+        <xsl:message>INFO: Calling 'generateDistribution' template</xsl:message>
         <h5>Generate Distribution</h5>
         <p>
             <xsl:text>Now, please use our distribution tool chain as explained in the tutorials section Bootstrapping
                 and Installing. Read and execute these instructions carefully. You will need to bootstrap the
             </xsl:text>
             <code>
-                <xsl:value-of select="c:distribution/@name"/>
+                <xsl:value-of select="//c:distribution/@name"/>
                 <xsl:text disable-output-escaping="yes">-</xsl:text>
-                <xsl:value-of select="c:distribution/@version"/>
+                <xsl:value-of select="//c:distribution/@version"/>
                 <xsl:text>.distribution</xsl:text>
             </code>
             <xsl:text>. If you changed your prefix from </xsl:text>
@@ -399,11 +403,12 @@
             <xsl:text> to something else, please keep that in mind.</xsl:text>
         </p>
         <pre>
-            <code class="shell">$ $HOME/citk/jenkins/job-configurator --on-error=continue -d $HOME/citk/dist/distributions/<xsl:value-of select="c:distribution/@name"/><xsl:text disable-output-escaping="yes">-</xsl:text><xsl:value-of select="c:distribution/@version"/>.distribution -m toolkit -u YOUR_USERNAME -p YOUR_PASSWORD -D toolkit.volume=$HOME/citk/systems</code>
+            <code class="shell">$ $HOME/citk/jenkins/job-configurator --on-error=continue -d $HOME/citk/dist/distributions/<xsl:value-of select="//c:distribution/@name"/><xsl:text disable-output-escaping="yes">-</xsl:text><xsl:value-of select="//c:distribution/@version"/>.distribution -m toolkit -u YOUR_USERNAME -p YOUR_PASSWORD -D toolkit.volume=$HOME/citk/systems</code>
         </pre>
     </xsl:template>
 
     <xsl:template name="jenkinsApi">
+        <xsl:message>INFO: Calling 'jenkinsApi' template</xsl:message>
         <xsl:element name="div">
             <xsl:attribute name="id">
                 <xsl:text disable-output-escaping="yes">jenkinsState</xsl:text>

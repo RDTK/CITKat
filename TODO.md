@@ -26,3 +26,4 @@
 * make Flask serve working dir files, add config param
 * minify all css and js, merge into one file?
 * replace URL params by cookies or (better) by Window.sessionStorage (which store data per tab/window) (however: it might be a better solution, to just keep GET params)
+* ReST API for file creation date and file modified date, eventually additional HTTP header?

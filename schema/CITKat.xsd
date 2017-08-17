@@ -14,23 +14,23 @@
     <xs:complexType name="distributionType">
         <xs:sequence>
             <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
-            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">Allowd fragment typres are: project, person, hardware, dataset,
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element type="extendsType" name="extends" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation xml:lang="en">Distribution might extend other distributions</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="accessType" name="access">
+            <!--<xs:element type="accessType" name="access">-->
+                <!--<xs:annotation>-->
+                    <!--<xs:documentation xml:lang="en">Distribution access, public or private</xs:documentation>-->
+                <!--</xs:annotation>-->
+            <!--</xs:element>-->
+            <xs:element type="dependenciesType" name="dependencies"/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en">Distribution access, public or private</xs:documentation>
+                    <xs:documentation xml:lang="en">Allowed fragment types are: project, person, hardware, dataset,
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="dependenciesType" name="dependencies"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="name" use="required"/>
         <xs:attribute type="xs:token" name="version" use="required"/>
@@ -71,6 +71,7 @@
         </xs:choice>
         <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
         <xs:attribute type="xs:anyURI" name="build-generator-template" use="required"/>
+        <xs:attribute type="accessType" name="access" use="optional" default="public"/>
         <!--<xs:attribute type="xs:token" name="m">-->
             <!--<xs:annotation>-->
                 <!--<xs:documentation xml:lang="en">build-generator's template, e.g. '-m toolkit'</xs:documentation>-->
@@ -113,9 +114,9 @@
     </xs:complexType>
     <xs:complexType name="projectType">
         <xs:sequence>
-            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
             <xs:element type="dependenciesType" name="dependencies" minOccurs="0"/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="name" use="required"/>
         <xs:attribute type="xs:token" name="version" use="required"/>
@@ -123,7 +124,6 @@
     </xs:complexType>
     <xs:complexType name="hardwareType">
         <xs:sequence>
-            <xs:element type="linkedFragmentType" name="linkedFragment" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="xs:string" name="description" minOccurs="0"
                         default="No description provided."/>
             <xs:element type="resourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
@@ -133,6 +133,7 @@
             <xs:element type="xs:token" name="acronym" minOccurs="0"/>
             <xs:element type="xs:token" name="manufacturer" minOccurs="0"/>
             <xs:any minOccurs="0" processContents="skip"/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="version" use="required"/>
@@ -155,8 +156,8 @@
         <xs:sequence>
             <xs:element type="xs:string" name="description" minOccurs="0" maxOccurs="1"
                         default="No description provided."/>
-            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="name" use="required"/>
         <xs:attribute type="xs:token" name="version" use="required"/>
@@ -193,11 +194,11 @@
     <xs:complexType name="personType">
         <xs:sequence>
             <xs:element type="xs:string" name="description" minOccurs="0"/>
-            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element type="xs:token" name="surname" minOccurs="0"/>
             <xs:element type="xs:token" name="forename" minOccurs="0"/>
             <xs:element type="xs:token" name="email" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="provider"/>
         <xs:attribute type="xs:token" name="id"/>
@@ -207,8 +208,8 @@
         <xs:sequence>
             <xs:element type="xs:string" name="description" minOccurs="0"
                         default="No description provided."/>
-            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="name" use="required"/>
         <xs:attribute type="xs:token" name="version" use="required"/>
