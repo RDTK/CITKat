@@ -32,8 +32,10 @@
         </dependencies>
         <linkedFragment type="person" role="maintainer">jdoe@techfak.uni-bielefeld.de</linkedFragment>
         <linkedFragment type="publication">The_Progress_of_Life</linkedFragment>
+        <linkedFragment type="publication">The_Progress_of_Foo</linkedFragment>
         <linkedFragment type="experiment">fsmt-experiment-bar-2001-10-26T21:32:52.12679</linkedFragment>
         <linkedFragment type="dataset">foodata-2001-10-26T21:32:52.12679</linkedFragment>
         <linkedFragment type="hardware">ToBI-2of4</linkedFragment>
+        <linkedFragment type="hardware">ToBI-1of4</linkedFragment>
     </distribution>
 </catalog>

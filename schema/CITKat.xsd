@@ -71,7 +71,7 @@
         </xs:choice>
         <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
         <xs:attribute type="xs:anyURI" name="build-generator-template" use="required"/>
-        <xs:attribute type="accessType" name="access" use="optional" default="public"/>
+        <xs:attribute type="accessType" name="access" use="required"/>
         <!--<xs:attribute type="xs:token" name="m">-->
             <!--<xs:annotation>-->
                 <!--<xs:documentation xml:lang="en">build-generator's template, e.g. '-m toolkit'</xs:documentation>-->

@@ -146,11 +146,93 @@
 
                         <xsl:apply-templates select="child::node()/c:description"/>
 
+                        <xsl:apply-templates select="/c:catalog/@access"/>
+
+                        <!--Persons-->
+                        <xsl:if test="//c:linkedFragment[@type = 'person']">
+                            <h5>
+                                <xsl:text disable-output-escaping="yes">Involved </xsl:text>
+                                <xsl:call-template name="capitalizeFirstLetter">
+                                    <xsl:with-param name="in" select="//c:linkedFragment[@type = 'person']/@type"/>
+                                </xsl:call-template>
+                                <xsl:if test="count(//c:linkedFragment[@type = 'person']) > 1">
+                                    <xsl:text>s</xsl:text>
+                                </xsl:if>
+                                <xsl:text disable-output-escaping="yes">:</xsl:text>
+                            </h5>
+                            <ul class="persons">
+                                <xsl:apply-templates select="//c:linkedFragment[@type = 'person']"/>
+                            </ul>
+                        </xsl:if>
+
+                        <!--Publications-->
+                        <xsl:if test="//c:linkedFragment[@type = 'publication']">
+                            <h5>
+                                <xsl:text disable-output-escaping="yes">Linked </xsl:text>
+                                <xsl:call-template name="capitalizeFirstLetter">
+                                    <xsl:with-param name="in" select="//c:linkedFragment[@type = 'publication']/@type"/>
+                                </xsl:call-template>
+                                <xsl:if test="count(//c:linkedFragment[@type = 'publication']) > 1">
+                                    <xsl:text>s</xsl:text>
+                                </xsl:if>
+                                <xsl:text disable-output-escaping="yes">:</xsl:text>
+                            </h5>
+                            <ul class="publications">
+                                <xsl:apply-templates select="//c:linkedFragment[@type = 'publication']"/>
+                            </ul>
+                        </xsl:if>
+
+                        <!--Hardware-->
+                        <xsl:if test="//c:linkedFragment[@type = 'hardware']">
+                            <h5>
+                                <xsl:call-template name="capitalizeFirstLetter">
+                                    <xsl:with-param name="in" select="//c:linkedFragment[@type = 'hardware']/@type"/>
+                                </xsl:call-template>
+                                <xsl:text disable-output-escaping="yes">:</xsl:text>
+                            </h5>
+                            <ul class="hardware">
+                                <xsl:apply-templates select="//c:linkedFragment[@type = 'hardware']"/>
+                            </ul>
+                        </xsl:if>
+                        
+                        <!--<xsl:for-each select="//c:linkedFragment[@type != 'project' and @type != 'experiment' and @type != 'dataset']/@type">-->
+                            <!--<xsl:choose>-->
+                                <!--<xsl:when test=". = 'person'">-->
+                                    <!--<h5>-->
+                                        <!--<xsl:call-template name="capitalizeFirstLetter">-->
+                                            <!--<xsl:with-param name="in" select="."/>-->
+                                        <!--</xsl:call-template>-->
+                                        <!--<xsl:if test=". != 'hardware'">-->
+                                            <!--<xsl:text>(s)</xsl:text>-->
+                                        <!--</xsl:if>-->
+                                        <!--<xsl:text disable-output-escaping="yes">:</xsl:text>-->
+                                    <!--</h5>-->
+                                    <!--<ul>-->
+                                        <!--<xsl:apply-templates select=".."/>-->
+                                    <!--</ul>-->
+                                <!--</xsl:when>-->
+                                <!--<xsl:otherwise>-->
+                                    <!--<h5>-->
+                                        <!--<xsl:call-template name="capitalizeFirstLetter">-->
+                                            <!--<xsl:with-param name="in" select="."/>-->
+                                        <!--</xsl:call-template>-->
+                                        <!--<xsl:if test=". != 'hardware'">-->
+                                            <!--<xsl:text>(s)</xsl:text>-->
+                                        <!--</xsl:if>-->
+                                        <!--<xsl:text disable-output-escaping="yes">:</xsl:text>-->
+                                    <!--</h5>-->
+                                    <!--<ul>-->
+                                        <!--<xsl:apply-templates select=".."/>-->
+                                    <!--</ul>-->
+                                <!--</xsl:otherwise>-->
+                            <!--</xsl:choose>-->
+                        <!--</xsl:for-each>-->
+
                         <xsl:apply-templates select="child::node()"/>
 
-                        <xsl:if test="not(c:distribution)">
+                        <!--<xsl:if test="not(c:distribution)">-->
                             <xsl:call-template name="getBacklink"/>
-                        </xsl:if>
+                        <!--</xsl:if>-->
                         <xsl:if test="c:distribution
                                      | c:project
                                      | c:experiment">
@@ -178,6 +260,12 @@
     <xsl:template match="c:linkedFragment">
         <xsl:call-template name="log_template_info"/>
         <li>
+            <xsl:if test="@role">
+                <xsl:call-template name="capitalizeFirstLetter">
+                    <xsl:with-param name="in" select="@role"/>
+                </xsl:call-template>
+                <xsl:text disable-output-escaping="yes">: </xsl:text>
+            </xsl:if>
             <xsl:element name="a">
                 <xsl:attribute name="href">
                     <xsl:text>../</xsl:text>
@@ -241,12 +329,12 @@
                 </ul>
             </div>
         </xsl:if>
-        <h5>TODO Linked Fragments:</h5>
-        <div id="linkedFragments">
-            <ul>
-                <xsl:apply-templates select="c:linkedFragment[@type != 'experiment' and @type != 'dataset']"/>
-            </ul>
-        </div>
+        <!--<h5>TODO Linked Fragments:</h5>-->
+        <!--<div id="linkedFragments">-->
+            <!--<ul>-->
+                <!--<xsl:apply-templates select="c:linkedFragment[@type != 'experiment' and @type != 'dataset']"/>-->
+            <!--</ul>-->
+        <!--</div>-->
     </xsl:template>
 
     <xsl:template match="c:directDependency">
@@ -428,6 +516,14 @@
                 <xsl:text disable-output-escaping="yes">/static/js/jenkins-api.js</xsl:text>
             </xsl:attribute>
         </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="/c:catalog/@access">
+        <xsl:call-template name="log_template_info"/>
+        <h5>
+            <xsl:text disable-output-escaping="yes">Access: </xsl:text>
+            <xsl:value-of select="."/>
+        </h5>
     </xsl:template>
 
 </xsl:stylesheet>
