@@ -15,7 +15,7 @@
     var backlinksDiv = document.querySelector('#backlinks');
 
     var type = backlinksDiv.getAttribute('type');
-    var parameter = backlinksDiv.getAttribute('name') + '-' + backlinksDiv.getAttribute('version');
+    var parameter = backlinksDiv.getAttribute('name') + '/' + backlinksDiv.getAttribute('version');
 
     // console.log(parameter);
 
@@ -35,9 +35,9 @@
         Object.keys(types).forEach(function (t) {
             var divGroup = document.createElement('div');
             divGroup.setAttribute('class', t);
-            var h6 = document.createElement('h6');
-            h6.appendChild(document.createTextNode('Also used by:'));
-            divGroup.appendChild(h6);
+            var h = document.createElement('h5');
+            h.appendChild(document.createTextNode('Recipe used by:'));
+            divGroup.appendChild(h);
             types[t].forEach(function (t2) {
                 var anker = document.createElement('a');
                 anker.setAttribute('href', '../' + t2);

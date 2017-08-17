@@ -22,7 +22,7 @@ class Backlink(Resource):
         self.valType = regex(expr_recipe_type, UNICODE)
         self.valFilename = regex(expr_filename, UNICODE)
 
-    def get(self, filename_wo_suffix, recipe_type):
+    def get(self, name, version, recipe_type):
         """
         find backlinks
 
@@ -31,6 +31,7 @@ class Backlink(Resource):
         :param recipe_type:
         :return: json list with backlinks dict
         """
+        filename_wo_suffix = name + '-' + version
         try:
             self.valFilename(filename_wo_suffix)
             self.valType(recipe_type)
@@ -40,7 +41,14 @@ class Backlink(Resource):
         for file_path in glob('*/*.xml'):
             with open(file_path, 'ro') as f:
                 s = mmap(f.fileno(), 0, access=ACCESS_READ)
-                for line in findall('<[\w= \"-]*>' + filename_wo_suffix + '<[\w/"-]*>', s, MULTILINE):
+                for line in findall('<[\w= \"-.:]*>' + filename_wo_suffix + '</[\w/"-]*>', s, MULTILINE):
+                    elem = etree.fromstring(line)
+                    return_dict = dict(elem.attrib)
+                    if 'type' not in return_dict:
+                        return_dict['type'] = 'directDependency'
+                    return_dict['path'] = file_path
+                    return_list.append(return_dict)
+                for line in findall('<extends name="' + name + '" version="' + version + '"/>', s, MULTILINE):
                     elem = etree.fromstring(line)
                     return_dict = dict(elem.attrib)
                     if 'type' not in return_dict:
@@ -50,10 +58,10 @@ class Backlink(Resource):
         if return_list:
             return return_list, 200
         else:
-            return return_list, 404
+            return return_list, 400
 
 
-api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:filename_wo_suffix>')
+api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:name>/<string:version>')
 
 
 # TODO: replace AutoIndex by well-styled templates
