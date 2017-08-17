@@ -14,8 +14,8 @@
     var catalog = document.querySelector('#catalog');
     var backlinksDiv = document.querySelector('#backlinks');
 
-    var type = catalog.getAttribute('type');
-    var parameter = catalog.getAttribute('name') + '-' + catalog.getAttribute('version');
+    var type = backlinksDiv.getAttribute('type');
+    var parameter = backlinksDiv.getAttribute('name') + '-' + backlinksDiv.getAttribute('version');
 
     // console.log(parameter);
 
@@ -36,7 +36,7 @@
             var divGroup = document.createElement('div');
             divGroup.setAttribute('class', t);
             var h6 = document.createElement('h6');
-            h6.appendChild(document.createTextNode('Backlinks'));
+            h6.appendChild(document.createTextNode('Also used by:'));
             divGroup.appendChild(h6);
             types[t].forEach(function (t2) {
                 var anker = document.createElement('a');
