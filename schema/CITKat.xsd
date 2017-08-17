@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xs3p/xs3p.xsl"?>
+<!--
+TODO: Associated Institute: IIT CITEC CoR-Lab
+TODO: experiment ini
+TODO: documentation
+-->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified" targetNamespace="https://toolkit.cit-ec.uni-bielefeld.de/CITKat"
            xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
@@ -12,29 +17,31 @@
         </xs:annotation>
     </xs:element>
     <xs:complexType name="distributionType">
-        <xs:sequence>
-            <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
-            <xs:element type="extendsType" name="extends" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">Distribution might extend other distributions</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <!--<xs:element type="accessType" name="access">-->
-                <!--<xs:annotation>-->
-                    <!--<xs:documentation xml:lang="en">Distribution access, public or private</xs:documentation>-->
-                <!--</xs:annotation>-->
-            <!--</xs:element>-->
-            <xs:element type="dependenciesType" name="dependencies"/>
-            <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">Allowed fragment types are: project, person, hardware, dataset,
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute type="xs:token" name="name" use="required"/>
-        <xs:attribute type="xs:token" name="version" use="required"/>
-        <xs:attribute type="xs:token" name="keywords"/>
+        <xs:complexContent>
+            <xs:extension base="xs:anyURI">
+                <xs:sequence>
+                    <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
+                    <xs:element type="resourceType" name="resource" maxOccurs="unbounded" minOccurs="0"/>
+                    <xs:element type="extendsType" name="extends" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Distribution might extend other distributions
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element type="dependenciesType" name="dependencies"/>
+                    <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Allowed fragment types are: project, person, hardware,
+                                dataset,
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute type="xs:token" name="name" use="required"/>
+                <xs:attribute type="xs:token" name="version" use="required"/>
+                <xs:attribute type="xs:token" name="keywords"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
     <xs:simpleType name="accessType">
         <xs:restriction base="xs:token">
@@ -142,15 +149,16 @@
     <xs:complexType name="dependenciesType">
         <xs:sequence>
             <xs:element type="systemType" name="system" maxOccurs="unbounded" minOccurs="0"/>
-            <xs:element type="xs:string" name="directDependency" maxOccurs="unbounded" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">directDependency, atm this information comes from a project, that is
-                        not an
-                        experiment.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element type="directDependencyType" name="directDependency" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="directDependencyType">
+        <xs:simpleContent>
+            <xs:extension base="xs:anyURI">
+                <xs:attribute type="xs:token" name="name"/>
+                <xs:attribute type="xs:token" name="version"/>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
     <xs:complexType name="experimentType">
         <xs:sequence>
@@ -216,11 +224,13 @@
         <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:complexType name="resourceType">
-        <xs:simpleContent>
-            <xs:extension base="xs:anyURI">
-                <xs:attribute name="title" use="required" type="xs:token"/>
-                <xs:attribute name="type" use="required" type="xs:token"/>
-            </xs:extension>
-        </xs:simpleContent>
+        <xs:attribute name="name" type="xs:token"/>
+        <xs:attribute name="type" use="required" type="resourceTypeType"/>
+        <xs:attribute name="href" use="required" type="xs:anyURI"/>
     </xs:complexType>
+    <xs:simpleType name="resourceTypeType">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="img|home|wiki|scmbrowser|scm|bugtracker|documentation|video"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
