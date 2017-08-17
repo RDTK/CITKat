@@ -72,4 +72,5 @@ setup(
             'citkat = citkat.citkat:main',
         ],
     },
+    license='GPL',
 )
