@@ -23,26 +23,26 @@
         var types = {};
         var jsonAnswer = JSON.parse(response);
         // console.log(jsonAnswer);
-        jsonAnswer.forEach(function (t) {
-            if (!(t['type'] in types)) {
-                types[t['type']] = [t['path']];
+        jsonAnswer.forEach(function (elem) {
+            if (!(elem['type'] in types)) {
+                types[elem['type']] = [elem['path']];
             }
             else {
-                types[t['type']].append(t['path']);
+                types[elem['type']].append(elem['path']);
             }
         });
         // console.log(types);
-        Object.keys(types).forEach(function (t) {
+        Object.keys(types).forEach(function (key) {
             var divGroup = document.createElement('div');
-            divGroup.setAttribute('class', t);
+            divGroup.setAttribute('class', key);
             var h = document.createElement('h5');
             h.appendChild(document.createTextNode('Recipe used by:'));
             divGroup.appendChild(h);
-            types[t].forEach(function (t2) {
+            types[key].forEach(function (value) {
                 var anker = document.createElement('a');
-                anker.setAttribute('href', '../' + t2);
+                anker.setAttribute('href', '../' + value);
                 // console.log(/(^\/).*(^.xml)$/.exec(t2)[1])
-                anker.appendChild(document.createTextNode(t2.split('/').pop().split('.xml')[0]));
+                anker.appendChild(document.createTextNode(value.split('/').pop().split('.xml')[0]));
 
                 divGroup.appendChild(anker);
             });

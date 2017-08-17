@@ -41,6 +41,7 @@ class Backlink(Resource):
         for file_path in glob('*/*.xml'):
             with open(file_path, 'ro') as f:
                 s = mmap(f.fileno(), 0, access=ACCESS_READ)
+                # find directDependency and linkedFragment
                 for line in findall('<[\w= \"-.:]*>' + filename_wo_suffix + '</[\w/"-]*>', s, MULTILINE):
                     elem = etree.fromstring(line)
                     return_dict = dict(elem.attrib)
@@ -48,6 +49,7 @@ class Backlink(Resource):
                         return_dict['type'] = 'directDependency'
                     return_dict['path'] = file_path
                     return_list.append(return_dict)
+                # find extends
                 for line in findall('<extends name="' + name + '" version="' + version + '"/>', s, MULTILINE):
                     elem = etree.fromstring(line)
                     return_dict = dict(elem.attrib)
