@@ -4,7 +4,7 @@
          build-generator-template="toolkit" access="public">
 
     <distribution name="iCub Ball Tracking" version="s1" keywords="iCub citk System-Testing Experiment fsmt YARP">
-        icub-balltracking-s1
+        <filename>icub-balltracking-s1</filename>
         <description>In this particular system version, iCub related tools (yarpview, iCubGui and dataSetPlayer) are used replay a pre-recorded sequence as provided in the iCub Wiki in order to visualize the original state of the robot. Feel free to 1) replicate the system and 2) execute the linked experiment to verify our results. Please see Linked Artifacts section. For a first glimpse, you may also check the linked video above.</description>
         <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_1_0.png"/>
         <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_2_0.png"/>

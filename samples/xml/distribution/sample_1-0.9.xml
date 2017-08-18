@@ -3,7 +3,8 @@
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
          build-generator-template="toolkit" access="private">
 
-    <distribution name="sample_1" version="0.9">sample_1-0.9
+    <distribution name="sample_1" version="0.9">
+        <filename>sample_1-0.9</filename>
         <dependencies>
             <system name="ubuntu" version="14.04">
                 <repositories>

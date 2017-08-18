@@ -19,7 +19,7 @@
     loadJSON('/api/backlinks/' + type + '/' + parameter, function (response) {
         var types = {};
         var jsonAnswer = JSON.parse(response);
-        console.log(jsonAnswer);
+        // console.log(jsonAnswer);
         var h = document.createElement('h5');
         h.appendChild(document.createTextNode('Recipe used by:'));
         backlinksDiv.appendChild(h);

@@ -4,13 +4,13 @@
          build-generator-template="toolkit" access="public">
 
     <distribution name="Sample: 1" version="1.0" keywords="sample distribution publication cit-ec">
-        sample_1-1.0
+        <filename>sample_1-1.0</filename>
         <description>Ut elitr ponderum reprimique nam. Electram hendrerit usu ut, recusabo elaboraret ex ius. Justo
             luptatum ea quo. At vix dicat causae fastidii, eu eos ferri tincidunt, cu quo iudico perpetua liberavisse.
             Adhuc nobis abhorreant eu sit, possit accusata ne sea, sea ea purto iudico sanctus.
         </description>
 
-        <extends name="Sample_1" version="0.9">sample_1-0.9</extends>
+        <extends name="Sample 1" version="0.9">sample_1-0.9</extends>
 
         <dependencies>
             <system name="ubuntu" version="14.04">

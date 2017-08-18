@@ -57,9 +57,7 @@
                 <xsl:value-of select="name(*[1])"/>
             </xsl:attribute>
             <xsl:attribute name="data-backlinks">
-                <xsl:call-template name="firstWordOnly">
-                    <xsl:with-param name="sequence" select="/c:catalog/child::node()/text()"/>
-                </xsl:call-template>
+                <xsl:value-of select="/c:catalog/child::node()/c:filename/text()"/>
             </xsl:attribute>
         </xsl:element>
         <xsl:element name="script">
@@ -137,13 +135,20 @@
                             </xsl:call-template>
                             <xsl:text disable-output-escaping="yes"> Details </xsl:text>
                         </h1>
-                        <xsl:if test="child::node()/@name and child::node()/@version">
-                            <h2>
-                                <xsl:value-of select="child::node()/@name"/>
-                                <xsl:text disable-output-escaping="yes"> - </xsl:text>
-                                <xsl:value-of select="child::node()/@version"/>
-                            </h2>
-                        </xsl:if>
+                        <h2>
+                            <xsl:choose>
+                                <xsl:when test="child::node()/@name and child::node()/@version">
+                                    <xsl:value-of select="child::node()/@name"/>
+                                    <xsl:text disable-output-escaping="yes"> - </xsl:text>
+                                    <xsl:value-of select="child::node()/@version"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:call-template name="firstWordOnly">
+                                        <xsl:with-param name="sequence" select="child::node()/c:filename/text()"/>
+                                    </xsl:call-template>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </h2>
                         <xsl:apply-templates select="child::node()/c:description"/>
                         <xsl:apply-templates select="/c:catalog/@access"/>
                         <!--Persons-->
@@ -264,9 +269,9 @@
             </h5>
             <xsl:element name="a">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="@name"/>
-                    <xsl:text disable-output-escaping="yes">-</xsl:text>
-                    <xsl:value-of select="@version"/>
+                    <xsl:call-template name="firstWordOnly">
+                        <xsl:with-param name="sequence" select="text()"/>
+                    </xsl:call-template>
                     <xsl:text disable-output-escaping="yes">.xml</xsl:text>
                 </xsl:attribute>
                 <xsl:attribute name="class">
@@ -455,10 +460,7 @@
                 and Installing. Read and execute these instructions carefully. You will need to bootstrap the
             </xsl:text>
             <code>
-                <!--special handling for spaces in filename:-->
-                <xsl:call-template name="firstWordOnly">
-                    <xsl:with-param name="sequence" select="//c:distribution/text()"/>
-                </xsl:call-template>
+                <xsl:value-of select="/c:catalog/c:distribution/c:filename/text()"/>
                 <xsl:text>.distribution</xsl:text>
             </code>
             <xsl:text>. If you changed your prefix from </xsl:text>
@@ -468,10 +470,7 @@
         <pre>
             <code class="shell">
                 <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator --on-error=continue -d $HOME/citk/dist/distributions/</xsl:text>
-                <!--special handling for spaces in filename:-->
-                <xsl:call-template name="firstWordOnly">
-                    <xsl:with-param name="sequence" select="//c:distribution/text()"/>
-                </xsl:call-template>
+                <xsl:value-of select="//c:distribution/c:filename/text()"/>
                 <xsl:text disable-output-escaping="yes">.distribution -m toolkit -u YOUR_USERNAME -p YOUR_PASSWORD -D toolkit.volume=$HOME/citk/systems</xsl:text>
             </code>
         </pre>
