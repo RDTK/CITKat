@@ -6,13 +6,57 @@
     <distribution name="iCub Ball Tracking" version="s1" keywords="iCub citk System-Testing Experiment fsmt YARP">
         <filename>icub-balltracking-s1</filename>
         <description>In this particular system version, iCub related tools (yarpview, iCubGui and dataSetPlayer) are used replay a pre-recorded sequence as provided in the iCub Wiki in order to visualize the original state of the robot. Feel free to 1) replicate the system and 2) execute the linked experiment to verify our results. Please see Linked Artifacts section. For a first glimpse, you may also check the linked video above.</description>
-        <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_1_0.png"/>
-        <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_2_0.png"/>
-        <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_3_0.png"/>
+        <resource type="img" alt="first image shows robot" name="Robot Image Caption" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_1_0.png"/>
+        <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_2_1.png"/>
         <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_4_0.png"/>
         <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_5_0.png"/>
+        <resource type="video" href="https://vimeo.com/120420019"/>
+        <!--<resource type="video" href="https://www.youtube.com/embed/M7lc1UVf-VE"/>-->
+        <!--<resource type="video" href="https://youtu.be/M7lc1UVf-VE"/>-->
+        <resource type="homepage" href="http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip" name="Data Set Download URL"/>
         <dependencies>
             <system name="ubuntu" version="14.04">
+                <repositories>
+                    <repository>deb http://archive.ubuntu.com/ubuntu/ trusty multiverse</repository>
+                </repositories>
+                <dependency>cmake</dependency>
+                <dependency>git</dependency>
+                <dependency>gfortran</dependency>
+                <dependency>python</dependency>
+                <dependency>libc6</dependency>
+                <dependency>libcv-dev</dependency>
+                <dependency>libace-dev</dependency>
+                <dependency>libgsl0-dev</dependency>
+                <dependency>libncurses5-dev</dependency>
+                <dependency>libgtkmm-2.4-dev</dependency>
+                <dependency>libglademm-2.4-dev</dependency>
+                <dependency>libqt4-dev</dependency>
+                <dependency>libqt4-opengl-dev</dependency>
+                <dependency>libopencv-dev</dependency>
+                <dependency>libcvaux-dev</dependency>
+                <dependency>libhighgui-dev</dependency>
+                <dependency>libsdl1.2-dev</dependency>
+                <dependency>libxmu-dev</dependency>
+                <dependency>freeglut3-dev</dependency>
+                <dependency>libode1</dependency>
+                <dependency>libode-dev</dependency>
+                <dependency>libblas-dev</dependency>
+                <dependency>python-sphinx</dependency>
+                <dependency>wmctrl</dependency>
+                <dependency>lshw</dependency>
+                <dependency>eog</dependency>
+                <dependency>gedit</dependency>
+                <dependency>gnuplot</dependency>
+                <dependency>libxml2-dev</dependency>
+                <dependency>libxslt1-dev</dependency>
+                <dependency>python2.7</dependency>
+                <dependency>python-setuptools</dependency>
+                <dependency>zlib1g-dev</dependency>
+                <dependency>swig</dependency>
+                <dependency>wget</dependency>
+                <dependency>unzip</dependency>
+            </system>
+            <system name="ubuntu" version="16.04">
                 <repositories>
                     <repository>deb http://archive.ubuntu.com/ubuntu/ trusty multiverse</repository>
                 </repositories>

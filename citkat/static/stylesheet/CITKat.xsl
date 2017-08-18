@@ -76,16 +76,15 @@
             <xsl:when test="not(c:publication) and not(c:person)">
                 <xsl:text disable-output-escaping="yes">: </xsl:text>
                 <xsl:value-of select="child::node()/@name"/>
-                <xsl:text disable-output-escaping="yes">, Version: </xsl:text>
+                <xsl:text disable-output-escaping="yes"> (</xsl:text>
                 <xsl:value-of select="child::node()/@version"/>
+                <xsl:text disable-output-escaping="yes">)</xsl:text>
             </xsl:when>
-            <xsl:otherwise>
-                <xsl:if test="child::node()/@title">
-                    <xsl:text disable-output-escaping="yes">: "</xsl:text>
-                    <xsl:value-of select="child::node()/@title"/>
-                    <xsl:text disable-output-escaping="yes">"</xsl:text>
-                </xsl:if>
-            </xsl:otherwise>
+            <xsl:when test="child::node()/@title">
+                <xsl:text disable-output-escaping="yes">: "</xsl:text>
+                <xsl:value-of select="child::node()/@title"/>
+                <xsl:text disable-output-escaping="yes">"</xsl:text>
+            </xsl:when>
         </xsl:choose>
         <xsl:text disable-output-escaping="yes"> // CITKat</xsl:text>
     </xsl:template>
@@ -139,17 +138,57 @@
                             <xsl:choose>
                                 <xsl:when test="child::node()/@name and child::node()/@version">
                                     <xsl:value-of select="child::node()/@name"/>
-                                    <xsl:text disable-output-escaping="yes"> - </xsl:text>
+                                    <xsl:text disable-output-escaping="yes"> (</xsl:text>
                                     <xsl:value-of select="child::node()/@version"/>
+                                    <xsl:text disable-output-escaping="yes">)</xsl:text>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <xsl:call-template name="firstWordOnly">
-                                        <xsl:with-param name="sequence" select="child::node()/c:filename/text()"/>
-                                    </xsl:call-template>
+                                    <xsl:value-of select="child::node()/c:filename/text()"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </h2>
                         <xsl:apply-templates select="child::node()/c:description"/>
+
+                        <xsl:if test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
+                            <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"/>
+                        </xsl:if>
+
+
+                        <xsl:if test="child::node()/c:resource[@type = 'img']">
+                            <div id="carouselImgs" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <xsl:for-each select="child::node()/c:resource[@type = 'img']">
+                                        <xsl:element name="li">
+                                            <xsl:attribute name="data-target">
+                                                <xsl:text disable-output-escaping="yes">#carouselImgs</xsl:text>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="data-slide-to">
+                                                <xsl:value-of select="position() - 1"/>
+                                            </xsl:attribute>
+                                            <xsl:if test="position() = 1">
+                                                <xsl:attribute name="class">
+                                                    <xsl:text disable-output-escaping="yes">active</xsl:text>
+                                                </xsl:attribute>
+                                            </xsl:if>
+                                        </xsl:element>
+                                    </xsl:for-each>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <xsl:apply-templates select="child::node()/c:resource[@type = 'img']"/>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselImgs" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"/>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselImgs" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"/>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </xsl:if>
+
+                        <xsl:apply-templates select="child::node()/c:resource[@type = 'video']"/>
+
                         <xsl:apply-templates select="/c:catalog/@access"/>
                         <!--Persons-->
                         <xsl:if test="//c:linkedFragment[@type = 'person']">
@@ -221,6 +260,115 @@
                 <xsl:value-of select="text()"/>
             </xsl:element>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="c:resource[@type = 'img']">
+        <xsl:element name="div">
+            <xsl:attribute name="class">
+                <xsl:text disable-output-escaping="yes">carousel-item</xsl:text>
+                <xsl:if test="position() = 1">
+                    <xsl:text disable-output-escaping="yes"> active</xsl:text>
+                </xsl:if>
+            </xsl:attribute>
+            <img class="d-block w-100" src="{@href}" alt="{@alt}"/>
+            <xsl:if test="@name">
+                <div class="carousel-caption ">
+                    <h3>
+                        <xsl:value-of select="@name"/>
+                    </h3>
+                </div>
+            </xsl:if>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="c:resource[not(@type = 'img') and not(@type = 'video')]">
+        <xsl:call-template name="log_template_info"/>
+        <xsl:choose>
+            <xsl:when test="bugtracker">
+                <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
+            </xsl:when>
+            <xsl:when test="scmbrowser">
+                <xsl:text disable-output-escaping="yes">SCM</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="capitalizeFirstLetter">
+                    <xsl:with-param name="in" select="@type"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text disable-output-escaping="yes">: </xsl:text>
+        <a href="{@href}">
+            <xsl:choose>
+                <xsl:when test="@name">
+                    <xsl:value-of select="@name"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="@href"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </a>
+    </xsl:template>
+    
+    <xsl:template match="c:resource[@type = 'video']">
+        <xsl:call-template name="log_template_info"/>
+        <xsl:choose>
+            <xsl:when test="contains(@href, 'vimeo')">
+                <div id="vimeo-embed" data-href="{@href}" class="videoWrapper">Loading video...</div>
+                <script><![CDATA[
+var videoUrl = document.querySelector('#vimeo-embed').getAttribute('data-href');
+var endpoint = 'http://www.vimeo.com/api/oembed.json';
+function embedVideo(video) {
+    document.querySelector('#vimeo-embed').innerHTML = unescape(video.html);
+}
+var callback = 'embedVideo';
+var url = endpoint + '?url=' + encodeURIComponent(videoUrl) + '&callback=' + callback + '&width=640';
+(function() {
+    var js = document.createElement('script');
+    js.setAttribute('type', 'text/javascript');
+    js.setAttribute('src', url);
+    document.querySelector('#vimeo-embed').appendChild(js);
+})();
+]]>
+                </script>
+            </xsl:when>
+            <xsl:when test="contains(@href, 'youtube.com') and contains(@href, '/embed/')">
+                <div class="videoWrapper">
+                    <xsl:element name="iframe">
+                        <xsl:attribute name="id">
+                            <xsl:text disable-output-escaping="yes">ytplayer</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="type">
+                            <xsl:text disable-output-escaping="yes">text/html</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="width">
+                            <xsl:text disable-output-escaping="yes">640</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="height">
+                            <xsl:text disable-output-escaping="yes">360</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="src">
+                            <xsl:value-of select="@href"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="frameborder">
+                            <xsl:text disable-output-escaping="yes">0</xsl:text>
+                        </xsl:attribute>
+                    </xsl:element>
+                </div>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text disable-output-escaping="yes">Linked Video: </xsl:text>
+                <a href="{@href}">
+                    <xsl:choose>
+                        <xsl:when test="@name">
+                            <xsl:value-of select="@name"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="@href"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </a>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="c:linkedFragment">

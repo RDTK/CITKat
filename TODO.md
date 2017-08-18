@@ -17,7 +17,7 @@
 * (mockup build-generator output for user study)
 * Person|Puclication|dataset|experiment|hardware details
 * list pages
-* integrate images
+* ~~integrate images~~ done.
 * keywords
 * linked recipe
 * more experiment information
