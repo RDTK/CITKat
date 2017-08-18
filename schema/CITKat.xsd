@@ -230,10 +230,11 @@ TODO: documentation
         <xs:attribute name="name" type="xs:token"/>
         <xs:attribute name="type" use="required" type="resourceTypeType"/>
         <xs:attribute name="href" use="required" type="xs:anyURI"/>
+        <xs:attribute name="alt" type="xs:token"/>
     </xs:complexType>
     <xs:simpleType name="resourceTypeType">
         <xs:restriction base="xs:token">
-            <xs:pattern value="img|home|wiki|scmbrowser|scm|bugtracker|documentation|video"/>
+            <xs:pattern value="img|homepage|scm|bugtracker|documentation|video"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
