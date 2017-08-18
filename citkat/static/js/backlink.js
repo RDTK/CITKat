@@ -14,32 +14,24 @@
     var backlinksDiv = document.querySelector('#backlinks');
 
     var type = backlinksDiv.getAttribute('type');
-    var parameter = backlinksDiv.getAttribute('name') + '/' + backlinksDiv.getAttribute('version');
+    var parameter = backlinksDiv.getAttribute('data-backlinks');
 
     loadJSON('/api/backlinks/' + type + '/' + parameter, function (response) {
         var types = {};
         var jsonAnswer = JSON.parse(response);
+        console.log(jsonAnswer);
+        var h = document.createElement('h5');
+        h.appendChild(document.createTextNode('Recipe used by:'));
+        backlinksDiv.appendChild(h);
+        var ul = document.createElement('ul');
         jsonAnswer.forEach(function (elem) {
-            if (!(elem['type'] in types)) {
-                types[elem['type']] = [elem['path']];
-            }
-            else {
-                types[elem['type']].append(elem['path']);
-            }
+            var li = document.createElement('li');
+            var anker = document.createElement('a');
+            anker.setAttribute('href', '../' + elem['path']);
+            anker.appendChild(document.createTextNode(elem['name'] + ' - ' + elem['version']));
+            li.appendChild(anker);
+            ul.appendChild(li);
         });
-        Object.keys(types).forEach(function (key) {
-            var divGroup = document.createElement('div');
-            divGroup.setAttribute('class', key);
-            var h = document.createElement('h5');
-            h.appendChild(document.createTextNode('Recipe used by:'));
-            divGroup.appendChild(h);
-            types[key].forEach(function (value) {
-                var anker = document.createElement('a');
-                anker.setAttribute('href', '../' + value);
-                anker.appendChild(document.createTextNode(value.split('/').pop().split('.xml')[0]));
-                divGroup.appendChild(anker);
-            });
-            backlinksDiv.appendChild(divGroup);
-        });
+        backlinksDiv.appendChild(ul);
     })
 })();

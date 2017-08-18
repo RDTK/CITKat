@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
+from lxml.etree import parse, XMLParser
 from os import path
 from flask import Flask
 from flask_autoindex import AutoIndex
 from flask_restful import Resource, Api
 from flask_restful.inputs import regex
-from mmap import mmap, ACCESS_READ
 from glob import glob
-from lxml import etree
-from re import findall, MULTILINE
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,7 +20,7 @@ class Backlink(Resource):
         self.valType = regex(expr_recipe_type, UNICODE)
         self.valFilename = regex(expr_filename, UNICODE)
 
-    def get(self, name, version, recipe_type):
+    def get(self, filename_wo_suffix, recipe_type):
         """
         find backlinks
 
@@ -31,7 +29,6 @@ class Backlink(Resource):
         :param recipe_type:
         :return: json list with backlinks dict
         """
-        filename_wo_suffix = name + '-' + version
         try:
             self.valFilename(filename_wo_suffix)
             self.valType(recipe_type)
@@ -39,31 +36,25 @@ class Backlink(Resource):
             return 406
         return_list = []
         for file_path in glob('*/*.xml'):
-            with open(file_path, 'ro') as f:
-                s = mmap(f.fileno(), 0, access=ACCESS_READ)
-                # find directDependency and linkedFragment
-                for line in findall('<[\w= \"-.:]*>' + filename_wo_suffix + '</[\w/"-]*>', s, MULTILINE):
-                    elem = etree.fromstring(line)
-                    return_dict = dict(elem.attrib)
-                    if 'type' not in return_dict:
-                        return_dict['type'] = 'directDependency'
-                    return_dict['path'] = file_path
-                    return_list.append(return_dict)
-                # find extends
-                for line in findall('<extends name="' + name + '" version="' + version + '"/>', s, MULTILINE):
-                    elem = etree.fromstring(line)
-                    return_dict = dict(elem.attrib)
-                    if 'type' not in return_dict:
-                        return_dict['type'] = 'directDependency'
-                    return_dict['path'] = file_path
-                    return_list.append(return_dict)
+            parser = XMLParser(remove_blank_text=True)
+            ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
+            doc = parse(file_path, parser=parser)
+            elem_list = doc.xpath('//c:linkedFragment[contains(text(), "' + filename_wo_suffix + '")]', namespaces=ns)
+            elem_list += doc.xpath('//c:directDependency[contains(text(), "' + filename_wo_suffix + '")]', namespaces=ns)
+            elem_list += doc.xpath('//c:extends[contains(text(), "' + filename_wo_suffix + '")]', namespaces=ns)
+            if elem_list:
+                return_dict = dict(doc.xpath('/c:catalog/child::node()', namespaces=ns)[0].attrib)
+                if 'keywords' in return_dict:
+                    del return_dict['keywords']
+                return_dict['path'] = file_path
+                return_list.append(return_dict)
         if return_list:
             return return_list, 200
         else:
-            return return_list, 404
+            return [], 404
 
 
-api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:name>/<string:version>')
+api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:filename_wo_suffix>')
 
 
 # TODO: replace AutoIndex by well-styled templates
@@ -72,5 +63,3 @@ api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:name>/<s
 
 def main():
     app.run(debug=True, host='::')
-
-# TODO: implement ReST API for backlinks

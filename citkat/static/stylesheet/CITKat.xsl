@@ -56,6 +56,11 @@
             <xsl:attribute name="type">
                 <xsl:value-of select="name(*[1])"/>
             </xsl:attribute>
+            <xsl:attribute name="data-backlinks">
+                <xsl:call-template name="firstWordOnly">
+                    <xsl:with-param name="sequence" select="/c:catalog/child::node()/text()"/>
+                </xsl:call-template>
+            </xsl:attribute>
         </xsl:element>
         <xsl:element name="script">
             <xsl:attribute name="src">
