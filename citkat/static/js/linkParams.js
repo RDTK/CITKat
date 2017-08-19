@@ -1,13 +1,11 @@
-<?xml version="1.0"?>
-<body>
-    <script><![CDATA[
-//
 (function () {
     var catalog = document.querySelector('#catalog');
     var type = catalog.getAttribute('type');
     var paramString = '';
     if (type === 'distribution') {
-        paramString = '?jobs=' + catalog.getAttribute('name') + '-' + catalog.getAttribute('version') + '&jenkins=' + catalog.getAttribute('buildserverbaseurl');
+        paramString = '?dist=' + catalog.getAttribute('data-filename') +
+            '&tpl=' + catalog.getAttribute('build-generator-template') +
+            '&jenkins=' + catalog.getAttribute('buildserverbaseurl');
     } else if (type === 'project' || type === 'experiment') {
         paramString = document.location.search;
     }
@@ -17,6 +15,3 @@
         });
     }
 })();
-]]>
-    </script>
-</body>

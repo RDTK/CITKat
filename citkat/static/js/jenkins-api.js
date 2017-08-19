@@ -13,7 +13,7 @@
 
     var jenkinsDiv = document.querySelector('#jenkinsState');
     var catalog = document.querySelector('#catalog');
-    var url = catalog.getAttribute('buildserverbaseurl');
+    var url = catalog.querySelector('distribution').getAttribute('buildserverbaseurl');
     var urlParam =
         '/api/json?&tree=' +
         'healthReport[' +
@@ -29,14 +29,14 @@
     if (url[-1] !== '/') {
         url += '/';
     }
-    url = url + 'job/'
+    url = url + 'job/';
     if (catalog.getAttribute('type') === 'distribution') {
         url = url
             + catalog.getAttribute('name')
             + '-'
             + catalog.getAttribute('version')
             + '-'
-            + catalog.getAttribute('build-generator-template')
+            + catalog.querySelector('distribution').getAttribute('build-generator-template')
             + '-orchestration'
             + urlParam;
     } else {
@@ -58,7 +58,7 @@
                 + '-'
                 + catalog.getAttribute('version')
                 + '-'
-                + catalog.getAttribute('build-generator-template')
+                + catalog.querySelector('distribution').getAttribute('build-generator-template')
                 + '-'
                 + params['jobs']
                 + urlParam;

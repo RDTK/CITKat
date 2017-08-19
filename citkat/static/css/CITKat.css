@@ -30,3 +30,7 @@ code.hljs {
 	width: 100%;
 	height: 100%;
 }
+
+span.capitalize {
+	text-transform: capitalize;
+}

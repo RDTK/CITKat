@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
-<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
-         build-generator-template="toolkit">
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
     <dataset name="foodata" version="2001-10-26T21:32:52.12679">
+        <filename>foodata-2001-10-26T21:32:52.12679</filename>
         <description>Ut elitr ponderum reprimique nam. Electram hendrerit usu ut, recusabo elaboraret ex ius. Justo
             luptatum ea quo. At vix dicat causae fastidii, eu eos ferri tincidunt, cu quo iudico perpetua liberavisse.
             Adhuc nobis abhorreant eu sit, possit accusata ne sea, sea ea purto iudico sanctus.
         </description>
-        <resource type="img" title="blaaa">http://opendata.uni-bielefeld.de</resource>
         <linkedFragment type="publication">provider-publicationid</linkedFragment>
     </dataset>
 </catalog>

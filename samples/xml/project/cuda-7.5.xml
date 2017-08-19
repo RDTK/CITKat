@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
-<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
-         build-generator-template="toolkit">
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
     <project name="cuda" version="7.5">
+        <filename>cuda-7.5</filename>
 
         <description>Lorem ipsum dolor sit amet, vix choro primis definitiones ne, id his omnium recusabo, at vim
             nostrud discere omnesque. Labore labores evertitur ius ei, noster dolorem quo ei, nobis dignissim intellegat

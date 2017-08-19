@@ -39,6 +39,8 @@ TODO: documentation
         <xs:attribute type="accessType" name="access" use="required"/>
         <xs:attributeGroup ref="nameAndVersion"/>
         <xs:attribute type="xs:token" name="keywords"/>
+        <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
+        <xs:attribute type="xs:anyURI" name="build-generator-template" use="required"/>
     </xs:complexType>
     <xs:element name="filename" type="filenameType" />
     <xs:simpleType name="filenameTypeType">
@@ -90,8 +92,6 @@ TODO: documentation
                 </xs:element>
             </xs:choice>
         </xs:sequence>
-        <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
-        <xs:attribute type="xs:anyURI" name="build-generator-template" use="required"/>
     </xs:complexType>
     <xs:complexType name="linkedFragmentType">
         <xs:simpleContent>
@@ -120,6 +120,7 @@ TODO: documentation
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element ref="filename"/>
             <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="provider"/>
@@ -129,6 +130,7 @@ TODO: documentation
     </xs:complexType>
     <xs:complexType name="projectType">
         <xs:sequence>
+            <xs:element ref="filename"/>
             <xs:element type="xs:string" name="description" minOccurs="0" default="No description provided."/>
             <xs:element type="dependenciesType" name="dependencies" minOccurs="0"/>
             <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
@@ -138,6 +140,7 @@ TODO: documentation
     </xs:complexType>
     <xs:complexType name="hardwareType">
         <xs:sequence>
+            <xs:element ref="filename"/>
             <xs:element type="xs:string" name="description" minOccurs="0"
                         default="No description provided."/>
             <xs:element type="resourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
@@ -169,8 +172,8 @@ TODO: documentation
     </xs:complexType>
     <xs:complexType name="experimentType">
         <xs:sequence>
-            <xs:element type="xs:string" name="description" minOccurs="0" maxOccurs="1"
-                        default="No description provided."/>
+            <xs:element ref="filename"/>
+            <xs:element type="xs:string" name="description" minOccurs="0"/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element type="linkedFragmentType" name="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
@@ -205,6 +208,7 @@ TODO: documentation
     </xs:complexType>
     <xs:complexType name="personType">
         <xs:sequence>
+            <xs:element ref="filename"/>
             <xs:element type="xs:string" name="description" minOccurs="0"/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element type="xs:token" name="surname" minOccurs="0"/>
@@ -218,6 +222,7 @@ TODO: documentation
     </xs:complexType>
     <xs:complexType name="datasetType">
         <xs:sequence>
+            <xs:element ref="filename"/>
             <xs:element type="xs:string" name="description" minOccurs="0"
                         default="No description provided."/>
             <xs:element name="resource" type="resourceType" maxOccurs="unbounded" minOccurs="0"/>
