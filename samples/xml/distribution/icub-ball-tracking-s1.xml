@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://repro.toolkit.cit-ec.de"
-         build-generator-template="toolkit" access="public">
+         build-generator-template="toolkit">
 
-    <distribution name="iCub Ball Tracking" version="s1" keywords="iCub citk System-Testing Experiment fsmt YARP">
+    <distribution name="iCub Ball Tracking" version="s1" keywords="iCub citk System-Testing Experiment fsmt YARP" access="public">
         <filename>icub-balltracking-s1</filename>
         <description>In this particular system version, iCub related tools (yarpview, iCubGui and dataSetPlayer) are used replay a pre-recorded sequence as provided in the iCub Wiki in order to visualize the original state of the robot. Feel free to 1) replicate the system and 2) execute the linked experiment to verify our results. Please see Linked Artifacts section. For a first glimpse, you may also check the linked video above.</description>
         <resource type="img" alt="first image shows robot" name="Robot Image Caption" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_1_0.png"/>
         <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_2_1.png"/>
         <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_4_0.png"/>
         <resource type="img" href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_5_0.png"/>
-        <resource type="video" href="https://vimeo.com/120420019"/>
+        <!--<resource type="video" href="https://vimeo.com/120420019"/>-->
         <!--<resource type="video" href="https://www.youtube.com/embed/M7lc1UVf-VE"/>-->
         <!--<resource type="video" href="https://youtu.be/M7lc1UVf-VE"/>-->
-        <resource type="homepage" href="http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip" name="Data Set Download URL"/>
+        <!--<resource type="homepage" href="http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip" name="Data Set Download URL"/>-->
         <dependencies>
             <system name="ubuntu" version="14.04">
                 <repositories>
@@ -104,7 +104,7 @@
             <directDependency name="iCub Main" version="v1.1.15">icub-main-v1.1.15</directDependency>
             <directDependency name="PySCXML" version="v.0.8.4-fsmt">pyscxml-v.0.8.4-fsmt</directDependency>
         </dependencies>
-        <linkedFragment type="person" role="maintainer" name="Florian Lier">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="Recipe Maintainer" name="Florian Lier">flier@techfak.uni-bielefeld.de</linkedFragment>
         <linkedFragment type="publication" name="The Progress of Whataboutism - How to Argument">The_Progress_of_Whataboutism</linkedFragment>
         <linkedFragment type="publication" name="The Progress of Science - A Scientific Approach">The_Progress_of_Science</linkedFragment>
         <linkedFragment type="experiment" name="FSMT Experiment iCub Ball Tracking" version="iros2015">fsmt-exp-icub-nightly-iros2015</linkedFragment>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
-         build-generator-template="toolkit" access="private">
+         build-generator-template="toolkit">
 
-    <distribution name="sample_1" version="0.9">
+    <distribution name="sample_1" version="0.9" access="private">
         <filename>sample_1-0.9</filename>
         <dependencies>
             <system name="ubuntu" version="14.04">

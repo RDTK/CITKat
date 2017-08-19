@@ -36,6 +36,7 @@ TODO: documentation
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
+        <xs:attribute type="accessType" name="access" use="required"/>
         <xs:attributeGroup ref="nameAndVersion"/>
         <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
@@ -91,7 +92,6 @@ TODO: documentation
         </xs:sequence>
         <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
         <xs:attribute type="xs:anyURI" name="build-generator-template" use="required"/>
-        <xs:attribute type="accessType" name="access" use="required"/>
     </xs:complexType>
     <xs:complexType name="linkedFragmentType">
         <xs:simpleContent>

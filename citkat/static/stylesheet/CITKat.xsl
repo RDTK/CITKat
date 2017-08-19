@@ -189,7 +189,7 @@
 
                         <xsl:apply-templates select="child::node()/c:resource[@type = 'video']"/>
 
-                        <xsl:apply-templates select="/c:catalog/@access"/>
+                        <xsl:apply-templates select="/c:catalog/c:distribution/@access"/>
                         <!--Persons-->
                         <xsl:if test="//c:linkedFragment[@type = 'person']">
                             <h5>
@@ -663,7 +663,7 @@ var url = endpoint + '?url=' + encodeURIComponent(videoUrl) + '&callback=' + cal
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="/c:catalog/@access">
+    <xsl:template match="/c:catalog/c:distribution/@access">
         <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:text disable-output-escaping="yes">Access: </xsl:text>

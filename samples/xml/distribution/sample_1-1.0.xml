@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" buildServerBaseURL="https://localhost/fooo/jenkins"
-         build-generator-template="toolkit" access="public">
+         build-generator-template="toolkit">
 
-    <distribution name="Sample: 1" version="1.0" keywords="sample distribution publication cit-ec">
+    <distribution name="Sample: 1" version="1.0" keywords="sample distribution publication cit-ec" access="public">
         <filename>sample_1-1.0</filename>
         <description>Ut elitr ponderum reprimique nam. Electram hendrerit usu ut, recusabo elaboraret ex ius. Justo
             luptatum ea quo. At vix dicat causae fastidii, eu eos ferri tincidunt, cu quo iudico perpetua liberavisse.
