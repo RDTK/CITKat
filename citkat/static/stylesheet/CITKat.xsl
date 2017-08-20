@@ -25,7 +25,7 @@
     <xsl:template match="text()" mode="dependency"/>
 
     <!--variables section-->
-    <arr:array name="mediaQueries">
+    <arr:array name="mediaQueries"><!--Bootstrap v4 values-->
         <arr:item name="sm">(min-width: 576px)</arr:item>
         <arr:item name="md">(min-width: 768px)</arr:item>
         <arr:item name="lg">(min-width: 992px)</arr:item>
@@ -334,8 +334,8 @@
 
     <!--generate picture source tag-->
     <xsl:template name="pictureSource">
-        <xsl:message>INFO: Calling 'pictureSource' template</xsl:message>
         <xsl:param name="href"/>
+        <xsl:message>INFO: Calling 'pictureSource' template</xsl:message>
         <xsl:for-each select="$mediaQueries">
             <xsl:element name="source">
                 <!--TODO: manipulate href>: "/foo/image.png" -> "/foo.image-{@name}.png, /foo.image-{@name}@2X.png 2x"-->
