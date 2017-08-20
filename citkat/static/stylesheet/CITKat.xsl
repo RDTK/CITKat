@@ -461,8 +461,8 @@
 
     <!--description-->
     <xsl:template match="c:description" mode="catalog">
-        <p>
-            <xsl:value-of select="."/>
+        <p style="white-space: pre-line;">
+            <xsl:value-of select="." disable-output-escaping="yes"/>
         </p>
     </xsl:template>
 
