@@ -53,11 +53,7 @@
         var params = getQueryParams(document.location.search);
 
         url = params['jenkins'];
-
-        if (url[-1] !== '/') {
-            url += '/';
-        }
-        url = url + 'job/';
+        url = url + '/job/';
         url = url
             + catalog.getAttribute('data-filename')
             + '-'

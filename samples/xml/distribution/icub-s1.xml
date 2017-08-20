@@ -5,7 +5,7 @@
     <distribution name="iCub Ball Tracking" version="s1" keywords="iCub citk System-Testing Experiment fsmt YARP"
                   access="public" buildServerBaseURL="https://repro.toolkit.cit-ec.de"
                   build-generator-template="toolkit">
-        <filename>icub-balltracking-s1</filename>
+        <filename>icub-s1</filename>
         <description>In this particular system version, iCub related tools (yarpview, iCubGui and dataSetPlayer) are used replay a pre-recorded sequence as provided in the iCub Wiki in order to visualize the original state of the robot. Feel free to 1) replicate the system and 2) execute the linked experiment to verify our results. Please see Linked Artifacts section. For a first glimpse, you may also check the linked video above.</description>
         <resource type="img" alt="first image shows robot" name="Robot Image Caption"
                   href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_1_0.png"/>
@@ -115,7 +115,7 @@
         <linkedFragment type="publication" name="The Progress of Whataboutism - How to Argument">The_Progress_of_Whataboutism</linkedFragment>
         <linkedFragment type="publication" name="The Progress of Science - A Scientific Approach">The_Progress_of_Science</linkedFragment>
         <linkedFragment type="experiment" name="FSMT Experiment iCub Ball Tracking" version="iros2015">fsmt-exp-icub-nightly-iros2015</linkedFragment>
-        <linkedFragment type="dataset" name="iCub Ball Tracking" version="095402">dataset-icub-ball-tracking-095402</linkedFragment>
+        <linkedFragment type="dataset" name="iCub Ball Tracking" version="095402">dataset-icub-balltracking-095402</linkedFragment>
         <linkedFragment type="hardware" name="iCub" version="v1">icub-v1</linkedFragment>
     </distribution>
 </catalog>

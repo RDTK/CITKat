@@ -23,8 +23,12 @@
     <xsl:template match="text()" mode="head"/>
     <xsl:template match="text()" mode="catalog"/>
     <xsl:template match="text()" mode="dependency"/>
+    <xsl:template match="text()" mode="gendist"/>
 
     <!--variables section-->
+    <xsl:variable name="redmineRecipesRepository"><!--/wo trailing slash-->
+        <xsl:value-of select="'https://opensource.cit-ec.de/projects/citk/repository/revisions/master'"/>
+    </xsl:variable>
     <arr:array name="mediaQueries"><!--Bootstrap v4 values-->
         <arr:item name="sm">(min-width: 576px)</arr:item>
         <arr:item name="md">(min-width: 768px)</arr:item>
@@ -533,7 +537,7 @@
     </xsl:template>
 
     <!--system os dependencies-->
-    <xsl:template match="c:distribution | c:project | c:experiment" mode="dependency">
+    <xsl:template match="c:distribution | c:project | c:experiment | c:dataset" mode="dependency">
         <xsl:call-template name="log_template_info"/>
         <xsl:if test="c:dependencies/c:directDependency">
             <div id="directDependencies">
@@ -610,61 +614,59 @@
                     </xsl:if>
                 </xsl:attribute>
                 <xsl:attribute name="role">tabpanel</xsl:attribute>
-                <xsl:if test="c:repositories/c:repository">
-                    <pre>
-                        <code class="shell">
-                            <xsl:choose>
-                                <xsl:when test="@name = 'ubuntu'">
-                                    <xsl:if test="c:repositories/c:repository">
-                                        <xsl:choose>
-                                            <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
-                                                <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
-                                                <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends software-properties-common&#xa;</xsl:text>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
-                                                <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends software-properties-common&#xa;</xsl:text>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </xsl:if>
-                                    <xsl:for-each select="c:repositories/c:repository">
-                                        <xsl:text disable-output-escaping="yes">$ sudo add-apt-repository "</xsl:text>
-                                        <xsl:value-of select="normalize-space(.)"/>
-                                        <xsl:text disable-output-escaping="yes">"&#xa;</xsl:text>
-                                        <xsl:if test="@gpgkey">
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com </xsl:text>
-                                            <xsl:value-of select="@gpgkey"/>
-                                            <xsl:text disable-output-escaping="yes">&#xa;</xsl:text>
-                                        </xsl:if>
-                                    </xsl:for-each>
+                <pre>
+                    <code class="shell">
+                        <xsl:choose>
+                            <xsl:when test="@name = 'ubuntu'">
+                                <xsl:if test="c:repositories/c:repository">
                                     <xsl:choose>
                                         <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
                                             <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends </xsl:text>
-                                            <xsl:for-each select="c:dependency">
-                                                <xsl:value-of select="."/>
-                                                <xsl:text disable-output-escaping="yes"> </xsl:text>
-                                            </xsl:for-each>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends software-properties-common&#xa;</xsl:text>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends </xsl:text>
-                                            <xsl:for-each select="c:dependency">
-                                                <xsl:value-of select="."/>
-                                                <xsl:text disable-output-escaping="yes"> </xsl:text>
-                                            </xsl:for-each>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends software-properties-common&#xa;</xsl:text>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <strong>
-                                        <xsl:text>Not implemented yet.</xsl:text>
-                                    </strong>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </code>
-                    </pre>
-                </xsl:if>
+                                </xsl:if>
+                                <xsl:for-each select="c:repositories/c:repository">
+                                    <xsl:text disable-output-escaping="yes">$ sudo add-apt-repository "</xsl:text>
+                                    <xsl:value-of select="normalize-space(.)"/>
+                                    <xsl:text disable-output-escaping="yes">"&#xa;</xsl:text>
+                                    <xsl:if test="@gpgkey">
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com </xsl:text>
+                                        <xsl:value-of select="@gpgkey"/>
+                                        <xsl:text disable-output-escaping="yes">&#xa;</xsl:text>
+                                    </xsl:if>
+                                </xsl:for-each>
+                                <xsl:choose>
+                                    <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends </xsl:text>
+                                        <xsl:for-each select="c:dependency">
+                                            <xsl:value-of select="."/>
+                                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                        </xsl:for-each>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends </xsl:text>
+                                        <xsl:for-each select="c:dependency">
+                                            <xsl:value-of select="."/>
+                                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                        </xsl:for-each>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <strong>
+                                    <xsl:text>Not implemented yet.</xsl:text>
+                                </strong>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </code>
+                </pre>
             </xsl:element>
         </div>
     </xsl:template>
@@ -708,10 +710,23 @@
             <xsl:text>Now, please use our distribution tool chain as explained in the tutorials section Bootstrapping
                 and Installing. Read and execute these instructions carefully. You will need to bootstrap the
             </xsl:text>
-            <code>
-                <xsl:value-of select="c:filename"/>
-                <xsl:text>.distribution</xsl:text>
-            </code>
+            <xsl:element name="a">
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$redmineRecipesRepository"/>
+                    <xsl:text disable-output-escaping="yes">/entry/</xsl:text>
+                    <xsl:value-of select="name(.)"/>
+                    <xsl:if test="not(name(.) = 'hardware')">
+                        <xsl:text disable-output-escaping="yes">s</xsl:text>
+                    </xsl:if>
+                    <xsl:text disable-output-escaping="yes">/</xsl:text>
+                    <xsl:value-of select="c:filename"/>
+                    <xsl:text>.distribution</xsl:text>
+                </xsl:attribute>
+                <code>
+                    <xsl:value-of select="c:filename"/>
+                    <xsl:text>.distribution</xsl:text>
+                </code>
+            </xsl:element>
             <xsl:text>. If you changed your prefix from </xsl:text>
             <code>$HOME/citk</code>
             <xsl:text> to something else, please keep that in mind.</xsl:text>

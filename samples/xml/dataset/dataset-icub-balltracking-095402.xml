@@ -2,9 +2,19 @@
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
     <dataset name="iCub Ball Tracking" version="095402" keywords="data set balltracking iCub robot Testing Experiment">
-        <filename>dataset-icub-ball-tracking-095402</filename>
+        <filename>dataset-icub-balltracking-095402</filename>
         <resource type="homepage" name="Data Set Download URL"
                   href="http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip"/>
+        <dependencies>
+            <system name="ubuntu" version="14.04">
+                <dependency>wget</dependency>
+                <dependency>unzip</dependency>
+            </system>
+            <system name="ubuntu" version="16.04">
+                <dependency>wget</dependency>
+                <dependency>unzip</dependency>
+            </system>
+        </dependencies>
         <linkedFragment type="person" role="Recipe Maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
     </dataset>
 </catalog>
