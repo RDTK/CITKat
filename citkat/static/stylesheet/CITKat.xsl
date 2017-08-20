@@ -511,6 +511,13 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:element>
+            <xsl:if test="@type = 'experiment' or @type = 'dataset'">
+                <span class="capitalize">
+                    <xsl:text disable-output-escaping="yes"> (</xsl:text>
+                    <xsl:value-of select="@type"/>
+                    <xsl:text disable-output-escaping="yes">)</xsl:text>
+                </span>
+            </xsl:if>
         </li>
     </xsl:template>
 
