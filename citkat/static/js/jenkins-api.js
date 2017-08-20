@@ -13,56 +13,58 @@
 
     var jenkinsDiv = document.querySelector('#jenkinsState');
     var catalog = document.querySelector('#catalog');
-    var url = catalog.querySelector('distribution').getAttribute('buildserverbaseurl');
+    var url = '';
     var urlParam =
         '/api/json?&tree=' +
         'healthReport[' +
-            'score' +
+        'score' +
         '],' +
-            'lastSuccessfulBuild[' +
-            'timestamp' +
+        'lastSuccessfulBuild[' +
+        'timestamp' +
         '],' +
         'lastFailedBuild[' +
-            'timestamp' +
+        'timestamp' +
         ']';
-
-    if (url[-1] !== '/') {
-        url += '/';
-    }
-    url = url + 'job/';
     if (catalog.getAttribute('type') === 'distribution') {
+        url = catalog.getAttribute('buildserverbaseurl');
+
+        if (url[-1] !== '/') {
+            url += '/';
+        }
+        url = url + 'job/';
         url = url
-            + catalog.getAttribute('name')
+            + catalog.getAttribute('data-filename')
             + '-'
-            + catalog.getAttribute('version')
-            + '-'
-            + catalog.querySelector('distribution').getAttribute('build-generator-template')
+            + catalog.getAttribute('build-generator-template')
             + '-orchestration'
             + urlParam;
     } else {
         function getQueryParams(qs) {
             qs = qs.split('+').join(' ');
-            var params = {},
+            var p = {},
                 tokens,
                 re = /[?&]?([^=]+)=([^&]*)/g;
             while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+                p[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
             }
-            return params;
+            return p;
         }
 
         var params = getQueryParams(document.location.search);
-        if (params && 'jobs' in params) {
-            url = url
-                + catalog.getAttribute('name')
-                + '-'
-                + catalog.getAttribute('version')
-                + '-'
-                + catalog.querySelector('distribution').getAttribute('build-generator-template')
-                + '-'
-                + params['jobs']
-                + urlParam;
+
+        url = params['jenkins'];
+
+        if (url[-1] !== '/') {
+            url += '/';
         }
+        url = url + 'job/';
+        url = url
+            + catalog.getAttribute('data-filename')
+            + '-'
+            + params['tpl']
+            + '-'
+            + params['dist']
+            + urlParam;
     }
     console.log(url)
     // TODO: load json from jenkins server, build corresponding domFragment, TEST!
