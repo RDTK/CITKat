@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" exclude-result-prefixes="c">
+                xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
+                exclude-result-prefixes="c">
     <xsl:output method="html" cdata-section-elements="script" indent="no" media-type="text/html" version="5.0"
                 encoding="UTF-8" doctype-system="about:legacy-compat"/>
     <!--root template-->
@@ -24,6 +25,22 @@
     <xsl:template match="text()" mode="dependency"/>
 
     <!--variables section-->
+    <arr:array name="mediaQueries">
+        <arr:item name="sm">(min-width: 576px)</arr:item>
+        <arr:item name="md">(min-width: 768px)</arr:item>
+        <arr:item name="lg">(min-width: 992px)</arr:item>
+        <arr:item name="xl">(min-width: 1200px)</arr:item>
+    </arr:array>
+    <xsl:variable name="mediaQueries" select="document('')/*/arr:array[@name = 'mediaQueries']/*"/>
+    <xsl:variable name="includeHead">
+        <xsl:copy-of select="document('/static/templates/head.xml')/child::node()/*"/>
+    </xsl:variable>
+    <xsl:variable name="includefooter">
+        <xsl:copy-of select="document('/static/templates/footer.xml')/child::node()/*"/>
+    </xsl:variable>
+    <xsl:variable name="includeNav">
+        <xsl:copy-of select="document('/static/templates/nav.xml')/child::node()/*"/>
+    </xsl:variable>
 
     <!--logging helper-->
     <xsl:template name="log_template_info">
@@ -62,7 +79,7 @@
     <!--head-->
     <xsl:template match="/c:catalog" mode="head">
         <xsl:call-template name="log_template_info"/>
-        <xsl:copy-of select="document('/static/templates/head.xml')/child::node()/*"/>
+        <xsl:copy-of select="$includeHead"/>
         <title>
             <xsl:call-template name="capitalizeFirstLetter">
                 <xsl:with-param name="in" select="name(*[1])"/>
@@ -89,7 +106,7 @@
 
     <!--footer-->
     <xsl:template name="footer">
-        <xsl:copy-of select="document('/static/templates/footer.xml')/child::node()/*"/>
+        <xsl:copy-of select="$includefooter"/>
         <script src="/static/js/linkParams.js"/>
         <script src="/static/js/oldAndroid.js"/>
     </xsl:template>
@@ -99,7 +116,7 @@
         <xsl:call-template name="log_template_info"/>
         <div class="container" style="padding-left: 0; padding-right: 0;"><!--first container doesn't need padding!-->
             <!--import navbar-->
-            <xsl:copy-of select="document('/static/templates/nav.xml')/child::node()/*"/>
+            <xsl:copy-of select="$includeNav"/>
             <!--main catalog container, set important attributes-->
             <xsl:element name="div">
                 <xsl:attribute name="id">
@@ -284,7 +301,14 @@
                                 <xsl:text disable-output-escaping="yes"> active</xsl:text>
                             </xsl:if>
                         </xsl:attribute>
-                        <img class="d-block w-100" src="{@href}" alt="{@alt}"/>
+                        <picture>
+                            <xsl:call-template name="pictureSource">
+                                <xsl:with-param name="href">
+                                    <xsl:value-of select="@href"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                            <img class="d-block w-100" src="{@href}" alt="{@alt}"/>
+                        </picture>
                         <xsl:if test="@name">
                             <div class="carousel-caption ">
                                 <h3>
@@ -306,6 +330,23 @@
                 </a>
             </xsl:if>
         </div>
+    </xsl:template>
+
+    <!--generate picture source tag-->
+    <xsl:template name="pictureSource">
+        <xsl:message>INFO: Calling 'pictureSource' template</xsl:message>
+        <xsl:param name="href"/>
+        <xsl:for-each select="$mediaQueries">
+            <xsl:element name="source">
+                <!--TODO: manipulate href>: "/foo/image.png" -> "/foo.image-{@name}.png, /foo.image-{@name}@2X.png 2x"-->
+                <xsl:attribute name="srcset">
+                    <xsl:value-of select="$href"/>
+                </xsl:attribute>
+                <xsl:attribute name="media">
+                    <xsl:value-of select="."/>
+                </xsl:attribute>
+            </xsl:element>
+        </xsl:for-each>
     </xsl:template>
 
     <!--video resources-->

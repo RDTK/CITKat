@@ -12,7 +12,7 @@
   * ~~rework xsd~~ done. made attribute mandatory
   * ~~add url param to all ankers in a distribution~~ done. added url param to all artifacts, that are build with jenkins 
   * ~~clone url param to all other types via js~~ done.  
-* hardware and dataset: remove doublets
+* ~~hardware and dataset: remove doublets~~ done.
 * create better (real world) sample data, integrate with real jenkins
 * (mockup build-generator output for user study)
 * Person|Puclication|dataset|experiment|hardware details
@@ -21,7 +21,7 @@
 * keywords
 * linked recipe
 * more experiment information
-* differentiate between recipe-maintainer and maintainer
+* ~~differentiate between recipe-maintainer and maintainer~~ done: @role has no restrictions
 
 
 
@@ -34,3 +34,4 @@
 * minify all css and js, merge into one file?
 * replace URL params by cookies or (better) by Window.sessionStorage (which store data per tab/window) (however: it might be a better solution, to just keep GET params)
 * ReST API for file creation date and file modified date, eventually additional HTTP header?
+* picture srcset (xsl work is mostly done, todo: flask implementation of compress images)
