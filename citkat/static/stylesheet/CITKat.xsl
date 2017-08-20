@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
-                exclude-result-prefixes="c">
+                exclude-result-prefixes="c arr">
     <xsl:output method="html" cdata-section-elements="script" indent="no" media-type="text/html" version="5.0"
                 encoding="UTF-8" doctype-system="about:legacy-compat"/>
     <!--root template-->
