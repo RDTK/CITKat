@@ -240,6 +240,10 @@
                 </xsl:if>
                 <!--apply all dependency stuff-->
                 <xsl:apply-templates mode="dependency"/>
+                <!--additional experiment info-->
+                <xsl:if test="c:experiment">
+                    <xsl:call-template name="experimentMetrics"/>
+                </xsl:if>
                 <!--getBacklinks block-->
                 <xsl:call-template name="getBacklink"/>
                 <!--jenkins block-->
@@ -461,9 +465,9 @@
 
     <!--description-->
     <xsl:template match="c:description" mode="catalog">
-        <p style="white-space: pre-line;">
+        <div data-markdown="true" style="white-space: pre-line;">
             <xsl:value-of select="." disable-output-escaping="yes"/>
-        </p>
+        </div>
     </xsl:template>
 
     <!--distributions access type-->
@@ -745,5 +749,82 @@
                 <xsl:text disable-output-escaping="yes">.distribution -m toolkit -u YOUR_USERNAME -p YOUR_PASSWORD -D toolkit.volume=$HOME/citk/systems</xsl:text>
             </code>
         </pre>
+    </xsl:template>
+
+    <!--additional experiment info-->
+    <!--TODO: replace iCub stuff by actual val: $prefix/etc/fsmt-experiments/icub-nightly/icub-nightly-balltracking.scxml-->
+    <xsl:template name="experimentMetrics">
+        <h3>
+            <xsl:text disable-output-escaping="yes">Experiment Metrics</xsl:text>
+        </h3>
+        <div>
+            <xsl:text disable-output-escaping="yes">
+                In general, successful execution is automatically reported by
+            </xsl:text>
+            <strong>
+                <xsl:text>FSMT</xsl:text>
+            </strong>
+            <xsl:text disable-output-escaping="yes"> indicating the following on the command line:</xsl:text>
+            <pre>
+                <code class="shell">> FSMT RUN WAS SUCCESSFUL</code>
+            </pre>
+            <xsl:text disable-output-escaping="yes">In case an experiment fails, i.e., evaluation criteria are not met,
+                FSMT reports:</xsl:text>
+            <pre>
+                <code class="shell">> FSMT RUN FAILED</code>
+            </pre>
+            <xsl:text disable-output-escaping="yes">This result is based on evaluation scripts and methods that are
+                usually distributed alongside an associated system distribution. Thus, the applied metrics are </xsl:text>
+            <strong>
+                <xsl:text>highly system</xsl:text>
+            </strong>
+            <xsl:text disable-output-escaping="yes"> specific and are typically explained in detail in a corresponding
+                publication. You can always inspect the FSMT experiment definition (*.ini file) for further details
+                and/or compare the reference data which is attached to this experiment.</xsl:text>
+        </div>
+        <h3>
+            <xsl:text disable-output-escaping="yes">Replication Information</xsl:text>
+        </h3>
+        <div>
+            <p>Please replicate the associated system iCub Ball Tracking-s1 as described in the Replicate System
+                Section, see Linked System Version. After installing the system, run the following CI Job on your local
+                Jenkins instance in order to execute the experiment:
+                <code id="">
+                    <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                    <xsl:text disable-output-escaping="yes">-*</xsl:text>
+                </code>
+            </p>
+            <p>Please also compare your results to the Linked CI Job.</p>
+            <p>
+                <strong>
+                    <xsl:text disable-output-escaping="yes">Alternatively </xsl:text>
+                </strong>
+                <xsl:text disable-output-escaping="yes">you may execute the following script in order to run the
+                    experiment manually. Remember, if you changed your prefix from </xsl:text>
+                <code>$HOME/citk</code>
+                <xsl:text> to something else, change the code accordingly.</xsl:text>
+            </p>
+            <pre>
+                <code class="bash">
+                    <xsl:text disable-output-escaping="yes">#!/bin/bash&#xa;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export DISPLAY=:0.0&#xa;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export prefix="$HOME/citk"  # you may have to change this!&#xa;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export PYTHONPATH=$prefix/lib/python2.7/site-packages/&#xa;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export PATH=$prefix/bin/:$PATH&#xa;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">fsmt $prefix/etc/fsmt-experiments/icub-nightly/icub-nightly-balltracking.scxml  # TODO: must be replaced by xsl val&#xa;</xsl:text>
+                </code>
+            </pre>
+            <h5>
+                <xsl:text disable-output-escaping="yes">Make the Experiment Fail:</xsl:text>
+            </h5>
+            <p>
+                <xsl:text disable-output-escaping="yes">In order to prove the simplicity of the FSMT approach you may again start the experiment by executing the last command. </xsl:text>
+                <strong>
+                    <xsl:text>This </xsl:text>
+                </strong>
+                <xsl:text disable-output-escaping="yes">time please close one of the camera images, the experiment will be
+                instantaneously stopped and marked as failed.</xsl:text>
+            </p>
+        </div>
     </xsl:template>
 </xsl:stylesheet>
