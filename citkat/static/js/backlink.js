@@ -28,8 +28,15 @@
             var li = document.createElement('li');
             var anker = document.createElement('a');
             anker.setAttribute('href', '../' + elem['path']);
+            var typeText = '';
+            if (elem['path'].match(/^(experiment\/).*/)) {
+                typeText = ' (Experiment)';
+            } else if (elem['path'].match(/^(dataset\/).*/)) {
+                typeText = ' (Dataset)';
+            }
             anker.appendChild(document.createTextNode(elem['name'] + ' - ' + elem['version']));
             li.appendChild(anker);
+            li.appendChild(document.createTextNode(typeText));
             ul.appendChild(li);
         });
         backlinksDiv.appendChild(ul);
