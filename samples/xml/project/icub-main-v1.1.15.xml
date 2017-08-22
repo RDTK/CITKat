@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
+    <project name="iCub Main" version="v1.1.15" access="public"
+             keywords="iCub  Robotics cpp">
+        <filename>icub-main-v1.1.15</filename>
+        <resource type="bugtracker" href="https://github.com/robotology/icub-main/issues"/>
+        <resource type="scm" href="https://github.com/robotology/icub-main.git"/>
+        <resource type="documentation" href="https://github.com/robotology/icub-main"/>
+        <dependencies>
+            <directDependency name="Yet Another Robot Platform (YARP)" version="v2.3.63">yarp-v2.3.63</directDependency>
+        </dependencies>
+        <linkedFragment type="person" role="maintainer">ugo.pattacini@iit.it</linkedFragment>
+        <linkedFragment type="person" role="maintainer">marco.randazzo@iit.it</linkedFragment>
+        <linkedFragment type="person" role="maintainer">francesco.rea@iit.it</linkedFragment>
+        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+    </project>
+</catalog>

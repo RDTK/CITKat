@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
+    <project name="PySCXML" version="v.0.8.4-fsmt" access="public">
+        <filename>pyscxml-v.0.8.4-fsmt</filename>
+        <description>PySCXML (pronounced pixel) supplies an SCXML parser and interpreter for the Python programming language. For an online console demonstrating the capabilities of PySCXML, check out http://pyscxml.spyderbrain.com PySCXML doesn't respect backward compatibility, and won't until the SCXML standard goes from working draft to recommended status. Recent changes may require some users to update documents written for previous versions of PySCXML.</description>
+        <resource type="bugtracker" href="https://github.com/warp1337/PySCXML/issues"/>
+        <resource type="scm" href="https://github.com/warp1337/PySCXML.git"/>
+        <resource type="documentation" href="https://github.com/warp1337/PySCXML"/>
+        <dependencies>
+            <system name="ubuntu" version="14.04">
+                <dependency>libxml2-dev</dependency>
+                <dependency>libxslt1-dev</dependency>
+                <dependency>python2.7</dependency>
+                <dependency>python-setuptools</dependency>
+                <dependency>zlib1g-dev</dependency>
+            </system>
+            <system name="ubuntu" version="16.04">
+                <dependency>libxml2-dev</dependency>
+                <dependency>libxslt1-dev</dependency>
+                <dependency>python2.7</dependency>
+                <dependency>python2-setuptools</dependency>
+                <dependency>zlib1g-dev</dependency>
+            </system>
+        </dependencies>
+        <linkedFragment type="person" role="maintainer">johan@roxendal.com</linkedFragment>
+        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+    </project>
+</catalog>

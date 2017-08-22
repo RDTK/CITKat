@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
+    <project name="Yet Another Robot Platform (YARP) Python Bindings" version="v2.3.63" access="public"
+             keywords="middleware integration Robotics cpp">
+        <filename>yarp-python-bindings-v2.3.63</filename>
+        <resource type="bugtracker" href="https://github.com/robotology/yarp/issues"/>
+        <resource type="scm" href="https://github.com/robotology/yarp.git"/>
+        <resource type="documentation" href="https://github.com/robotology/yarp"/>
+        <dependencies>
+            <system name="ubuntu" version="14.04">
+                <dependency>swig</dependency>
+            </system>
+            <system name="ubuntu" version="16.04">
+                <dependency>swig</dependency>
+            </system>
+        </dependencies>
+        <linkedFragment type="person" role="maintainer">paulfitz@alum.mit.edu</linkedFragment>
+        <linkedFragment type="person" role="maintainer">daniele.domenichelli@iit.it</linkedFragment>
+        <linkedFragment type="person" role="maintainer">lorenzo.natale@iit.it</linkedFragment>
+        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+    </project>
+</catalog>

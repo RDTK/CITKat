@@ -29,7 +29,6 @@
                 <dependency>cmake</dependency>
                 <dependency>git</dependency>
                 <dependency>gfortran</dependency>
-                <dependency>python</dependency>
                 <dependency>libc6</dependency>
                 <dependency>libcv-dev</dependency>
                 <dependency>libace-dev</dependency>
@@ -70,7 +69,6 @@
                 <dependency>cmake</dependency>
                 <dependency>git</dependency>
                 <dependency>gfortran</dependency>
-                <dependency>python</dependency>
                 <dependency>libc6</dependency>
                 <dependency>libcv-dev</dependency>
                 <dependency>libace-dev</dependency>
@@ -89,7 +87,7 @@
                 <dependency>libode1</dependency>
                 <dependency>libode-dev</dependency>
                 <dependency>libblas-dev</dependency>
-                <dependency>python-sphinx</dependency>
+                <dependency>python2-sphinx</dependency>
                 <dependency>wmctrl</dependency>
                 <dependency>lshw</dependency>
                 <dependency>eog</dependency>
@@ -98,7 +96,7 @@
                 <dependency>libxml2-dev</dependency>
                 <dependency>libxslt1-dev</dependency>
                 <dependency>python2.7</dependency>
-                <dependency>python-setuptools</dependency>
+                <dependency>python2-setuptools</dependency>
                 <dependency>zlib1g-dev</dependency>
                 <dependency>swig</dependency>
                 <dependency>wget</dependency>
@@ -107,14 +105,16 @@
             <directDependency name="Yet Another Robot Platform (YARP) Python Bindings" version="v2.3.63">yarp-python-bindings-v2.3.63</directDependency>
             <directDependency name="iCub Contrib" version="v1.1.15">icub-contrib-v1.1.15</directDependency>
             <directDependency name="Finite State Machine Based Testing (FSMT)" version="0.18">fsmt-0.18</directDependency>
+            <directDependency name="FSMT Experiment iCub Ball Tracking" version="iros2015">fsmt-exp-icub-nightly-iros2015</directDependency>
             <directDependency name="Yet Another Robot Platform (YARP)" version="v2.3.63">yarp-v2.3.63</directDependency>
             <directDependency name="iCub Main" version="v1.1.15">icub-main-v1.1.15</directDependency>
             <directDependency name="PySCXML" version="v.0.8.4-fsmt">pyscxml-v.0.8.4-fsmt</directDependency>
         </dependencies>
         <linkedFragment type="person" role="Recipe Maintainer" name="Florian Lier">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="Recipe Maintainer" name="Florian Lier">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
         <linkedFragment type="publication" name="The Progress of Whataboutism - How to Argument">The_Progress_of_Whataboutism</linkedFragment>
         <linkedFragment type="publication" name="The Progress of Science - A Scientific Approach">The_Progress_of_Science</linkedFragment>
-        <linkedFragment type="experiment" name="FSMT Experiment iCub Ball Tracking" version="iros2015">fsmt-exp-icub-nightly-iros2015</linkedFragment>
+        <linkedFragment type="experiment" name="iCub Ball Tracking" version="s1">runnable-icub-balltracking-s1</linkedFragment>
         <linkedFragment type="dataset" name="iCub Ball Tracking" version="095402">dataset-icub-balltracking-095402</linkedFragment>
         <linkedFragment type="hardware" name="iCub" version="v1">icub-v1</linkedFragment>
     </distribution>

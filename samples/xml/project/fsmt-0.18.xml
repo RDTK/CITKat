@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
+    <project name="Finite State Machine Based Testing (FSMT)" version="0.18" access="public"
+             keywords="Testing System Testing Test Automation Continuous Integration Functional Testing fsmt">
+        <filename>fsmt-0.18</filename>
+        <description>Robot simulators, like the MORSE project, provide a safe and readily available environment for robot system testing, reducing the effort for testing drastically. In principle, simulation testing is automatable, and thus a good target for Continuous Integration (CI) testing. However, so far, high-level scenario tests still require complex component setup and configuration before they can be run in the simulator. An added complication is, that there is no standard for starting, configuring, or monitoring software components on todays robots. Often, high-level tests are carried out manually, implementing a tailored solution, e.g, via shell scripts or launch files, for a specific system setup.
+
+Besides the effort of manual execution and supervision, current tests mostly do not take timing and orchestration, i.e., required process start-up sequence, into account. Furthermore, successful execution of components is not verified, which might lead to subsequent errors during the execution chain. Most importantly, all this knowledge about the test and its environment is implicit, often hidden in the actual implementation of the tailored test suite.
+
+To overcome these issues, FSMT introduces a generic and configurable state-machine based process to automate:
+
+* Environment setup
+* System bootstrapping
+* System tests
+* Result assessment
+* Exit and clean-up strategy
+
+We have chosen a state-based approach in order to inherit a well structured automaton, which enables us to invoke the steps mentioned above, in the desired order, and to explicitly model required test steps. Furthermore, the state-chart model enables us to invoke states in parallel, or sequentially, which also makes orchestration, e.g., start-up of system components, feasible and most importantly controllable. Last but not least, errors during the execution will prematurely end the state-machine to prevent subsequent errors.</description>
+        <resource type="bugtracker" href="http://opensource.cit-ec.de/projects/fsmt/issues"/>
+        <resource type="scm" href="https://opensource.cit-ec.de/projects/fsmt/repository"/>
+        <resource type="documentation" href="http://opensource.cit-ec.de/projects/fsmt"/>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/fsmt_logo_640x480.png"/>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/fsmt_concept_1.jpg"/>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/fsmt_concept_2.jpg"/>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/fsmt_concept_3.jpg"/>
+        <dependencies>
+            <system name="ubuntu" version="14.04">
+                <dependency>python2.7</dependency>
+                <dependency>python-setuptools</dependency>
+                <dependency>python-sphinx</dependency>
+                <dependency>wmctrl</dependency>
+                <dependency>lshw</dependency>
+            </system>
+            <system name="ubuntu" version="16.04">
+                <dependency>python2.7</dependency>
+                <dependency>python2-setuptools</dependency>
+                <dependency>python2-sphinx</dependency>
+                <dependency>wmctrl</dependency>
+                <dependency>lshw</dependency>
+            </system>
+            <directDependency name="PySCXML" version="v.0.8.4-fsmt">pyscxml-v.0.8.4-fsmt</directDependency>
+        </dependencies>
+        <linkedFragment type="person" role="maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="maintainer">nkoester@techfak.uni-bielefeld.de</linkedFragment>
+        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+    </project>
+</catalog>

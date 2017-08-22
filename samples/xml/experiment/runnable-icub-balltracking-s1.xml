@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
+<catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
+    <experiment name="iCub Ball Tracking" version="s1" access="public"
+                keywords="fsmt Functional Testing iCub">
+        <filename>runnable-icub-balltracking-s1</filename>
+        <description>In this experiment, iCub related tools (e.g. yarpview, iCubGui and dataSetPlayer) are used to replay a pre-recorded data set (joint values) as provided by the iCub community in order to recreate the original state of the robot during a ball tracking and grasping experiment.</description>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_2_0.png"/>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/success_fsmt_2.png"/>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/success_angles.png"/>
+        <resource type="img"
+                  href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub-left-arm_0.png"/>
+        <resource type="video" href="https://vimeo.com/120420019"/>
+        <dependencies>
+            <directDependency name="Finite State Machine Based Testing (FSMT)" version="0.18">fsmt-0.18</directDependency>
+            <directDependency name="FSMT Experiment iCub Ball Tracking" version="iros2015">fsmt-exp-icub-nightly-iros2015</directDependency>
+        </dependencies>
+        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <iniPath>https://opensource.cit-ec.de/projects/fsmt/repository/experiments/revisions/master/raw/icub-nightly/icub-nightly-balltracking.ini</iniPath>
+    </experiment>
+</catalog>
