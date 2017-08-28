@@ -1,11 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, Command
 from setuptools.command.install import install
 from setuptools.command.develop import develop
 from subprocess import call
 import os
+from distutils.command.build import build as _build
+from setuptools.command.bdist_egg import bdist_egg as _bdist_egg
 
 
 def which(program):
@@ -17,32 +19,37 @@ def which(program):
     return None
 
 
-class NpmInstall(install):
+class bdist_egg(_bdist_egg):
+    def run(self):
+        self.run_command('NpmInstall')
+        _bdist_egg.run(self)
+
+
+class NpmInstall(Command):
+    description = 'NPM install'
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
     def run(self):
         npm = which("npm")
         if npm:
             os.chdir('citkat/static')
             call([npm, 'install'])
             os.chdir('../../')
-            install.run(self)
         else:
             print(
                 "Error: npm executable not found.")
             exit(1)
 
 
-class NpmDevelop(develop):
-    def run(self):
-        npm = which("npm")
-        if npm:
-            os.chdir('citkat/static')
-            call([npm, 'install'])
-            os.chdir('../../')
-            develop.run(self)
-        else:
-            print(
-                "Error: npm executable not found.")
-            exit(1)
+class build(_build):
+    sub_commands = _build.sub_commands + [('NpmInstall', None)]
 
 
 setup(
@@ -64,8 +71,9 @@ setup(
         # 'flask-bootstrap>=4, <5'  # Waiting for release...
     ],
     cmdclass={
-        'install': NpmInstall,
-        'develop': NpmDevelop,
+        'build': build,
+        'bdist_egg': bdist_egg,
+        'NpmInstall': NpmInstall,
     },
     entry_points={
         'console_scripts': [
