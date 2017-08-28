@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
-    <experiment name="FSMT Experiment iCub Ball Tracking" version="iros2015" access="public"
+    <project name="FSMT Experiment iCub Ball Tracking" version="iros2015" access="public"
                 keywords="fsmt Functional Testing iCub">
         <filename>fsmt-exp-icub-nightly-iros2015</filename>
         <resource type="bugtracker" href="https://openresearch.cit-ec.de/projects/fsmt/issues"/>
@@ -22,5 +22,5 @@
         </dependencies>
         <linkedFragment type="person" role="maintainer" name="Florian Lier">flier@techfak.uni-bielefeld.de</linkedFragment>
         <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
-    </experiment>
+    </project>
 </catalog>
