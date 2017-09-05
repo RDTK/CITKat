@@ -39,7 +39,7 @@ class Backlink(Resource):
             parser = XMLParser(remove_blank_text=True)
             ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
             doc = parse(file_path, parser=parser)
-            elem_list = doc.xpath('//c:linkedFragment[contains(text(), "' + filename_wo_suffix + '")]', namespaces=ns)
+            elem_list = doc.xpath('//c:relation[contains(text(), "' + filename_wo_suffix + '")]', namespaces=ns)
             elem_list += doc.xpath('//c:directDependency[contains(text(), "' + filename_wo_suffix + '")]', namespaces=ns)
             elem_list += doc.xpath('//c:extends[contains(text(), "' + filename_wo_suffix + '")]', namespaces=ns)
             if elem_list:

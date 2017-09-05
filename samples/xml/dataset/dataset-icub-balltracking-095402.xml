@@ -16,6 +16,6 @@
                 <dependency>unzip</dependency>
             </system>
         </dependencies>
-        <linkedFragment type="person" role="Recipe Maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <relation type="person" role="Recipe Maintainer">flier@techfak.uni-bielefeld.de</relation>
     </dataset>
 </catalog>

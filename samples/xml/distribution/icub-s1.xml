@@ -7,7 +7,7 @@
                   build-generator-template="toolkit">
         <filename>icub-s1</filename>
         <description>In this particular system version, iCub related tools (yarpview, iCubGui and dataSetPlayer) are used replay a pre-recorded sequence as provided in the iCub Wiki in order to visualize the original state of the robot. Feel free to 1) replicate the system and 2) execute the linked experiment to verify our results. Please see Linked Artifacts section. For a first glimpse, you may also check the linked video above.</description>
-        <resource type="img" alt="first image shows robot" name="Robot Image Caption"
+        <resource type="img" alt="first image shows robot" name="iCub visualization"
                   href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_1_0.png"/>
         <resource type="img"
                   href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_2_1.png"/>
@@ -15,12 +15,6 @@
                   href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_4_0.png"/>
         <resource type="img"
                   href="https://toolkit.cit-ec.uni-bielefeld.de/sites/toolkit.cit-ec.uni-bielefeld.de/files/icub_5_0.png"/>
-        <!--<resource type="video" href="https://vimeo.com/120420019"/>-->
-        <!--<resource type="video" href="https://www.youtube.com/embed/M7lc1UVf-VE"/>-->
-        <!--<resource type="video" href="https://youtu.be/M7lc1UVf-VE"/>-->
-        <!--<resource type="homepage"-->
-                  <!--href="http://www.icub.org/download/software/datasetplayer-demo/testData_20120803_095402.zip"-->
-                  <!--name="Data Set Download URL"/>-->
         <dependencies>
             <system name="ubuntu" version="14.04">
                 <repositories>
@@ -110,12 +104,10 @@
             <directDependency name="iCub Main" version="v1.1.15">icub-main-v1.1.15</directDependency>
             <directDependency name="PySCXML" version="v.0.8.4-fsmt">pyscxml-v.0.8.4-fsmt</directDependency>
         </dependencies>
-        <linkedFragment type="person" role="Recipe Maintainer" name="Florian Lier">flier@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="person" role="Recipe Maintainer" name="Florian Lier">mwiechmann@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="publication" name="The Progress of Whataboutism - How to Argument">The_Progress_of_Whataboutism</linkedFragment>
-        <linkedFragment type="publication" name="The Progress of Science - A Scientific Approach">The_Progress_of_Science</linkedFragment>
-        <linkedFragment type="experiment" name="iCub Ball Tracking" version="s1">runnable-icub-balltracking-s1</linkedFragment>
-        <linkedFragment type="dataset" name="iCub Ball Tracking" version="095402">dataset-icub-balltracking-095402</linkedFragment>
-        <linkedFragment type="hardware" name="iCub" version="v1">icub-v1</linkedFragment>
+        <relation type="person" role="Recipe Maintainer" name="Florian Lier">flier@techfak.uni-bielefeld.de</relation>
+        <relation type="person" role="Recipe Maintainer" name="Martin Wiechmann">mwiechmann@techfak.uni-bielefeld.de</relation>
+        <relation type="experiment" name="iCub Ball Tracking" version="s1">runnable-icub-balltracking-s1</relation>
+        <relation type="dataset" name="iCub Ball Tracking" version="095402">dataset-icub-balltracking-095402</relation>
+        <relation type="hardware" name="iCub" version="v1">icub-v1</relation>
     </distribution>
 </catalog>

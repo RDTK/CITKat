@@ -18,7 +18,7 @@ TODO: documentation
     <xs:element type="xs:string" name="description"/>
     <xs:element type="dependenciesType" name="dependencies"/>
     <xs:element name="filename" type="filenameType" />
-    <xs:element type="linkedFragmentType" name="linkedFragment"/>
+    <xs:element type="relationType" name="relation"/>
     <xs:element type="extendsType" name="extends"/>
     <xs:element type="resourceType" name="resource"/>
     <xs:complexType name="distributionType">
@@ -33,7 +33,7 @@ TODO: documentation
                 </xs:annotation>
             </xs:element>
             <xs:element ref="dependencies"/>
-            <xs:element ref="linkedFragment" maxOccurs="unbounded" minOccurs="0">
+            <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation xml:lang="en">Allowed fragment types are: project, person, hardware,
                         dataset,
@@ -98,17 +98,17 @@ TODO: documentation
             </xs:choice>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="linkedFragmentType">
+    <xs:complexType name="relationType">
         <xs:simpleContent>
             <xs:extension base="filenameTypeType">
-                <xs:attribute type="linkedFragmentTypeType" name="type" use="required"/>
+                <xs:attribute type="relationTypeType" name="type" use="required"/>
                 <xs:attribute type="xs:token" name="role"/>
                 <xs:attribute type="xs:token" name="name"/>
                 <xs:attribute type="xs:token" name="version"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
-    <xs:simpleType name="linkedFragmentTypeType">
+    <xs:simpleType name="relationTypeType">
         <xs:restriction base="xs:token">
             <xs:pattern value="project|person|hardware|dataset|experiment|publication"/>
         </xs:restriction>
@@ -126,7 +126,7 @@ TODO: documentation
         </xs:annotation>
         <xs:sequence>
             <xs:element ref="filename"/>
-            <xs:element ref="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="provider"/>
         <xs:attribute type="xs:token" name="id"/>
@@ -139,7 +139,7 @@ TODO: documentation
             <xs:element ref="description" minOccurs="0"/>
             <xs:element ref="resource" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="dependencies" minOccurs="0"/>
-            <xs:element ref="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="accessType" name="access" use="required"/>
         <xs:attributeGroup ref="nameAndVersion"/>
@@ -156,7 +156,7 @@ TODO: documentation
             <xs:element type="xs:token" name="acronym" minOccurs="0"/>
             <xs:element type="xs:token" name="manufacturer" minOccurs="0"/>
             <xs:any minOccurs="0" processContents="skip"/>
-            <xs:element ref="linkedFragment" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="relation" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="version" use="required"/>
@@ -219,7 +219,7 @@ TODO: documentation
             <xs:element type="xs:token" name="surname" minOccurs="0"/>
             <xs:element type="xs:token" name="forename" minOccurs="0"/>
             <xs:element type="xs:token" name="email" maxOccurs="unbounded" minOccurs="0"/>
-            <xs:element ref="linkedFragment" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="provider"/>
         <xs:attribute type="xs:token" name="id"/>

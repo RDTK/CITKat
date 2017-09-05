@@ -16,9 +16,9 @@
             </system>
             <directDependency name="Yet Another Robot Platform (YARP)" version="v2.3.63">yarp-v2.3.63</directDependency>
         </dependencies>
-        <linkedFragment type="person" role="maintainer">paulfitz@alum.mit.edu</linkedFragment>
-        <linkedFragment type="person" role="maintainer">daniele.domenichelli@iit.it</linkedFragment>
-        <linkedFragment type="person" role="maintainer">lorenzo.natale@iit.it</linkedFragment>
-        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <relation type="person" role="maintainer">paulfitz@alum.mit.edu</relation>
+        <relation type="person" role="maintainer">daniele.domenichelli@iit.it</relation>
+        <relation type="person" role="maintainer">lorenzo.natale@iit.it</relation>
+        <relation type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</relation>
     </project>
 </catalog>

@@ -11,8 +11,8 @@
             <directDependency name="Yet Another Robot Platform (YARP)" version="v2.3.63">yarp-v2.3.63</directDependency>
             <directDependency name="iCub Main" version="v1.1.15">icub-main-v1.1.15</directDependency>
         </dependencies>
-        <linkedFragment type="person" role="maintainer">elena.ceseracciu@iit.it</linkedFragment>
-        <linkedFragment type="person" role="maintainer">daniele.domenichelli@gmail.com</linkedFragment>
-        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <relation type="person" role="maintainer">elena.ceseracciu@iit.it</relation>
+        <relation type="person" role="maintainer">daniele.domenichelli@gmail.com</relation>
+        <relation type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</relation>
     </project>
 </catalog>

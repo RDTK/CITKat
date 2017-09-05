@@ -23,7 +23,7 @@
                 <dependency>zlib1g-dev</dependency>
             </system>
         </dependencies>
-        <linkedFragment type="person" role="maintainer">johan@roxendal.com</linkedFragment>
-        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <relation type="person" role="maintainer">johan@roxendal.com</relation>
+        <relation type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</relation>
     </project>
 </catalog>

@@ -45,8 +45,8 @@ We have chosen a state-based approach in order to inherit a well structured auto
             </system>
             <directDependency name="PySCXML" version="v.0.8.4-fsmt">pyscxml-v.0.8.4-fsmt</directDependency>
         </dependencies>
-        <linkedFragment type="person" role="maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="person" role="maintainer">nkoester@techfak.uni-bielefeld.de</linkedFragment>
-        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <relation type="person" role="maintainer">flier@techfak.uni-bielefeld.de</relation>
+        <relation type="person" role="maintainer">nkoester@techfak.uni-bielefeld.de</relation>
+        <relation type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</relation>
     </project>
 </catalog>

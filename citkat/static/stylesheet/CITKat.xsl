@@ -195,47 +195,47 @@
                 <!--extends-->
                 <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
                 <!--Persons-->
-                <xsl:if test="child::node()/c:linkedFragment[@type = 'person']">
+                <xsl:if test="child::node()/c:relation[@type = 'person']">
                     <h5>
                         <xsl:text disable-output-escaping="yes">Involved </xsl:text>
                         <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="child::node()/c:linkedFragment[@type = 'person']/@type"/>
+                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
                         </xsl:call-template>
-                        <xsl:if test="count(child::node()/c:linkedFragment[@type = 'person']) > 1">
+                        <xsl:if test="count(child::node()/c:relation[@type = 'person']) > 1">
                             <xsl:text>s</xsl:text>
                         </xsl:if>
                         <xsl:text disable-output-escaping="yes">:</xsl:text>
                     </h5>
                     <ul class="persons">
-                        <xsl:apply-templates select="child::node()/c:linkedFragment[@type = 'person']" mode="catalog"/>
+                        <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="catalog"/>
                     </ul>
                 </xsl:if>
                 <!--Publications-->
-                <xsl:if test="child::node()/c:linkedFragment[@type = 'publication']">
+                <xsl:if test="child::node()/c:relation[@type = 'publication']">
                     <h5>
                         <xsl:text disable-output-escaping="yes">Linked </xsl:text>
                         <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="child::node()/c:linkedFragment[@type = 'publication']/@type"/>
+                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'publication']/@type"/>
                         </xsl:call-template>
-                        <xsl:if test="count(child::node()/c:linkedFragment[@type = 'publication']) > 1">
+                        <xsl:if test="count(child::node()/c:relation[@type = 'publication']) > 1">
                             <xsl:text>s</xsl:text>
                         </xsl:if>
                         <xsl:text disable-output-escaping="yes">:</xsl:text>
                     </h5>
                     <ul class="publications">
-                        <xsl:apply-templates select="child::node()/c:linkedFragment[@type = 'publication']" mode="catalog"/>
+                        <xsl:apply-templates select="child::node()/c:relation[@type = 'publication']" mode="catalog"/>
                     </ul>
                 </xsl:if>
                 <!--Hardware-->
-                <xsl:if test="child::node()/c:linkedFragment[@type = 'hardware']">
+                <xsl:if test="child::node()/c:relation[@type = 'hardware']">
                     <h5>
                         <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="child::node()/c:linkedFragment[@type = 'hardware']/@type"/>
+                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'hardware']/@type"/>
                         </xsl:call-template>
                         <xsl:text disable-output-escaping="yes">:</xsl:text>
                     </h5>
                     <ul class="hardware">
-                        <xsl:apply-templates select="child::node()/c:linkedFragment[@type = 'hardware']" mode="catalog"/>
+                        <xsl:apply-templates select="child::node()/c:relation[@type = 'hardware']" mode="catalog"/>
                     </ul>
                 </xsl:if>
                 <!--apply all dependency stuff-->
@@ -480,7 +480,7 @@
     </xsl:template>
 
     <!--linked fragments-->
-    <xsl:template match="c:linkedFragment" mode="catalog">
+    <xsl:template match="c:relation" mode="catalog">
         <xsl:call-template name="log_template_info"/>
         <li>
             <xsl:if test="@role">
@@ -558,7 +558,7 @@
                 <ul>
                     <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency"/>
                     <xsl:apply-templates
-                            select="c:linkedFragment[@type = 'experiment'] | c:linkedFragment[@type = 'dataset']"
+                            select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']"
                             mode="catalog"/>
                 </ul>
             </div>

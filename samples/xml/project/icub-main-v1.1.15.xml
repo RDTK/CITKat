@@ -10,9 +10,9 @@
         <dependencies>
             <directDependency name="Yet Another Robot Platform (YARP)" version="v2.3.63">yarp-v2.3.63</directDependency>
         </dependencies>
-        <linkedFragment type="person" role="maintainer">ugo.pattacini@iit.it</linkedFragment>
-        <linkedFragment type="person" role="maintainer">marco.randazzo@iit.it</linkedFragment>
-        <linkedFragment type="person" role="maintainer">francesco.rea@iit.it</linkedFragment>
-        <linkedFragment type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</linkedFragment>
+        <relation type="person" role="maintainer">ugo.pattacini@iit.it</relation>
+        <relation type="person" role="maintainer">marco.randazzo@iit.it</relation>
+        <relation type="person" role="maintainer">francesco.rea@iit.it</relation>
+        <relation type="person" role="recipe maintainer">flier@techfak.uni-bielefeld.de</relation>
     </project>
 </catalog>
