@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from lxml.etree import parse, XMLParser
 from os import path
-from flask import Flask
+from flask import Flask, abort
 from flask_autoindex import AutoIndex
 from flask_restful import Resource, Api
 from flask_restful.inputs import regex
@@ -59,6 +59,19 @@ api.add_resource(Backlink, '/api/backlinks/<string:recipe_type>/<string:filename
 
 # TODO: replace AutoIndex by well-styled templates
 # TODO: implement search
+
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    if app.debug:
+        r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        r.headers["Pragma"] = "no-cache"
+        r.headers["Expires"] = "0"
+        r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 
 def main():
