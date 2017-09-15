@@ -46,3 +46,43 @@ ol.carousel-indicators > li {
 .carousel-control-prev-icon {
 	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ccc' viewBox='0 0 8 8'%3E%3Cpath d='M4 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
+
+.carousel-item > picture * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#carouselImgs {
+    height: 300px;
+}
+.carousel-item > picture * {
+    max-height: 300px;
+}
+
+
+@media (min-width: 768px) {
+    #carouselImgs {
+        height: 400px;
+    }
+    .carousel-item > picture * {
+        max-height: 400px;
+    }
+}
+
+@media (min-width: 992px) {
+    #carouselImgs {
+        height: 520px;
+    }
+    .carousel-item > picture * {
+        max-height: 520px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #carouselImgs {
+        height: 640px;
+    }
+    .carousel-item > picture * {
+        max-height: 640px;
+    }
+}

@@ -316,7 +316,7 @@
                                     <xsl:value-of select="@href"/>
                                 </xsl:with-param>
                             </xsl:call-template>
-                            <img class="d-block w-100" src="{@href}" alt="{@alt}"/>
+                            <img class="d-block img-fluid" src="{@href}" alt="{@alt}"/>
                         </picture>
                         <xsl:if test="@name">
                             <div class="carousel-caption ">
