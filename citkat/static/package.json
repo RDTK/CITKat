@@ -5,6 +5,8 @@
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
     "jquery": ">=3.0.0",
+    "marked": "^0.3.6",
+    "octicons": "^6.0.1",
     "popper.js": "^1.11.0"
   }
 }

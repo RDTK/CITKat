@@ -2,7 +2,8 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
-                exclude-result-prefixes="c arr">
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                exclude-result-prefixes="c arr xlink">
     <xsl:output method="html" cdata-section-elements="script" indent="no" media-type="text/html" version="5.0"
                 encoding="UTF-8" doctype-system="about:legacy-compat"/>
     <!--root template-->
@@ -414,6 +415,9 @@
         <xsl:call-template name="log_template_info"/>
         <div class="resource">
             <span>
+                <!--<svg version="1.1" width="16" height="16" viewBox="0 0 16 16" class="octicon octicon-beaker" aria-hidden="true">-->
+                    <!--<use xlink:href="#git-branch"/>-->
+                <!--</svg>-->
                 <xsl:choose>
                     <xsl:when test="@type = 'bugtracker'">
                         <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
@@ -468,6 +472,27 @@
         <div data-markdown="true" style="white-space: pre-line;">
             <xsl:value-of select="." disable-output-escaping="yes"/>
         </div>
+        <script src="/static/node_modules/marked/marked.min.js"></script>
+        <script><![CDATA[
+// add +3 to the heading level of Markdown text
+var renderer = new marked.Renderer();
+renderer.heading = function(text, level, raw) {
+    return '<h'
+    + (level + 3)
+    + ' id="'
+    + this.options.headerPrefix
+    + raw.toLowerCase().replace(/[^\w]+/g, '-')
+    + '">'
+    + text
+    + '</h'
+    + (level + 3)
+    + '>\n';
+};
+
+document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.body.querySelector('[data-markdown=true]').textContent, { renderer: renderer });
+document.body.querySelector('[data-markdown=true]').removeAttribute('style');
+]]>
+        </script>
     </xsl:template>
 
     <!--distributions access type-->
@@ -556,7 +581,9 @@
                     <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
                 </h5>
                 <ul>
-                    <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency"/>
+                    <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency">
+                        <xsl:sort/>
+                    </xsl:apply-templates>
                     <xsl:apply-templates
                             select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']"
                             mode="catalog"/>
@@ -655,17 +682,33 @@
                                     <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
                                         <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends </xsl:text>
+                                        <!--<xsl:text disable-output-escaping="yes">$ sudo apt-get install &#45;&#45;no-install-recommends \&#xa;</xsl:text>-->
                                         <xsl:for-each select="c:dependency">
+                                            <xsl:sort/>
+                                            <!--<xsl:text disable-output-escaping="yes">    </xsl:text>-->
                                             <xsl:value-of select="."/>
-                                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                            <xsl:if test="position() != last()">
+                                                <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                            </xsl:if>
+                                            <!--<xsl:if test="position() != last()">-->
+                                                <!--<xsl:text disable-output-escaping="yes"> \&#xa;</xsl:text>-->
+                                            <!--</xsl:if>-->
                                         </xsl:for-each>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends </xsl:text>
+                                        <!--<xsl:text disable-output-escaping="yes">$ sudo apt-get install &#45;&#45;no-install-recommends \&#xa;</xsl:text>-->
                                         <xsl:for-each select="c:dependency">
+                                            <xsl:sort/>
+                                            <!--<xsl:text disable-output-escaping="yes">    </xsl:text>-->
                                             <xsl:value-of select="."/>
-                                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                            <xsl:if test="position() != last()">
+                                                <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                            </xsl:if>
+                                            <!--<xsl:if test="position() != last()">-->
+                                            <!--<xsl:text disable-output-escaping="yes"> \&#xa;</xsl:text>-->
+                                            <!--</xsl:if>-->
                                         </xsl:for-each>
                                     </xsl:otherwise>
                                 </xsl:choose>
@@ -744,9 +787,9 @@
         </p>
         <pre>
             <code class="shell">
-                <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator --on-error=continue -d $HOME/citk/dist/distributions/</xsl:text>
+                <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator \&#xa;    --on-error=continue \&#xa;    -d $HOME/citk/dist/distributions/</xsl:text>
                 <xsl:value-of select="c:filename"/>
-                <xsl:text disable-output-escaping="yes">.distribution -m toolkit -u YOUR_USERNAME -p YOUR_PASSWORD -D toolkit.volume=$HOME/citk/systems</xsl:text>
+                <xsl:text disable-output-escaping="yes">.distribution \&#xa;    -m toolkit \&#xa;    -u YOUR_USERNAME \&#xa;    -p YOUR_PASSWORD \&#xa;    -D toolkit.volume=$HOME/citk/systems</xsl:text>
             </code>
         </pre>
     </xsl:template>
