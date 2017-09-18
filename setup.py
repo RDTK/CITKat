@@ -1,13 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-
+from distutils import dir_util
 from setuptools import setup, Command
-from setuptools.command.install import install
-from setuptools.command.develop import develop
 from subprocess import call
 import os
 from distutils.command.build import build as _build
 from setuptools.command.bdist_egg import bdist_egg as _bdist_egg
+from setuptools.command.develop import develop as _develop
+from distutils.command.clean import clean as _clean
 
 
 def which(program):
@@ -48,6 +48,19 @@ class NpmInstall(Command):
             exit(1)
 
 
+class develop(_develop):
+    def run(self):
+        self.run_command('NpmInstall')
+        _develop.run(self)
+
+
+class clean(_clean):
+    def run(self):
+        if os.path.exists('citkat/static/node_modules/'):
+            dir_util.remove_tree('citkat/static/node_modules/', dry_run=self.dry_run)
+        _clean.run(self)
+
+
 class build(_build):
     sub_commands = _build.sub_commands + [('NpmInstall', None)]
 
@@ -72,6 +85,8 @@ setup(
     ],
     cmdclass={
         'build': build,
+        'develop': develop,
+        'clean': clean,
         'bdist_egg': bdist_egg,
         'NpmInstall': NpmInstall,
     },
