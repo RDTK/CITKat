@@ -1,5 +1,5 @@
 recursive-include citkat/templates *
 recursive-include citkat/static *
-prune citkat/static/css/github.css
+recursive-exclude citkat/static *.json
 prune citkat/static/node_modules
-recursive-include citkat/static/node_modules */dist/jquery.slim.min.js */dist/js/bootstrap.min.js */dist/umd/popper.min.js */dist/css/bootstrap*.min.css
+recursive-include citkat/static/node_modules */dist/jquery.slim.min.js */dist/js/bootstrap.min.js */dist/umd/popper.min.js */dist/css/bootstrap*.min.css */marked.min.js */build/sprite.octicons.svg */build/octicons.min.css
