@@ -76,11 +76,10 @@ setup(
     author_email='mwiechmann@techfak.uni-bielefeld.de',
     url='https://opensource.cit-ec.de/projects/citk/repository/citkat',
     install_requires=[
-        'flask>=0.12.2, <0.13',
-        'flask_restful>=0.3.5, <0.4',
-        'flask_bower>=1.3.0',
+        'flask>=0.12.2',
+        'flask_restful>=0.3.5',
         'Flask-AutoIndex',
-        'lxml'
+        'lxml>=4.0'
         # 'flask-bootstrap>=4, <5'  # Waiting for release...
     ],
     cmdclass={
