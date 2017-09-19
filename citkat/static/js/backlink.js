@@ -19,26 +19,28 @@
     loadJSON('/api/backlinks/' + type + '/' + parameter, function (response) {
         var types = {};
         var jsonAnswer = JSON.parse(response);
-        // console.log(jsonAnswer);
-        var h = document.createElement('h5');
-        h.appendChild(document.createTextNode('Recipe used by:'));
-        backlinksDiv.appendChild(h);
-        var ul = document.createElement('ul');
-        jsonAnswer.forEach(function (elem) {
-            var li = document.createElement('li');
-            var anker = document.createElement('a');
-            anker.setAttribute('href', '../' + elem['path']);
-            var typeText = '';
-            if (elem['path'].match(/^(experiment\/).*/)) {
-                typeText = ' (Experiment)';
-            } else if (elem['path'].match(/^(dataset\/).*/)) {
-                typeText = ' (Dataset)';
-            }
-            anker.appendChild(document.createTextNode(elem['name'] + ' - ' + elem['version']));
-            li.appendChild(anker);
-            li.appendChild(document.createTextNode(typeText));
-            ul.appendChild(li);
-        });
-        backlinksDiv.appendChild(ul);
+        if (jsonAnswer.length > 0) {
+            // console.log(jsonAnswer);
+            var h = document.createElement('h5');
+            h.appendChild(document.createTextNode('Recipe used by:'));
+            backlinksDiv.appendChild(h);
+            var ul = document.createElement('ul');
+            jsonAnswer.forEach(function (elem) {
+                var li = document.createElement('li');
+                var anker = document.createElement('a');
+                anker.setAttribute('href', '../' + elem['path']);
+                var typeText = '';
+                if (elem['path'].match(/^(experiment\/).*/)) {
+                    typeText = ' (Experiment)';
+                } else if (elem['path'].match(/^(dataset\/).*/)) {
+                    typeText = ' (Dataset)';
+                }
+                anker.appendChild(document.createTextNode(elem['name'] + ' - ' + elem['version']));
+                li.appendChild(anker);
+                li.appendChild(document.createTextNode(typeText));
+                ul.appendChild(li);
+            });
+            backlinksDiv.appendChild(ul);
+        }
     })
 })();
