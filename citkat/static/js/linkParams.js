@@ -10,7 +10,7 @@
         paramString = document.location.search;
     }
     if (paramString !== '') {
-        catalog.querySelectorAll('.ref').forEach(function (elem) {
+        Array.prototype.slice.call(catalog.querySelectorAll('.ref'), 0).forEach(function (elem) {
             elem.setAttribute('href', elem.getAttribute('href') + paramString)
         });
     }
