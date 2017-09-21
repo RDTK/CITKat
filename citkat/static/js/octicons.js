@@ -6,7 +6,7 @@ xhttp.onreadystatechange = function() {
     div.setAttribute('hidden', 'true');
     div.setAttribute('id', 'octicons');
     div.innerHTML = xhttp.responseText;
-    document.body.appendChild(div);
+    document.getElementsByTagName('body')[0].appendChild(div);
   }
 };
 xhttp.open("GET", "/static/node_modules/octicons/build/sprite.octicons.svg", true);
