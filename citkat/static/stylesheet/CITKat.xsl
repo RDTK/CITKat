@@ -2,8 +2,7 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                exclude-result-prefixes="c arr xlink">
+                exclude-result-prefixes="c arr">
     <xsl:output method="html" cdata-section-elements="script" indent="no" media-type="text/html" version="5.0"
                 encoding="UTF-8" doctype-system="about:legacy-compat"/>
     <!--root template-->
@@ -41,10 +40,10 @@
         <xsl:copy-of select="document('/static/templates/head.xml')/child::node()/*"/>
     </xsl:variable>
     <xsl:variable name="includefooter">
-        <xsl:copy-of select="document('/static/templates/footer.xml')/child::node()/*"/>
+        <xsl:copy-of select="document('/static/templates/footer.xml')"/>
     </xsl:variable>
     <xsl:variable name="includeNav">
-        <xsl:copy-of select="document('/static/templates/nav.xml')/child::node()/*"/>
+        <xsl:copy-of select="document('/static/templates/nav.xml')"/>
     </xsl:variable>
 
     <!--logging helper-->
@@ -415,6 +414,7 @@
         <xsl:call-template name="log_template_info"/>
         <div class="resource">
             <span>
+                <!--support for icons example:-->
                 <!--<svg version="1.1" width="16" height="16" viewBox="0 0 16 16" class="octicon octicon-beaker" aria-hidden="true">-->
                     <!--<use xlink:href="#git-branch"/>-->
                 <!--</svg>-->

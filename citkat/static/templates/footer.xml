@@ -1,15 +1,12 @@
-<?xml version="1.0"?>
-<body>
-    <div id="footer" class="container">
-        <div id="copyright">
-            © Bielefeld University
-            <script><![CDATA[
+<div id="footer" class="container">
+    <div id="copyright">
+        © Bielefeld University
+        <script><![CDATA[
 document.body.querySelector('#footer > #copyright').innerHTML += (new Date()).getFullYear();
 ]]>
-            </script>
-        </div>
-        <div style="font-size: 0.7em;">This page has been built by open-source software, source code is <a href="https://opensource.cit-ec.de/projects/citk/repository/citkat">available</a>.</div>
+        </script>
     </div>
+    <div style="font-size: 0.7em;">This page has been built by open-source software, source code is <a href="https://opensource.cit-ec.de/projects/citk/repository/citkat">available</a>.</div>
     <script src="/static/node_modules/jquery/dist/jquery.slim.min.js"></script>
     <script src="/static/node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -18,4 +15,6 @@ document.body.querySelector('#footer > #copyright').innerHTML += (new Date()).ge
 hljs.initHighlightingOnLoad();
 ]]>
     </script>
-</body>
+</div>
+
+

@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
     <script><![CDATA[
@@ -34,4 +33,5 @@
     <link rel="shortcut icon" href="/static/favicon/favicon.ico"></link>
     <meta name="msapplication-config" content="/static/favicon/browserconfig.xml"></meta>
     <meta name="theme-color" content="#ffffff"></meta>
+    {% block head %}{% endblock %}
 </head>
