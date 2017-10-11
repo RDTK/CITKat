@@ -1,3 +1,13 @@
+Title:   My Document
+Summary: A brief description of my document.
+Authors: Waylan Limberg
+         John Doe
+Date:    October 2, 2007
+blank-value: 
+base_url: http://example.com
+
+[TOC]
+
 # Welcome to CITKat
 Find research artifacts and related Software.
 Browse Systems, Publications, Software Components, Data Sets ...
@@ -25,9 +35,9 @@ Reference-style:
 Inline `code` has `back-ticks around` it.
 
 
-```python
-s = "Python syntax highlighting"
-print s
+```bash
+export foo="bar"
+echo $foo
 ```
 
 

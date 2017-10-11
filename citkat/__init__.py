@@ -2,7 +2,8 @@
 # from flask_sqlalchemy import SQLAlchemy
 from os import getcwd
 
-from flask import Flask, abort, render_template, redirect
+from flask import Flask, abort, render_template, redirect, Markup
+from markdown import Markdown
 from pkg_resources import resource_stream
 
 from citkat.modules.browse import browse_blueprint
@@ -31,10 +32,19 @@ def home():
 
 
 @app.route('/content/<path:fullpath>')
-def content(fullpath):
+def markdown_content(fullpath):
     try:
-        body_markdown = resource_stream(__name__, 'content/' + fullpath + '.md').read()
-        title = 'TODO'
+        # # body_markdown = resource_stream(__name__, 'content/' + fullpath + '.md').read()
+        # body_markdown = Markdown(resource_stream(__name__, 'content/' + fullpath + '.md').read(),
+        #                          extensions=['markdown.extensions.extra',
+        #                                      'markdown.extensions.toc',
+        #                                      'markdown.extensions.meta'])
+        # print(body_markdown.convert().Meta)
+        md = Markdown(extensions=['markdown.extensions.extra',
+                                  'markdown.extensions.toc',
+                                  'markdown.extensions.meta'])
+        content = Markup(md.convert(resource_stream(__name__, 'content/' + fullpath + '.md').read()))
+        title = md.Meta['title'][0]
         return render_template('layout.html', **locals())
     except IOError:
         return abort(404)

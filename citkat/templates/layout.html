@@ -35,20 +35,10 @@
 
     </nav>
     <div class="container">
+        {{ content }}
         {% block body %}{% endblock %}
-        {% if body_markdown %}
-        <div data-markdown="true" style="white-space: pre-line;">{{ body_markdown }}</div>
-        {% endif %}
     </div>
 </div>
-
-{% if body_markdown %}
-<script src="/static/node_modules/marked/marked.min.js"></script>
-<script>
-document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.body.querySelector('[data-markdown=true]').textContent);
-document.body.querySelector('[data-markdown=true]').removeAttribute('style');
-</script>
-{% endif %}
 {{ include_xml_template('footer.xml') }}
 </body>
 </html>
