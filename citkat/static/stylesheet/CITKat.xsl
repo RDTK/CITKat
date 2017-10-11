@@ -162,7 +162,7 @@
                 <h1>
                     <xsl:call-template name="includeOcticon">
                         <xsl:with-param name="size" select="$octiconsH1"/>
-                        <xsl:with-param name="name" select="'repo'"/>
+                        <xsl:with-param name="name" select="'star'"/>
                     </xsl:call-template>
                     <xsl:choose>
                         <xsl:when test="child::node()/@name">
@@ -258,6 +258,10 @@
                 <!--Hardware-->
                 <xsl:if test="child::node()/c:relation[@type = 'hardware']">
                     <h5>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="size" select="$octiconsH5"/>
+                            <xsl:with-param name="name" select="'server'"/>
+                        </xsl:call-template>
                         <xsl:call-template name="capitalizeFirstLetter">
                             <xsl:with-param name="in" select="child::node()/c:relation[@type = 'hardware']/@type"/>
                         </xsl:call-template>
@@ -690,7 +694,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <h5>
             <xsl:call-template name="includeOcticon">
                         <xsl:with-param name="size" select="$octiconsH5"/>
-                        <xsl:with-param name="name" select="'key'"/>
+                        <xsl:with-param name="name" select="'shield'"/>
                     </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Access: </xsl:text>
             <xsl:value-of select="."/>
@@ -798,6 +802,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </h3>
             </xsl:if>
             <h5>
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="size" select="$octiconsH5"/>
+                    <xsl:with-param name="name" select="'desktop-download'"/>
+                </xsl:call-template>
                 <xsl:text disable-output-escaping="yes">Install Required OS Packages:</xsl:text>
             </h5>
             <div id="systemDependencies" data-children=".system">
@@ -959,6 +967,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <xsl:template match="c:distribution" mode="gendist">
         <xsl:call-template name="log_template_info"/>
         <h5>
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="size" select="$octiconsH5"/>
+                <xsl:with-param name="name" select="'terminal'"/>
+            </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Generate Distribution</xsl:text>
         </h5>
         <p>
