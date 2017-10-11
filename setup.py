@@ -78,7 +78,8 @@ setup(
     install_requires=[
         'flask>=0.12.2',
         'flask_restful>=0.3.5',
-        'lxml>=4.0'
+        'lxml>=4.0',
+        'markdown'
     ],
     cmdclass={
         'build': build,

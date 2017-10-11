@@ -33,16 +33,10 @@ def home():
 
 @app.route('/content/<path:fullpath>')
 def markdown_content(fullpath):
+    md = Markdown(extensions=['markdown.extensions.extra',
+                              'markdown.extensions.toc',
+                              'markdown.extensions.meta'])
     try:
-        # # body_markdown = resource_stream(__name__, 'content/' + fullpath + '.md').read()
-        # body_markdown = Markdown(resource_stream(__name__, 'content/' + fullpath + '.md').read(),
-        #                          extensions=['markdown.extensions.extra',
-        #                                      'markdown.extensions.toc',
-        #                                      'markdown.extensions.meta'])
-        # print(body_markdown.convert().Meta)
-        md = Markdown(extensions=['markdown.extensions.extra',
-                                  'markdown.extensions.toc',
-                                  'markdown.extensions.meta'])
         content = Markup(md.convert(resource_stream(__name__, 'content/' + fullpath + '.md').read()))
         title = md.Meta['title'][0]
         return render_template('layout.html', **locals())
