@@ -2,7 +2,8 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
-                exclude-result-prefixes="c arr">
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                exclude-result-prefixes="c arr xlink">
     <xsl:output method="html" cdata-section-elements="script" indent="no" media-type="text/html" version="5.0"
                 encoding="UTF-8" doctype-system="about:legacy-compat"/>
     <!--root template-->
@@ -40,11 +41,19 @@
         <xsl:copy-of select="document('/static/templates/head.xml')/child::node()/*"/>
     </xsl:variable>
     <xsl:variable name="includefooter">
-        <xsl:copy-of select="document('/static/templates/footer.xml')"/>
+        <xsl:copy-of select="document('/static/templates/footer.xml')/child::node()/*"/>
     </xsl:variable>
-    <xsl:variable name="includeNav">
-        <xsl:copy-of select="document('/static/templates/nav.xml')"/>
+    <xsl:variable name="includeNavbar-head">
+        <xsl:copy-of select="document('/static/templates/navbar-head.xml')/child::node()/*"/>
     </xsl:variable>
+    <xsl:variable name="addMenuItems">
+        <xsl:copy-of select="document('/menu/additionalMenuItems.xml')/child::node()/*"/>
+    </xsl:variable>
+    <xsl:variable name="octiconsH1" select="'32'"/>
+    <xsl:variable name="octiconsH2" select="'26'"/>
+    <xsl:variable name="octiconsH3" select="'22'"/>
+    <xsl:variable name="octiconsH4" select="'19'"/>
+    <xsl:variable name="octiconsH5" select="'16'"/>
 
     <!--logging helper-->
     <xsl:template name="log_template_info">
@@ -92,9 +101,11 @@
                 <xsl:when test="not(c:publication) and not(c:person)">
                     <xsl:text disable-output-escaping="yes">: </xsl:text>
                     <xsl:value-of select="child::node()/@name"/>
-                    <xsl:text disable-output-escaping="yes"> (</xsl:text>
-                    <xsl:value-of select="child::node()/@version"/>
-                    <xsl:text disable-output-escaping="yes">)</xsl:text>
+                    <xsl:if test="child::node()/@version">
+                        <xsl:text disable-output-escaping="yes"> (</xsl:text>
+                        <xsl:value-of select="child::node()/@version"/>
+                        <xsl:text disable-output-escaping="yes">)</xsl:text>
+                    </xsl:if>
                 </xsl:when>
                 <xsl:when test="c:publication">
                     <xsl:text disable-output-escaping="yes">: </xsl:text>
@@ -120,7 +131,11 @@
         <xsl:call-template name="log_template_info"/>
         <div class="container" style="padding-left: 0; padding-right: 0;"><!--first container doesn't need padding!-->
             <!--import navbar-->
-            <xsl:copy-of select="$includeNav"/>
+            <xsl:call-template name="navbar">
+                <xsl:with-param name="type">
+                    <xsl:value-of select="name(*[1])"/>
+                </xsl:with-param>
+            </xsl:call-template>
             <!--main catalog container, set important attributes-->
             <xsl:element name="div">
                 <xsl:attribute name="id">
@@ -143,25 +158,35 @@
                         <xsl:value-of select="c:distribution/@buildServerBaseURL"/>
                     </xsl:attribute>
                 </xsl:if>
-                <h1>
-                    <xsl:call-template name="capitalizeFirstLetter">
-                        <xsl:with-param name="in" select="name(*[1])"/>
-                    </xsl:call-template>
-                    <xsl:text disable-output-escaping="yes"> Details </xsl:text>
-                </h1>
                 <!--recipes name and version as headline-->
-                <h2>
+                <h1>
+                    <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="size" select="$octiconsH1"/>
+                        <xsl:with-param name="name" select="'repo'"/>
+                    </xsl:call-template>
                     <xsl:choose>
-                        <xsl:when test="child::node()/@name and child::node()/@version">
+                        <xsl:when test="child::node()/@name">
                             <xsl:value-of select="child::node()/@name"/>
-                            <xsl:text disable-output-escaping="yes"> (</xsl:text>
-                            <xsl:value-of select="child::node()/@version"/>
-                            <xsl:text disable-output-escaping="yes">)</xsl:text>
+                            <xsl:if test="child::node()/@version">
+                                <xsl:text disable-output-escaping="yes"> (</xsl:text>
+                                <xsl:value-of select="child::node()/@version"/>
+                                <xsl:text disable-output-escaping="yes">)</xsl:text>
+                            </xsl:if>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="child::node()/c:filename"/>
                         </xsl:otherwise>
                     </xsl:choose>
+                </h1>
+                <h2>
+                    <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="size" select="$octiconsH2"/>
+                        <xsl:with-param name="name" select="'book'"/>
+                    </xsl:call-template>
+                    <xsl:call-template name="capitalizeFirstLetter">
+                        <xsl:with-param name="in" select="name(*[1])"/>
+                    </xsl:call-template>
+                    <xsl:text disable-output-escaping="yes"> Details </xsl:text>
                 </h2>
                 <!--general information for all but persons and publications-->
                 <xsl:if test="c:distribution | c:project | c:experiment | c:hardware | c:dataset">
@@ -197,6 +222,10 @@
                 <!--Persons-->
                 <xsl:if test="child::node()/c:relation[@type = 'person']">
                     <h5>
+                        <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="size" select="$octiconsH5"/>
+                        <xsl:with-param name="name" select="'person'"/>
+                    </xsl:call-template>
                         <xsl:text disable-output-escaping="yes">Involved </xsl:text>
                         <xsl:call-template name="capitalizeFirstLetter">
                             <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
@@ -254,6 +283,170 @@
         </div>
     </xsl:template>
 
+    <!--include octicon-->
+    <xsl:template name="includeOcticon">
+        <xsl:param name="size"/>
+        <xsl:param name="name"/>
+        <xsl:element name="svg">
+            <xsl:attribute name="version">1.1</xsl:attribute>
+            <xsl:attribute name="width"><xsl:value-of select="$size"/></xsl:attribute>
+            <xsl:attribute name="height"><xsl:value-of select="$size"/></xsl:attribute>
+            <xsl:attribute name="viewBox">0 0 16 16</xsl:attribute>
+            <xsl:attribute name="class">
+                <xsl:text disable-output-escaping="yes">octicon octicon-</xsl:text>
+                <xsl:value-of select="$name"/>
+            </xsl:attribute>
+            <xsl:attribute name="aria-hidden">true</xsl:attribute>
+            <xsl:element name="use">
+                <xsl:attribute name="xlink:href">
+                    <xsl:text disable-output-escaping="yes">#</xsl:text>
+                    <xsl:value-of select="$name"/>
+                </xsl:attribute>
+            </xsl:element>
+        </xsl:element>
+    </xsl:template>
+
+    <!--navbar creation-->
+    <xsl:template name="navbar">
+        <xsl:param name="type"/>
+        <xsl:message>INFO: Calling 'navbar' template</xsl:message>
+        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+            <xsl:copy-of select="$includeNavbar-head"/>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about/">About</a>
+                    </li>
+                    <xsl:call-template name="navbar-browseDropdown">
+                        <xsl:with-param name="type" select="$type"/>
+                    </xsl:call-template>
+                    <!--<li class="nav-item dropdown">-->
+                        <!--<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2"-->
+                           <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">tutorials</a>-->
+                        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">-->
+                            <!--<a class="dropdown-item" href="#">Action</a>-->
+                            <!--<a class="dropdown-item" href="#">Another action</a>-->
+                            <!--<a class="dropdown-item" href="#">Something else here</a>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <xsl:copy-of select="$addMenuItems"/>
+                </ul>
+                <form class="form-inline my-2 my-lg-0" method="get" action="/search">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="s"/>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" hidden="true">Search</button>
+                </form>
+            </div>
+        </nav>
+    </xsl:template>
+
+    <!--navbar browsed-dropdown-->
+    <xsl:template name="navbar-browseDropdown">
+        <xsl:param name="type"/>
+        <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="/browse/" id="BrowseDropdown"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <xsl:text>Browse</xsl:text>
+                <span class="sr-only">
+                    <xsl:text> (current)</xsl:text>
+                </span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="BrowseDropdown">
+                <!--System Versions-->
+                <xsl:element name="a">
+                    <xsl:attribute name="class">
+                        <xsl:text>dropdown-item</xsl:text>
+                        <xsl:if test="$type = 'distribution'">
+                            <xsl:text> active</xsl:text>
+                        </xsl:if>
+                    </xsl:attribute>
+                    <xsl:attribute name="href">
+                        <xsl:text disable-output-escaping="yes">/browse/distributions/</xsl:text>
+                    </xsl:attribute>
+                    <xsl:text disable-output-escaping="yes">System Versions</xsl:text>
+                    <xsl:if test="$type = 'distribution'">
+                        <span class="sr-only">
+                            <xsl:text> (current)</xsl:text>
+                        </span>
+                    </xsl:if>
+                </xsl:element>
+                <!--Component Versions-->
+                <xsl:element name="a">
+                    <xsl:attribute name="class">
+                        <xsl:text>dropdown-item</xsl:text>
+                        <xsl:if test="$type = 'project'">
+                            <xsl:text> active</xsl:text>
+                        </xsl:if>
+                    </xsl:attribute>
+                    <xsl:attribute name="href">
+                        <xsl:text disable-output-escaping="yes">/browse/projects/</xsl:text>
+                    </xsl:attribute>
+                    <xsl:text disable-output-escaping="yes">Component Versions</xsl:text>
+                    <xsl:if test="$type = 'distribution'">
+                        <span class="sr-only">
+                            <xsl:text> (current)</xsl:text>
+                        </span>
+                    </xsl:if>
+                </xsl:element>
+                <!--Experiments-->
+                <xsl:element name="a">
+                    <xsl:attribute name="class">
+                        <xsl:text>dropdown-item</xsl:text>
+                        <xsl:if test="$type = 'experiment'">
+                            <xsl:text> active</xsl:text>
+                        </xsl:if>
+                    </xsl:attribute>
+                    <xsl:attribute name="href">
+                        <xsl:text disable-output-escaping="yes">/browse/experiments/</xsl:text>
+                    </xsl:attribute>
+                    <xsl:text disable-output-escaping="yes">Experiments</xsl:text>
+                    <xsl:if test="$type = 'distribution'">
+                        <span class="sr-only">
+                            <xsl:text> (current)</xsl:text>
+                        </span>
+                    </xsl:if>
+                </xsl:element>
+                <!--Datasets-->
+                <xsl:element name="a">
+                    <xsl:attribute name="class">
+                        <xsl:text>dropdown-item</xsl:text>
+                        <xsl:if test="$type = 'dataset'">
+                            <xsl:text> active</xsl:text>
+                        </xsl:if>
+                    </xsl:attribute>
+                    <xsl:attribute name="href">
+                        <xsl:text disable-output-escaping="yes">/browse/datasets/</xsl:text>
+                    </xsl:attribute>
+                    <xsl:text disable-output-escaping="yes">Datasets</xsl:text>
+                    <xsl:if test="$type = 'distribution'">
+                        <span class="sr-only">
+                            <xsl:text> (current)</xsl:text>
+                        </span>
+                    </xsl:if>
+                </xsl:element>
+                <!--Hardware Versions-->
+                <xsl:element name="a">
+                    <xsl:attribute name="class">
+                        <xsl:text>dropdown-item</xsl:text>
+                        <xsl:if test="$type = 'hardware'">
+                            <xsl:text> active</xsl:text>
+                        </xsl:if>
+                    </xsl:attribute>
+                    <xsl:attribute name="href">
+                        <xsl:text disable-output-escaping="yes">/browse/hardware/</xsl:text>
+                    </xsl:attribute>
+                    <xsl:text disable-output-escaping="yes">Hardware Versions</xsl:text>
+                    <xsl:if test="$type = 'distribution'">
+                        <span class="sr-only">
+                            <xsl:text> (current)</xsl:text>
+                        </span>
+                    </xsl:if>
+                </xsl:element>
+            </div>
+        </li>
+    </xsl:template>
+
+
     <!--backlinks creating-->
     <xsl:template name="getBacklink">
         <xsl:message>INFO: Calling 'getBacklink' template</xsl:message>
@@ -273,7 +466,7 @@
                 </xsl:attribute>
             </xsl:for-each>
         </xsl:element>
-        <script src="/static/js/backlink.js"/>
+        <script src="/api/backlinks/static/js/backlink.js"/>
     </xsl:template>
 
     <!--resource type image, display in a carousel-->
@@ -414,10 +607,6 @@
         <xsl:call-template name="log_template_info"/>
         <div class="resource">
             <span>
-                <!--support for icons example:-->
-                <!--<svg version="1.1" width="16" height="16" viewBox="0 0 16 16" class="octicon octicon-beaker" aria-hidden="true">-->
-                    <!--<use xlink:href="#git-branch"/>-->
-                <!--</svg>-->
                 <xsl:choose>
                     <xsl:when test="@type = 'bugtracker'">
                         <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
@@ -499,6 +688,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <xsl:template match="c:distribution/@access" mode="catalog">
         <xsl:call-template name="log_template_info"/>
         <h5>
+            <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="size" select="$octiconsH5"/>
+                        <xsl:with-param name="name" select="'key'"/>
+                    </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Access: </xsl:text>
             <xsl:value-of select="."/>
         </h5>
@@ -578,6 +771,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:if test="c:dependencies/c:directDependency">
             <div id="directDependencies">
                 <h5>
+                    <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="size" select="$octiconsH5"/>
+                        <xsl:with-param name="name" select="'package'"/>
+                    </xsl:call-template>
                     <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
                 </h5>
                 <ul>
@@ -593,6 +790,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:if test="c:dependencies/c:system/c:dependency">
             <xsl:if test="local-name() = 'distribution'">
                 <h3>
+                    <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="size" select="$octiconsH3"/>
+                        <xsl:with-param name="name" select="'repo-clone'"/>
+                    </xsl:call-template>
                     <xsl:text disable-output-escaping="yes">Replication</xsl:text>
                 </h3>
             </xsl:if>

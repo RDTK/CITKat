@@ -1,20 +1,22 @@
-<div id="footer" class="container">
-    <div id="copyright">
-        © Bielefeld University
+<div>
+    <div id="footer" class="container">
+        <div id="copyright">
+            © <span id="copyright-year"></span>, Bielefeld University
+            <script><![CDATA[
+document.body.querySelector('#copyright-year').innerHTML += (new Date()).getFullYear();
+]]>
+            </script>
+        </div>
+        <div style="font-size: 0.7em;">This page has been built by open-source software, source code is <a href="https://opensource.cit-ec.de/projects/citk/repository/citkat">available</a>.</div>
+        <script src="/static/node_modules/jquery/dist/jquery.slim.min.js"></script>
+        <script src="/static/node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/static/js/highlight.pack.js"></script>
         <script><![CDATA[
-document.body.querySelector('#footer > #copyright').innerHTML += (new Date()).getFullYear();
+hljs.initHighlightingOnLoad();
 ]]>
         </script>
     </div>
-    <div style="font-size: 0.7em;">This page has been built by open-source software, source code is <a href="https://opensource.cit-ec.de/projects/citk/repository/citkat">available</a>.</div>
-    <script src="/static/node_modules/jquery/dist/jquery.slim.min.js"></script>
-    <script src="/static/node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/static/js/highlight.pack.js"></script>
-    <script><![CDATA[
-hljs.initHighlightingOnLoad();
-]]>
-    </script>
 </div>
 
 

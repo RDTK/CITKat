@@ -33,5 +33,4 @@
     <link rel="shortcut icon" href="/static/favicon/favicon.ico"></link>
     <meta name="msapplication-config" content="/static/favicon/browserconfig.xml"></meta>
     <meta name="theme-color" content="#ffffff"></meta>
-    {% block head %}{% endblock %}
 </head>

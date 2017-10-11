@@ -9,29 +9,45 @@ TODO: documentation
            xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
     <xs:element name="catalog" type="catalogType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"
-                              source="https://toolkit.cit-ec.uni-bielefeld.de/tutorials/writingrecipes#tutcatalog">The
-                Root-element of the document.
-            </xs:documentation>
+            <xs:documentation xml:lang="en">The Root-element of the document.</xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element type="xs:string" name="description"/>
-    <xs:element type="dependenciesType" name="dependencies"/>
-    <xs:element name="filename" type="filenameType" />
-    <xs:element type="relationType" name="relation"/>
-    <xs:element type="extendsType" name="extends"/>
-    <xs:element type="resourceType" name="resource"/>
+    <xs:element type="xs:string" name="description">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Description, either plain text or with Markdown syntax.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element type="dependenciesType" name="dependencies">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Contains system-dependencies and also component versions.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="filename" type="filenameType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">To restrict file names to a specific set of chars.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element type="relationType" name="relation">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">To express the relation between component versions.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element type="extendsType" name="extends">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">May contain another component or system version the actual element inherits from.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element type="resourceType" name="resource">
+            <xs:annotation>
+            <xs:documentation xml:lang="en">A resource contains a hyper-ref of a linked (external) artifact, like SCM, bug tracking, homepage, etc.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:complexType name="distributionType">
         <xs:sequence>
             <xs:element ref="filename"/>
             <xs:element ref="description" minOccurs="0"/>
             <xs:element ref="resource" maxOccurs="unbounded" minOccurs="0"/>
-            <xs:element ref="extends" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">Distribution might extend other distributions
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element ref="extends" minOccurs="0"/>
             <xs:element ref="dependencies"/>
             <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0">
                 <xs:annotation>

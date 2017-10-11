@@ -31,6 +31,11 @@ code.hljs {
 	height: 100%;
 }
 
+.octicon {
+    vertical-align: baseline;
+    margin-right: 0.4em;
+}
+
 span.capitalize {
 	text-transform: capitalize;
 }
@@ -86,3 +91,4 @@ ol.carousel-indicators > li {
         max-height: 640px;
     }
 }
+

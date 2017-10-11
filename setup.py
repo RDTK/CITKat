@@ -81,6 +81,7 @@ setup(
         'Flask-AutoIndex',
         'lxml>=4.0'
         # 'flask-bootstrap>=4, <5'  # Waiting for release...
+        # TODO: update deps
     ],
     cmdclass={
         'build': build,
@@ -91,7 +92,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'citkat = citkat.citkat:main',
+            'citkat = citkat.__init__:develop',
         ],
     },
     license='GPL',
