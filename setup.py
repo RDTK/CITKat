@@ -67,7 +67,7 @@ class build(_build):
 
 setup(
     name='citkat',
-    version='0.1.2',
+    version='0.2.0',
     long_description=__doc__,
     packages=['citkat'],
     include_package_data=True,
@@ -78,10 +78,7 @@ setup(
     install_requires=[
         'flask>=0.12.2',
         'flask_restful>=0.3.5',
-        'Flask-AutoIndex',
         'lxml>=4.0'
-        # 'flask-bootstrap>=4, <5'  # Waiting for release...
-        # TODO: update deps
     ],
     cmdclass={
         'build': build,
