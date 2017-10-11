@@ -2,7 +2,7 @@
 # from flask_sqlalchemy import SQLAlchemy
 from os import getcwd
 
-from flask import Flask, abort, render_template
+from flask import Flask, abort, render_template, redirect
 from pkg_resources import resource_stream
 
 from citkat.modules.browse import browse_blueprint
@@ -25,12 +25,17 @@ app.register_blueprint(simple_search_blueprint)
 # db.init_app(app)
 
 
-@app.route('/', methods=['GET'])
-def index():
+@app.route('/')
+def home():
+    return redirect('/content/home')
+
+
+@app.route('/content/<path:fullpath>')
+def content(fullpath):
     try:
-        f = resource_stream(__name__, 'static/content/' + 'home.md')
+        f = resource_stream(__name__, 'content/' + fullpath + '.md')
         body_str = f.read()
-        return render_template('layout.html', body_markdown=body_str, title='Home')
+        return render_template('layout.html', body_markdown=body_str, title='TODO')
     except IOError:
         return abort(404)
 
