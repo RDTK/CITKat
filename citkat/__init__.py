@@ -33,9 +33,9 @@ def home():
 @app.route('/content/<path:fullpath>')
 def content(fullpath):
     try:
-        f = resource_stream(__name__, 'content/' + fullpath + '.md')
-        body_str = f.read()
-        return render_template('layout.html', body_markdown=body_str, title='TODO')
+        body_markdown = resource_stream(__name__, 'content/' + fullpath + '.md').read()
+        title = 'TODO'
+        return render_template('layout.html', **locals())
     except IOError:
         return abort(404)
 

@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 <head>
-    {{ include_xml_template('head.xml') | safe }}
+    {{ include_xml_template('head.xml') }}
     <title>{{ title }} // {{ name }}</title>
 </head>
 <body>
 <div class="container" style="padding-left: 0; padding-right: 0;">
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-        {{ include_xml_template('navbar-head.xml') | safe }}
+        {{ include_xml_template('navbar-head.xml') }}
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -25,7 +25,7 @@
                         <a class="dropdown-item" href="/browse/hardware/">Hardware Versions</a>
                     </div>
                 </li>
-                {{ include_additional_menu_items() | safe }}
+                {{ include_additional_menu_items() }}
             </ul>
             <form class="form-inline my-2 my-lg-0" method="get" action="/search">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="s">
@@ -37,7 +37,7 @@
     <div class="container">
         {% block body %}{% endblock %}
         {% if body_markdown %}
-        <div data-markdown="true" style="white-space: pre-line;">{{ body_markdown | safe }}</div>
+        <div data-markdown="true" style="white-space: pre-line;">{{ body_markdown }}</div>
         {% endif %}
     </div>
 </div>
@@ -49,6 +49,6 @@ document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.
 document.body.querySelector('[data-markdown=true]').removeAttribute('style');
 </script>
 {% endif %}
-{{ include_xml_template('footer.xml') | safe }}
+{{ include_xml_template('footer.xml') }}
 </body>
 </html>
