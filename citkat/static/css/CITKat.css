@@ -5,6 +5,14 @@ pre {
     word-wrap: break-word;
 }
 
+table {
+    width: 100%;
+}
+
+blockquote {
+    margin: 0 1rem 1rem;
+}
+
 a[data-toggle=collapse][aria-expanded=false]::after {
     content: ' ▹';
 }
