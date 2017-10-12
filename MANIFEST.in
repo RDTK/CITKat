@@ -1,4 +1,5 @@
 recursive-include citkat/templates *
+recursive-include citkat/content *
 recursive-include citkat/modules */templates/*
 recursive-include citkat/modules */static/*
 recursive-include citkat/static *
