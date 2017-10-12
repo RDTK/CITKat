@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 # from flask_sqlalchemy import SQLAlchemy
-from os import getcwd
-
 from flask import Flask, redirect
 
 from citkat.modules.browse import browse_blueprint
@@ -12,33 +10,33 @@ from citkat.modules.simple_search import simple_search_blueprint
 from citkat.modules.static_xml import static_xml_blueprint
 from citkat.modules.gen_menu_items import gen_menu_items_blueprint
 
-app = Flask(__name__)
-app.register_blueprint(backlinks_blueprint)
-app.register_blueprint(static_xml_blueprint)
-app.register_blueprint(gen_menu_items_blueprint)
-app.register_blueprint(browse_blueprint)
-app.register_blueprint(include_xml_jinja2_blueprint)
-app.register_blueprint(simple_search_blueprint)
-app.register_blueprint(markdown_content_blueprint)
+citkat = Flask(__name__)
+citkat.register_blueprint(backlinks_blueprint)
+citkat.register_blueprint(static_xml_blueprint)
+citkat.register_blueprint(gen_menu_items_blueprint)
+citkat.register_blueprint(browse_blueprint)
+citkat.register_blueprint(include_xml_jinja2_blueprint)
+citkat.register_blueprint(simple_search_blueprint)
+citkat.register_blueprint(markdown_content_blueprint)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'  # create in-memory database
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy()
 # db.init_app(app)
 
 
-@app.route('/')
+@citkat.route('/')
 def home():
     return redirect('/content/home')
 
 
-@app.after_request
+@citkat.after_request
 def add_headers(r):
     """
     Add headers for caching and correct content types.
     :param r:
     :return:
     """
-    if app.config['no-caching']:
+    if citkat.config['no-caching']:
         r.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
         r.headers['Pragma'] = 'no-cache'
         r.headers['Expires'] = '0'
@@ -53,6 +51,7 @@ def add_headers(r):
 
 
 def develop():
-    app.config['catalog-directory'] = getcwd()  # use current working dir as catalog root
-    app.config['no-caching'] = True  # for developer preview of CITKat content, disable all caching
-    app.run(host='localhost')  # bind to localhost
+    from os import getcwd
+    citkat.config['catalog-directory'] = getcwd()  # use current working dir as catalog root
+    citkat.config['no-caching'] = True  # for developer preview of CITKat content, disable all caching
+    citkat.run(host='localhost')  # bind to localhost
