@@ -1,4 +1,5 @@
 from glob import glob
+from collections import OrderedDict
 
 from flask import Blueprint, render_template, current_app, safe_join, abort
 from lxml.etree import XPath, XMLParser, parse
@@ -33,14 +34,14 @@ titles = {'project': 'Project Versions',
           'hardware': 'Hardware Versions'}
 
 
-# TODO: pagenation, sort, images?
+# TODO: pagenation, images?
 @browse_blueprint.route('/<path:entity>')
 def browse(entity):
     if 'catalog-directory' not in current_app.config:
         return abort(500, "app.config['catalog-directory'] is not set!")
     title = 'Browse ' + titles[entity[:-1]]
-    listing = dict()
+    listing = OrderedDict()
     b = Browse()
-    for itm in glob(safe_join(current_app.config['catalog-directory'], entity, '*.xml')):
+    for itm in sorted(glob(safe_join(current_app.config['catalog-directory'], entity, '*.xml'))):
         listing[itm.split('/')[-1]] = b.get_name(entity, itm.split('/')[-1])
     return render_template('browse.html', **locals())
