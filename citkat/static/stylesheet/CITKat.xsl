@@ -365,7 +365,7 @@
                         </xsl:if>
                     </xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:text disable-output-escaping="yes">/browse/distributions/</xsl:text>
+                        <xsl:text disable-output-escaping="yes">/browse/distribution/</xsl:text>
                     </xsl:attribute>
                     <xsl:text disable-output-escaping="yes">System Versions</xsl:text>
                     <xsl:if test="$type = 'distribution'">
@@ -383,7 +383,7 @@
                         </xsl:if>
                     </xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:text disable-output-escaping="yes">/browse/projects/</xsl:text>
+                        <xsl:text disable-output-escaping="yes">/browse/project/</xsl:text>
                     </xsl:attribute>
                     <xsl:text disable-output-escaping="yes">Component Versions</xsl:text>
                     <xsl:if test="$type = 'distribution'">
@@ -401,7 +401,7 @@
                         </xsl:if>
                     </xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:text disable-output-escaping="yes">/browse/experiments/</xsl:text>
+                        <xsl:text disable-output-escaping="yes">/browse/experiment/</xsl:text>
                     </xsl:attribute>
                     <xsl:text disable-output-escaping="yes">Experiments</xsl:text>
                     <xsl:if test="$type = 'distribution'">
@@ -419,7 +419,7 @@
                         </xsl:if>
                     </xsl:attribute>
                     <xsl:attribute name="href">
-                        <xsl:text disable-output-escaping="yes">/browse/datasets/</xsl:text>
+                        <xsl:text disable-output-escaping="yes">/browse/dataset/</xsl:text>
                     </xsl:attribute>
                     <xsl:text disable-output-escaping="yes">Datasets</xsl:text>
                     <xsl:if test="$type = 'distribution'">

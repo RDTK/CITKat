@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Browse {{entity|e|title}} // CITKat</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "layout.html" %}
+{% set active_page = "index" %}
+{% block content %}
+<h1>{{ title }}:</h1>
+<ul>
+{% for key, value in listing.iteritems() %}
+    <li><a href="../../{{ entity }}{{ key }}">{{ value }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

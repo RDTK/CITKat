@@ -2,7 +2,8 @@
 <html>
 <head>
     {{ include_xml_template('head.xml') }}
-    <title>{{ title }} // {{ name }}</title>
+    {% block head %}{% endblock %}
+    <title>{% block title %}{{ title or 'Untitled' }}{% endblock %} // CITKat</title>
 </head>
 <body>
 <div class="container" style="padding-left: 0; padding-right: 0;">
@@ -18,10 +19,10 @@
                     <a class="nav-link dropdown-toggle" href="/browse/" id="BrowseDropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Browse</a>
                     <div class="dropdown-menu" aria-labelledby="BrowseDropdown">
-                        <a class="dropdown-item" href="/browse/distributions/">System Versions</a>
-                        <a class="dropdown-item" href="/browse/projects/">Component Versions</a>
-                        <a class="dropdown-item" href="/browse/experiments/">Experiments</a>
-                        <a class="dropdown-item" href="/browse/datasets/">Datasets</a>
+                        <a class="dropdown-item" href="/browse/distribution/">System Versions</a>
+                        <a class="dropdown-item" href="/browse/project/">Component Versions</a>
+                        <a class="dropdown-item" href="/browse/experiment/">Experiments</a>
+                        <a class="dropdown-item" href="/browse/dataset/">Datasets</a>
                         <a class="dropdown-item" href="/browse/hardware/">Hardware Versions</a>
                     </div>
                 </li>
@@ -35,8 +36,7 @@
 
     </nav>
     <div class="container">
-        {{ content }}
-        {% block body %}{% endblock %}
+        {% block content %}{{ content }}{% endblock %}
     </div>
 </div>
 {{ include_xml_template('footer.xml') }}
