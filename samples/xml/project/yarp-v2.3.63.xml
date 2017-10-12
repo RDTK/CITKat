@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet type="text/xsl" href="/static/stylesheet/CITKat.xsl"?>
 <catalog xmlns="https://toolkit.cit-ec.uni-bielefeld.de/CITKat">
-    <project name="Yet Another Robot Platform (YARP) Python Bindings" version="v2.3.63" access="public"
+    <project name="Yet Another Robot Platform (YARP)" version="v2.3.63" access="public"
              keywords="middleware integration Robotics cpp">
-        <filename>yarp-python-bindings-v2.3.63</filename>
+        <filename>yarp-v2.3.63</filename>
         <resource type="bugtracker" href="https://github.com/robotology/yarp/issues"/>
         <resource type="scm" href="https://github.com/robotology/yarp.git"/>
         <resource type="documentation" href="https://github.com/robotology/yarp"/>
