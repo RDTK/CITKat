@@ -2,13 +2,12 @@
 # from flask_sqlalchemy import SQLAlchemy
 from os import getcwd
 
-from flask import Flask, abort, render_template, redirect, Markup
-from markdown import Markdown
-from pkg_resources import resource_stream
+from flask import Flask, redirect
 
 from citkat.modules.browse import browse_blueprint
 from citkat.modules.backlinks import backlinks_blueprint
 from citkat.modules.include_xml_jinja2 import include_xml_jinja2_blueprint
+from citkat.modules.markdown_content import markdown_content_blueprint
 from citkat.modules.simple_search import simple_search_blueprint
 from citkat.modules.static_xml import static_xml_blueprint
 from citkat.modules.gen_menu_items import gen_menu_items_blueprint
@@ -20,6 +19,7 @@ app.register_blueprint(gen_menu_items_blueprint)
 app.register_blueprint(browse_blueprint)
 app.register_blueprint(include_xml_jinja2_blueprint)
 app.register_blueprint(simple_search_blueprint)
+app.register_blueprint(markdown_content_blueprint)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'  # create in-memory database
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy()
@@ -29,19 +29,6 @@ app.register_blueprint(simple_search_blueprint)
 @app.route('/')
 def home():
     return redirect('/content/home')
-
-
-@app.route('/content/<path:fullpath>')
-def markdown_content(fullpath):
-    md = Markdown(extensions=['markdown.extensions.extra',
-                              'markdown.extensions.toc',
-                              'markdown.extensions.meta'])
-    try:
-        content = Markup(md.convert(resource_stream(__name__, 'content/' + fullpath + '.md').read()))
-        title = md.Meta['title'][0]
-        return render_template('layout.html', **locals())
-    except IOError:
-        return abort(404)
 
 
 @app.after_request
