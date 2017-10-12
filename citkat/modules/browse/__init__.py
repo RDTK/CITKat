@@ -20,9 +20,9 @@ class Browse(object):
             name = file[:-4]
         else:
             name = name[0]
-        versions = self.xpath_entity_version(doc)
-        if versions:
-            name += ' (' + versions[0] + ')'
+            version = self.xpath_entity_version(doc)
+            if version:
+                name += ' (' + version[0] + ')'
         return name
 
 
