@@ -1,0 +1,31 @@
+<div>
+    {% for itm in menu_items %}
+        {% if itm is string %}
+            <li class="nav-item">
+                <a class="nav-link" href="/content/{{ itm }}">{{ itm }}</a>
+            </li>
+        {% else %}
+            {% for key in itm.keys() %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/{{ key }}/" id="{{ key }}Dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ key }}</a>
+                    <div class="dropdown-menu" aria-labelledby="{{ key }}Dropdown">
+                        {% for subitm in itm[key] %}
+                        <a class="dropdown-item" href="/content/{{ key }}/{{ subitm }}">{{ subitm }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="/browse/" id="BrowseDropdown" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">Browse</a>
+        <div class="dropdown-menu" aria-labelledby="BrowseDropdown">
+            <a class="dropdown-item" href="/browse/distribution/">System Versions</a>
+            <a class="dropdown-item" href="/browse/project/">Component Versions</a>
+            <a class="dropdown-item" href="/browse/experiment/">Experiments</a>
+            <a class="dropdown-item" href="/browse/dataset/">Datasets</a>
+            <a class="dropdown-item" href="/browse/hardware/">Hardware Versions</a>
+        </div>
+    </li>
+</div>

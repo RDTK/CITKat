@@ -12,20 +12,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="../../content/about/">About</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/browse/" id="BrowseDropdown" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Browse</a>
-                    <div class="dropdown-menu" aria-labelledby="BrowseDropdown">
-                        <a class="dropdown-item" href="/browse/distribution/">System Versions</a>
-                        <a class="dropdown-item" href="/browse/project/">Component Versions</a>
-                        <a class="dropdown-item" href="/browse/experiment/">Experiments</a>
-                        <a class="dropdown-item" href="/browse/dataset/">Datasets</a>
-                        <a class="dropdown-item" href="/browse/hardware/">Hardware Versions</a>
-                    </div>
-                </li>
                 {{ include_additional_menu_items() }}
             </ul>
             <form class="form-inline my-2 my-lg-0" method="get" action="/search">

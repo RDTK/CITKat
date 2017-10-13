@@ -26,7 +26,7 @@ citkat.register_blueprint(markdown_content_blueprint)
 
 @citkat.route('/')
 def home():
-    return redirect('/content/home')
+    return redirect('/content/Home')
 
 
 @citkat.after_request

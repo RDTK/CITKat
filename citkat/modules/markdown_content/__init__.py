@@ -7,7 +7,7 @@ markdown_content_blueprint = Blueprint(name='markdown_content', import_name=__na
 @markdown_content_blueprint.route('/<path:fullpath>/')
 def markdown_content(fullpath):
     if 'content-directory' not in current_app.config:
-        if fullpath == 'home':
+        if fullpath == 'Home':
             title = 'Home'
             content = Markup("<h1>Welcome!</h1><h4><svg height='19' class='octicon octicon-alert' viewBox='0 0 16 16' version='1.1' width='19' aria-hidden='true'><use xlink:href='#alert'></svg><code>citkat.config['content-directory']</code> is not set!</h4>")
             return render_template('layout.html', **locals())

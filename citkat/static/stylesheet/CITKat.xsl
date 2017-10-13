@@ -319,21 +319,21 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../content/about/">About</a>
-                    </li>
-                    <xsl:call-template name="navbar-browseDropdown">
-                        <xsl:with-param name="type" select="$type"/>
-                    </xsl:call-template>
-                    <!--<li class="nav-item dropdown">-->
-                        <!--<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2"-->
-                           <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">tutorials</a>-->
-                        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">-->
-                            <!--<a class="dropdown-item" href="#">Action</a>-->
-                            <!--<a class="dropdown-item" href="#">Another action</a>-->
-                            <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                        <!--</div>-->
+                    <!--<li class="nav-item">-->
+                        <!--<a class="nav-link" href="../../content/About/">About</a>-->
                     <!--</li>-->
+                    <!--<xsl:call-template name="navbar-browseDropdown">-->
+                        <!--<xsl:with-param name="type" select="$type"/>-->
+                    <!--</xsl:call-template>-->
+                    <!--&lt;!&ndash;<li class="nav-item dropdown">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2"&ndash;&gt;-->
+                           <!--&lt;!&ndash;data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">tutorials</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a class="dropdown-item" href="#">Action</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a class="dropdown-item" href="#">Another action</a>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a class="dropdown-item" href="#">Something else here</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
                     <xsl:copy-of select="$addMenuItems"/>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" method="get" action="/search">
