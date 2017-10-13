@@ -16,7 +16,7 @@
 * ~~create better (real world) sample data~~ done, integrate with real jenkins
 * ~~(mockup build-generator output for user study)~~ done
 * Person|Puclication|dataset|experiment|hardware details
-* list pages
+* ~~list pages: browse feature~~ done.
 * ~~integrate images~~ done.
 * keywords
 * linked recipe

@@ -7,7 +7,6 @@ from os.path import isfile, join, isdir
 gen_menu_items_blueprint = Blueprint(name='gen_menu_items', import_name=__name__, url_prefix='/menu', template_folder='templates')
 
 
-# TODO: scrape available menuItems
 @gen_menu_items_blueprint.route('/additionalMenuItems.xml')
 def gen_menu_items():
     """
