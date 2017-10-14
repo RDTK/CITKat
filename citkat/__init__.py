@@ -34,6 +34,11 @@ def not_found(error):
     return render_template('404.html'), 404
 
 
+@citkat.errorhandler(500)
+def not_found(error):
+    return render_template('500.html', **locals()), 500
+
+
 @citkat.after_request
 def add_headers(r):
     """
