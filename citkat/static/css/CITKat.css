@@ -44,8 +44,7 @@ code.hljs {
 }
 
 .octicon {
-    vertical-align: baseline;
-    margin-right: 0.4em;
+    margin-right: .5rem;
     height: 1rem;
     width: 1rem;
     float: left;
