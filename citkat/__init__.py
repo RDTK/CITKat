@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect
+from flask import Flask, redirect, render_template
 
 from citkat.modules.browse import browse_blueprint
 from citkat.modules.backlinks import backlinks_blueprint
@@ -27,6 +27,11 @@ citkat.register_blueprint(markdown_content_blueprint)
 @citkat.route('/')
 def home():
     return redirect('/content/Home')
+
+
+@citkat.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
 
 
 @citkat.after_request
