@@ -31,12 +31,14 @@ def home():
 
 @citkat.errorhandler(404)
 def not_found(warning):
-    return render_template('404.html'), 404
+    title = '404 Not Found'
+    return render_template('layout.html', **locals()), 404
 
 
 @citkat.errorhandler(500)
 def not_found(error):
-    return render_template('500.html', **locals()), 500
+    title = '500 Internal Server Error'
+    return render_template('layout.html', **locals()), 500
 
 
 @citkat.after_request
