@@ -52,7 +52,7 @@ def add_headers(r):
 
 def develop():
     from os import getcwd
-    citkat.config['content-directory'] = getcwd() + '/../content'  # TODO: remove this line for production release
+    # citkat.config['content-directory'] = getcwd() + '/../content'  # TODO: remove this line for production release
     citkat.config['catalog-directory'] = getcwd()  # use current working dir as catalog root
     citkat.config['no-caching'] = True  # for developer preview of CITKat content, disable all caching
     citkat.run(host='localhost')  # bind to localhost

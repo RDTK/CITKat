@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 from distutils import dir_util
-from setuptools import setup, Command
+from setuptools import setup, Command, find_packages
 from subprocess import call
 import os
 from distutils.command.build import build as _build
@@ -39,9 +39,7 @@ class NpmInstall(Command):
     def run(self):
         npm = which("npm")
         if npm:
-            os.chdir('citkat/static')
-            call([npm, 'install'])
-            os.chdir('../../')
+            call([npm, 'install', '--prefix=citkat/static'])
         else:
             print(
                 "Error: npm executable not found.")
@@ -69,7 +67,7 @@ setup(
     name='citkat',
     version='0.2.0',
     long_description=__doc__,
-    packages=['citkat'],
+    packages=find_packages(exclude=('tests',)),
     include_package_data=True,
     zip_safe=False,
     author='Martin Wiechmann',
