@@ -13,6 +13,10 @@ blockquote {
     margin: 0 1rem 1rem;
 }
 
+.alert-warning {
+    overflow: overlay;
+}
+
 a[data-toggle=collapse][aria-expanded=false]::after {
     content: ' ▹';
 }
@@ -42,6 +46,34 @@ code.hljs {
 .octicon {
     vertical-align: baseline;
     margin-right: 0.4em;
+    height: 1rem;
+    width: 1rem;
+    float: left;
+}
+
+h1 > .octicon {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+h2 > .octicon {
+    height: 2rem;
+    width: 2rem;
+}
+
+h3 > .octicon {
+    height: 1.75rem;
+    width: 1.75rem;
+}
+
+h4 > .octicon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+h5 > .octicon {
+    height: 1.25rem;
+    width: 1.25rem;
 }
 
 span.capitalize {

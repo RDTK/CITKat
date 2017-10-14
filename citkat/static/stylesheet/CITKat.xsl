@@ -49,11 +49,6 @@
     <xsl:variable name="addMenuItems">
         <xsl:copy-of select="document('/menu/additionalMenuItems.xml')/child::node()/*"/>
     </xsl:variable>
-    <xsl:variable name="octiconsH1" select="'32'"/>
-    <xsl:variable name="octiconsH2" select="'26'"/>
-    <xsl:variable name="octiconsH3" select="'22'"/>
-    <xsl:variable name="octiconsH4" select="'19'"/>
-    <xsl:variable name="octiconsH5" select="'16'"/>
 
     <!--logging helper-->
     <xsl:template name="log_template_info">
@@ -161,7 +156,6 @@
                 <!--recipes name and version as headline-->
                 <h1>
                     <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="size" select="$octiconsH1"/>
                         <xsl:with-param name="name" select="'star'"/>
                     </xsl:call-template>
                     <xsl:choose>
@@ -180,7 +174,6 @@
                 </h1>
                 <h2>
                     <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="size" select="$octiconsH2"/>
                         <xsl:with-param name="name" select="'book'"/>
                     </xsl:call-template>
                     <xsl:call-template name="capitalizeFirstLetter">
@@ -223,7 +216,6 @@
                 <xsl:if test="child::node()/c:relation[@type = 'person']">
                     <h5>
                         <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="size" select="$octiconsH5"/>
                         <xsl:with-param name="name" select="'person'"/>
                     </xsl:call-template>
                         <xsl:text disable-output-escaping="yes">Involved </xsl:text>
@@ -259,7 +251,6 @@
                 <xsl:if test="child::node()/c:relation[@type = 'hardware']">
                     <h5>
                         <xsl:call-template name="includeOcticon">
-                            <xsl:with-param name="size" select="$octiconsH5"/>
                             <xsl:with-param name="name" select="'server'"/>
                         </xsl:call-template>
                         <xsl:call-template name="capitalizeFirstLetter">
@@ -289,12 +280,11 @@
 
     <!--include octicon-->
     <xsl:template name="includeOcticon">
-        <xsl:param name="size"/>
         <xsl:param name="name"/>
         <xsl:element name="svg">
             <xsl:attribute name="version">1.1</xsl:attribute>
-            <xsl:attribute name="width"><xsl:value-of select="$size"/></xsl:attribute>
-            <xsl:attribute name="height"><xsl:value-of select="$size"/></xsl:attribute>
+            <xsl:attribute name="width"><xsl:value-of select="16"/></xsl:attribute>
+            <xsl:attribute name="height"><xsl:value-of select="16"/></xsl:attribute>
             <xsl:attribute name="viewBox">0 0 16 16</xsl:attribute>
             <xsl:attribute name="class">
                 <xsl:text disable-output-escaping="yes">octicon octicon-</xsl:text>
@@ -693,8 +683,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="size" select="$octiconsH5"/>
-                        <xsl:with-param name="name" select="'shield'"/>
+                        <xsl:with-param name="name" select="'lock'"/>
                     </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Access: </xsl:text>
             <xsl:value-of select="."/>
@@ -776,7 +765,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <div id="directDependencies">
                 <h5>
                     <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="size" select="$octiconsH5"/>
                         <xsl:with-param name="name" select="'package'"/>
                     </xsl:call-template>
                     <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
@@ -795,7 +783,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:if test="local-name() = 'distribution'">
                 <h3>
                     <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="size" select="$octiconsH3"/>
                         <xsl:with-param name="name" select="'repo-clone'"/>
                     </xsl:call-template>
                     <xsl:text disable-output-escaping="yes">Replication</xsl:text>
@@ -803,7 +790,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             </xsl:if>
             <h5>
                 <xsl:call-template name="includeOcticon">
-                    <xsl:with-param name="size" select="$octiconsH5"/>
                     <xsl:with-param name="name" select="'desktop-download'"/>
                 </xsl:call-template>
                 <xsl:text disable-output-escaping="yes">Install Required OS Packages:</xsl:text>
@@ -968,7 +954,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="size" select="$octiconsH5"/>
                 <xsl:with-param name="name" select="'terminal'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Generate Distribution</xsl:text>
