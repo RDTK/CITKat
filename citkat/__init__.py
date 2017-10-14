@@ -30,7 +30,7 @@ def home():
 
 
 @citkat.errorhandler(404)
-def not_found(error):
+def not_found(warning):
     return render_template('404.html'), 404
 
 

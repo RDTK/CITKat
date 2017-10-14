@@ -22,6 +22,32 @@
 
     </nav>
     <div class="container">
+        {% if error %}
+        <p>
+        <div class='alert alert-danger' role='alert'>
+            <h4>
+                <svg height='64' width='64' style='vertical-align: text-top; ' class='octicon octicon-alert'
+                     viewBox='0 0 16 16' version='1.1' aria-hidden='true'>
+                    <use xlink:href='#alert'/>
+                </svg>
+                {{ error | safe }}
+            </h4>
+        </div>
+        </p>
+        {% endif %}
+        {% if warning %}
+        <p>
+        <div class='alert alert-warning' role='alert'>
+            <h4>
+                <svg height='64' width='64' style='vertical-align: text-top; ' class='octicon octicon-alert'
+                     viewBox='0 0 16 16' version='1.1' aria-hidden='true'>
+                    <use xlink:href='#alert'/>
+                </svg>
+                {{ warning | safe }}
+            </h4>
+        </div>
+        </p>
+        {% endif %}
         {% block content %}{{ content }}{% endblock %}
     </div>
 </div>
