@@ -25,5 +25,6 @@ def gen_menu_items():
             for subitm in listdir(join(content_root, itm)):
                 if isfile(join(content_root, itm, subitm)):
                     dir[itm].append(subitm[:-3])
+            dir[itm] = sorted(dir[itm])
             menu_items.append(dir)
     return render_template('menu.xml', **locals())
