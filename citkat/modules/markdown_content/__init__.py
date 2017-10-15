@@ -1,5 +1,6 @@
 from flask import Blueprint, Markup, render_template, abort, current_app, safe_join
 from markdown import Markdown
+# from markdown_blockdiag import BlockdiagExtension
 
 markdown_content_blueprint = Blueprint(name='markdown_content', import_name=__name__, url_prefix='/content')
 
@@ -15,7 +16,9 @@ def markdown_content(fullpath):
         return abort(500, warning)
     md = Markdown(extensions=['markdown.extensions.extra',
                               'markdown.extensions.toc',
-                              'markdown.extensions.meta'])
+                              'markdown.extensions.meta',
+                              # BlockdiagExtension(format='svg')
+                              ])
     try:
         f = open(safe_join(current_app.config['content-directory'], fullpath) + '.md', 'rb')
     except IOError:
