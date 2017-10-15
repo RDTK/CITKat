@@ -38,7 +38,7 @@ titles = {'project': 'Project Versions',
 @browse_blueprint.route('/<path:entity>')
 def browse(entity):
     if 'catalog-directory' not in current_app.config:
-        return abort(500, "app.config['catalog-directory'] is not set!")
+        return abort(500, "<code>citkat.config['catalog-directory']</code> is not set!")
     title = 'Browse ' + titles[entity[:-1]]
     listing = OrderedDict()
     b = Browse()
