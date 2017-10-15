@@ -13,7 +13,7 @@ base_url: http://example.com
 Find research artifacts and related Software.
 Browse Systems, Publications, Software Components, Data Sets ...
 
-[Start Now!](tutorials/foo "title foo") Learn more.
+[Start Now!](/content/Tutorials/First Tutorial "First Tutorial") Learn more.
 
 ## Table example
 
