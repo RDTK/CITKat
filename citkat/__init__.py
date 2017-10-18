@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, redirect, render_template
+from os import environ
 
 from citkat.modules.browse import browse_blueprint
 from citkat.modules.backlinks import backlinks_blueprint
@@ -22,6 +23,11 @@ citkat.register_blueprint(markdown_content_blueprint)
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy()
 # db.init_app(app)
+
+if 'CATALOG_PATH' in environ:
+    citkat.config['catalog-directory'] = environ['CATALOG_PATH']
+if 'CONTENT_PATH' in environ:
+    citkat.config['content-directory'] = environ['CONTENT_PATH']
 
 
 @citkat.route('/')
