@@ -65,7 +65,7 @@ class build(_build):
 
 setup(
     name='citkat',
-    version='0.2.0',
+    version='0.2.4',
     long_description=__doc__,
     packages=find_packages(exclude=('tests',)),
     include_package_data=True,
