@@ -48,7 +48,7 @@ def add_headers(r):
     :param r:
     :return:
     """
-    if citkat.config['no-caching']:
+    if 'no-caching' in citkat.config and citkat.config['no-caching']:
         r.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
         r.headers['Pragma'] = 'no-cache'
         r.headers['Expires'] = '0'
