@@ -2,7 +2,7 @@
 
 ## Installation
 ```shell
-$ ./setup.py install --prefix=$HOME/.local
+$ ./setup.py install --user
 ``` 
 will install CITKat into your home folder and adds `citkat` to your `$PATH` environment.
 
@@ -23,11 +23,130 @@ terminal and shell of your choice, then execute `citkat`:
 $ cd your/working/dir
 $ citkat
 ```
-CITKat will fire up a webserver; you can now preview your catalog data using your favorite browser.
+CITKat will fire up an internal web server; you can now preview your catalog data using your favorite browser.
 
 ## CITKat XML Schema Documentation
 You may generate the schema documentation by using the following command:
 ```shell
 $ git submodule init; git submodule update  # get xs3p from submodule
 $ xsltproc -o schema/CITKat.xsd.html xs3p/xs3p.xsl schema/CITKat.xsd
+```
+
+## Production Server Setup for Ubuntu 16.04
+TODO: include emperor setup
+### Apache with mod_uwsgi
+TODO
+### Nginx with uWSGI
+Install packages:
+```bash
+apt install --no-install-recommends libxml2-dev libxslt1-dev nginx uwsgi uwsgi-plugin-python python2.7-minimal python-virtualenv npm
+```
+
+Create `/etc/nginx/sites-available/citkat.conf`:
+```
+server {
+    listen 80;
+    listen [::]:80;
+#    server_name <YOUR_HOST_NAME>;
+    location / { try_files $uri @citkat; }
+    location @citkat {
+        include uwsgi_params;
+        uwsgi_pass unix:/var/run/uwsgi/citkat.sock;
+    }
+}
+```
+
+Create `/var/www/citkat` and the python-virtualenv, then install CITKat:
+```bash
+mkdir /var/www/citkat; cd /var/www/citkat
+python2 -m virtualenv .env
+source .env/bin/activate
+git clone --branch <DESIRED_VERSION_TAG> https://opensource.cit-ec.de/git/citk.citkat.git
+cd citk.citkat
+./setup.py install
+```
+
+
+Create uWSGI dir by typing `mkdir /var/run/uwsgi`.
+
+Then create `/etc/uwsgi/apps-available/citkat.ini`:
+```ini
+[uwsgi]
+uid = www-data
+gid = www-data
+env CONTENT_PATH = foo  # CHANGE THIS
+env CATALOG_PATH = bar  # CHANGE THIS
+
+plugin = systemd_logger
+logger = systemd
+
+appname = citkat
+plugin = python2
+base = /var/www/%(appname)
+chdir = %(base)
+vacuum = true
+die-on-term = true
+virtualenv = %(base)/.env
+module = %(appname)
+callable = %(appname)
+```
+
+Now create `/etc/systemd/system/uwsgi@.service`:
+```
+[Unit]
+Description=%i uWSGI app
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/uwsgi \
+        --ini /etc/uwsgi/apps-available/%i.ini \
+        --socket /var/run/uwsgi/%i.sock
+User=www-%i
+Group=www-data
+Restart=on-failure
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+```
+and `/etc/systemd/system/uwsgi@.socket`:
+```
+[Unit]
+Description=Socket for uWSGI app %i
+
+[Socket]
+ListenStream=/var/run/uwsgi/%i.socket
+SocketUser=www-%i
+SocketGroup=www-data
+SocketMode=0660
+
+[Install]
+WantedBy=sockets.target
+```
+
+Add the citkat user:
+```
+adduser www-citkat --disabled-login --disabled-password \
+  --ingroup www-data --home /var/www/citkat --shell /bin/false
+```
+
+Enable und start uWSGI:
+```bash
+systemctl enable uwsgi@citkat.socket
+systemctl enable uwsgi@citkat.service
+systemctl start uwsgi@citkat.socket
+```
+
+
+
+### Updating CITKat on a Production Server
+```bash
+systemctl stop uwsgi@citkat
+source /var/www/.env/bin/activate
+pip uninstall citkat
+cd $HOME
+rm -rf $HOME/citk.citkat
+git clone --branch <DESIRED_VERSION_TAG> https://opensource.cit-ec.de/git/citk.citkat.git
+./setup.py install
+systemctl start uwsgi@citkat
 ```

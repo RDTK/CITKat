@@ -12,6 +12,12 @@ from citkat.modules.static_xml import static_xml_blueprint
 from citkat.modules.gen_menu_items import gen_menu_items_blueprint
 
 citkat = Flask(__name__)
+
+if 'CATALOG_PATH' in environ:
+    citkat.config['catalog-directory'] = environ['CATALOG_PATH']
+if 'CONTENT_PATH' in environ:
+    citkat.config['content-directory'] = environ['CONTENT_PATH']
+
 citkat.register_blueprint(backlinks_blueprint)
 citkat.register_blueprint(static_xml_blueprint)
 citkat.register_blueprint(gen_menu_items_blueprint)
@@ -23,11 +29,6 @@ citkat.register_blueprint(markdown_content_blueprint)
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy()
 # db.init_app(app)
-
-if 'CATALOG_PATH' in environ:
-    citkat.config['catalog-directory'] = environ['CATALOG_PATH']
-if 'CONTENT_PATH' in environ:
-    citkat.config['content-directory'] = environ['CONTENT_PATH']
 
 
 @citkat.route('/')
