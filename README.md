@@ -74,8 +74,8 @@ Then create `/etc/uwsgi/apps-available/citkat.ini`:
 [uwsgi]
 uid = www-data
 gid = www-data
-env CONTENT_PATH = foo  # CHANGE THIS
-env CATALOG_PATH = bar  # CHANGE THIS
+env = CONTENT_PATH=/path/to/markdown/content  # CHANGE THIS
+env = CATALOG_PATH=/path/to/catalog/xml  # CHANGE THIS
 
 plugin = systemd_logger
 logger = systemd
