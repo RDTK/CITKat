@@ -312,15 +312,10 @@
     <xsl:template name="includeOcticon">
         <xsl:param name="name"/>
         <xsl:element name="svg">
-            <xsl:attribute name="version">1.1</xsl:attribute>
-            <xsl:attribute name="width"><xsl:value-of select="16"/></xsl:attribute>
-            <xsl:attribute name="height"><xsl:value-of select="16"/></xsl:attribute>
-            <xsl:attribute name="viewBox">0 0 16 16</xsl:attribute>
             <xsl:attribute name="class">
                 <xsl:text disable-output-escaping="yes">octicon octicon-</xsl:text>
                 <xsl:value-of select="$name"/>
             </xsl:attribute>
-            <xsl:attribute name="aria-hidden">true</xsl:attribute>
             <xsl:element name="use">
                 <xsl:attribute name="xlink:href">
                     <xsl:text disable-output-escaping="yes">#</xsl:text>
