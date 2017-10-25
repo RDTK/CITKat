@@ -2,8 +2,7 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                exclude-result-prefixes="c arr xlink">
+                exclude-result-prefixes="c arr">
     <xsl:output method="html" cdata-section-elements="script" indent="no" media-type="text/html" version="5.0"
                 encoding="UTF-8" doctype-system="about:legacy-compat"/>
     <!--root template-->
@@ -295,18 +294,19 @@
     <xsl:template name="includeOcticon">
         <xsl:param name="name"/>
         <xsl:message>INFO: Calling 'includeOcticon' template</xsl:message>
-        <xsl:element name="svg">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <xsl:attribute name="version">1.1</xsl:attribute>
             <xsl:attribute name="class">
                 <xsl:text disable-output-escaping="yes">octicon octicon-</xsl:text>
                 <xsl:value-of select="$name"/>
             </xsl:attribute>
-            <xsl:element name="use">
+            <use>
                 <xsl:attribute name="xlink:href">
                     <xsl:text disable-output-escaping="yes">#</xsl:text>
                     <xsl:value-of select="$name"/>
                 </xsl:attribute>
-            </xsl:element>
-        </xsl:element>
+            </use>
+        </svg>
     </xsl:template>
 
     <!--navbar creation-->
