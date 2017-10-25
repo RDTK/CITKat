@@ -780,7 +780,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:with-param name="name" select="'clock'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
-            <xsl:value-of select="c:date/text()"/>
+            <xsl:value-of select="c:date/text()"/><!--TODO: convert date to region specific format-->
             <small>
                 <xsl:text> (</xsl:text>
                 <xsl:value-of select="c:id/text()"/>
