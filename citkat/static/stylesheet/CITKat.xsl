@@ -200,49 +200,32 @@
                     </div>
                 </xsl:if>
                 <!--person -->
-                <xsl:if test="c:person">
-                  <xsl:value-of select="child::node()/c:forename/text()"/>
-                  <xsl:text> </xsl:text>
-                  <xsl:value-of select="child::node()/c:surname/text()"/>
-                </xsl:if>
-                <xsl:if test="child::node()/c:email">
-                  <ul>
-                    <xsl:for-each select="child::node()/c:email">
-                      <li>
-                        <xsl:call-template name="includeOcticon">
-                          <xsl:with-param name="name" select="'mail'"/>
-                        </xsl:call-template>
-                        <a>
-                          <xsl:attribute name="href">
-                            <xsl:value-of select="text()"/>
-                          </xsl:attribute>
-                          <xsl:value-of select="text()"/>
-                        </a>
-                      </li>
-                    </xsl:for-each>
-                  </ul>
-                </xsl:if>
+                <xsl:apply-templates select="c:person" mode="catalog"/>
+
                 <!--image carousel-->
                 <xsl:if test="child::node()/c:resource[@type = 'img']">
                     <xsl:call-template name="imgCarousel"/>
                 </xsl:if>
                 <!--embed video-->
                 <xsl:apply-templates select="child::node()/c:resource[@type = 'video']" mode="catalog"/>
+
                 <!--access type-->
-                <xsl:apply-templates select="c:distribution/@access|c:project/@access" mode="catalog"/>
+                <xsl:apply-templates select="child::node()/@access" mode="catalog"/>
                 <!--license-->
-                <xsl:apply-templates select="c:distribution/c:license|c:project/c:license" mode="catalog"/>
+                <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
+                <!--activities-->
+                <xsl:apply-templates select="child::node()/c:mostRecentActivity" mode="catalog"/>
+                <!--natures-->
+                <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
+                <!--languages-->
+                <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
 
-                <xsl:apply-templates select="c:project/c:mostRecentActivity" mode="catalog"/>
-
-                <xsl:apply-templates select="c:project/c:natures" mode="catalog"/>
-                <xsl:apply-templates select="c:project/c:programmingLanguages" mode="catalog"/>
                 <!--other resources-->
                 <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
                                      mode="catalog"/>
                 <!--extends-->
                 <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
-                <!--Persons-->
+                <!--Related Persons-->
                 <xsl:if test="child::node()/c:relation[@type = 'person']">
                     <h5>
                         <xsl:call-template name="includeOcticon">
@@ -261,7 +244,7 @@
                         <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="catalog"/>
                     </ul>
                 </xsl:if>
-                <!--Publications-->
+                <!--Related Publications-->
                 <xsl:if test="child::node()/c:relation[@type = 'publication']">
                     <h5>
                         <xsl:text disable-output-escaping="yes">Linked </xsl:text>
@@ -277,7 +260,7 @@
                         <xsl:apply-templates select="child::node()/c:relation[@type = 'publication']" mode="catalog"/>
                     </ul>
                 </xsl:if>
-                <!--Hardware-->
+                <!--Related Hardware-->
                 <xsl:if test="child::node()/c:relation[@type = 'hardware']">
                     <h5>
                         <xsl:call-template name="includeOcticon">
@@ -311,6 +294,7 @@
     <!--include octicon-->
     <xsl:template name="includeOcticon">
         <xsl:param name="name"/>
+        <xsl:message>INFO: Calling 'includeOcticon' template</xsl:message>
         <xsl:element name="svg">
             <xsl:attribute name="class">
                 <xsl:text disable-output-escaping="yes">octicon octicon-</xsl:text>
@@ -569,6 +553,55 @@
         </xsl:for-each>
     </xsl:template>
 
+    <!--person -->
+    <xsl:template match="c:person" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
+        <h4>
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'person'"/>
+            </xsl:call-template>
+            <xsl:value-of select="c:forename/text()"/>
+            <xsl:text disable-output-escaping="yes"> </xsl:text>
+            <xsl:value-of select="c:surname/text()"/>
+        </h4>
+        <xsl:if test="c:email">
+            <ul>
+                <xsl:apply-templates select="c:email" mode="catalog"/>
+            </ul>
+        </xsl:if>
+    </xsl:template>
+
+    <!--email-->
+    <xsl:template match="c:email" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
+        <li>
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'mail'"/>
+            </xsl:call-template>
+            <a>
+                <xsl:attribute name="href">
+                    <xsl:choose>
+                        <xsl:when test="contains(text(), 'mailto:')">
+                            <xsl:value-of select="text()"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>mailto:</xsl:text>
+                            <xsl:value-of select="text()"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="contains(text(), 'mailto:')">
+                        <xsl:value-of select="substring-after(text(), 'mailto:')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="text()"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </a>
+        </li>
+    </xsl:template>
+
     <!--video resources-->
     <xsl:template match="c:resource[@type = 'video']" mode="catalog">
         <xsl:call-template name="log_template_info"/>
@@ -703,87 +736,97 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         </script>
     </xsl:template>
 
-    <!--distribution/project access type-->
-    <xsl:template match="c:distribution/@access|c:project/@access" mode="catalog">
+    <!--access type-->
+    <xsl:template match="@access" mode="catalog">
         <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'lock'"/>
-                    </xsl:call-template>
+                <xsl:with-param name="name" select="'lock'"/>
+            </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Access: </xsl:text>
             <span>
-              <xsl:choose>
-                <xsl:when test=". = 'public'">
-                  <xsl:attribute name="class"> badge badge-success</xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:attribute name="class"> badge badge-danger</xsl:attribute>
-                </xsl:otherwise>
-              </xsl:choose>
-            <xsl:value-of select="."/>
-          </span>
+                <xsl:choose>
+                    <xsl:when test=". = 'public'">
+                        <xsl:attribute name="class">badge badge-success</xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="class">badge badge-danger</xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:value-of select="."/>
+            </span>
         </h5>
     </xsl:template>
 
-    <!--distribution/project licenses-->
-    <xsl:template match="c:distribution/c:license|c:project/c:license" mode="catalog">
-      <xsl:call-template name="log_template_info"/>
+    <!--licenses-->
+    <xsl:template match="c:license" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:call-template name="includeOcticon">
-              <xsl:with-param name="name" select="'law'"/>
+                <xsl:with-param name="name" select="'law'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">License: </xsl:text>
-            <span class="badge badge-info"><xsl:value-of select="text()"/></span>
+            <span class="badge badge-info">
+                <xsl:value-of select="text()"/>
+            </span>
         </h5>
     </xsl:template>
 
-    <!--project most recent activity-->
-    <xsl:template match="c:project/c:mostRecentActivity" mode="catalog">
-      <xsl:call-template name="log_template_info"/>
+    <!--most recent activity-->
+    <xsl:template match="c:mostRecentActivity" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:call-template name="includeOcticon">
-              <xsl:with-param name="name" select="'clock'"/>
+                <xsl:with-param name="name" select="'clock'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
             <xsl:value-of select="c:date/text()"/>
             <small>
-              <xsl:text> (</xsl:text>
-              <xsl:value-of select="c:id/text()"/>
-              <xsl:text>)</xsl:text>
+                <xsl:text> (</xsl:text>
+                <xsl:value-of select="c:id/text()"/>
+                <xsl:text>)</xsl:text>
             </small>
         </h5>
     </xsl:template>
 
-    <!--project natures-->
-    <xsl:template match="c:project/c:natures" mode="catalog">
-      <xsl:call-template name="log_template_info"/>
+    <!--natures-->
+    <xsl:template match="c:natures" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:call-template name="includeOcticon">
-              <xsl:with-param name="name" select="'gear'"/>
+                <xsl:with-param name="name" select="'gear'"/>
             </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">Nature: </xsl:text> <!-- TODO plural -->
+            <xsl:text disable-output-escaping="yes">Nature</xsl:text>
+            <xsl:if test="count(c:nature) > 1">s</xsl:if>
+            <xsl:text disable-output-escaping="yes">: </xsl:text>
             <xsl:for-each select="c:nature">
-              <span class="badge badge-info"><xsl:value-of select="text()"/></span>
-              <xsl:if test="position() != last()">
-                <xsl:text> </xsl:text> <!-- <xsl:text>•</xsl:text> -->
-              </xsl:if>
+                <span class="badge badge-info">
+                    <xsl:value-of select="text()"/>
+                </span>
+                <xsl:if test="position() != last()">
+                    <xsl:text> </xsl:text>
+                </xsl:if>
             </xsl:for-each>
         </h5>
     </xsl:template>
 
-    <!--project programming languages-->
-    <xsl:template match="c:project/c:programmingLanguages" mode="catalog">
-      <xsl:call-template name="log_template_info"/>
+    <!--programming languages-->
+    <xsl:template match="c:programmingLanguages" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
         <h5>
             <xsl:call-template name="includeOcticon">
-              <xsl:with-param name="name" select="'code'"/>
+                <xsl:with-param name="name" select="'code'"/>
             </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">Programming Languages: </xsl:text> <!-- TODO plural -->
+            <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
+            <xsl:if test="count(c:language) > 1">s</xsl:if>
+            <xsl:text disable-output-escaping="yes">: </xsl:text>
             <xsl:for-each select="c:language">
-              <span class="badge badge-info"><xsl:value-of select="text()"/></span>
-              <xsl:if test="position() != last()">
-                <xsl:text> </xsl:text> <!-- <xsl:text>•</xsl:text> -->
-              </xsl:if>
+                <span class="badge badge-info">
+                    <xsl:value-of select="text()"/>
+                </span>
+                <xsl:if test="position() != last()">
+                    <xsl:text> </xsl:text>
+                </xsl:if>
             </xsl:for-each>
         </h5>
     </xsl:template>
