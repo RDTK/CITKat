@@ -318,21 +318,6 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <!--<li class="nav-item">-->
-                        <!--<a class="nav-link" href="../../content/About/">About</a>-->
-                    <!--</li>-->
-                    <!--<xsl:call-template name="navbar-browseDropdown">-->
-                        <!--<xsl:with-param name="type" select="$type"/>-->
-                    <!--</xsl:call-template>-->
-                    <!--&lt;!&ndash;<li class="nav-item dropdown">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2"&ndash;&gt;-->
-                           <!--&lt;!&ndash;data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">tutorials</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<a class="dropdown-item" href="#">Action</a>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<a class="dropdown-item" href="#">Another action</a>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<a class="dropdown-item" href="#">Something else here</a>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
                     <xsl:copy-of select="$addMenuItems"/>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" method="get" action="/search">
@@ -560,9 +545,7 @@
             <xsl:call-template name="includeOcticon">
                 <xsl:with-param name="name" select="'person'"/>
             </xsl:call-template>
-            <xsl:value-of select="c:forename/text()"/>
-            <xsl:text disable-output-escaping="yes"> </xsl:text>
-            <xsl:value-of select="c:surname/text()"/>
+            <xsl:value-of select="c:name/text()"/>
         </h4>
         <xsl:if test="c:email">
             <ul>
@@ -780,7 +763,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:with-param name="name" select="'clock'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
-            <xsl:value-of select="c:date/text()"/><!--TODO: convert date to region specific format-->
+            <span class="date">
+                <xsl:value-of select="c:date/text()"/>
+            </span>
             <small>
                 <xsl:text> (</xsl:text>
                 <xsl:value-of select="c:id/text()"/>
@@ -992,7 +977,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <code class="shell">
                         <xsl:choose>
                             <xsl:when test="@name = 'ubuntu'">
-                                <xsl:if test="c:repositories/c:repository">
+                                <xsl:if test="c:repository">
                                     <xsl:choose>
                                         <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
                                             <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
@@ -1004,7 +989,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:if>
-                                <xsl:for-each select="c:repositories/c:repository">
+                                <xsl:for-each select="c:repository">
                                     <xsl:text disable-output-escaping="yes">$ sudo add-apt-repository "</xsl:text>
                                     <xsl:value-of select="normalize-space(.)"/>
                                     <xsl:text disable-output-escaping="yes">"&#xa;</xsl:text>

@@ -27,6 +27,16 @@ TODO: documentation
             <xs:documentation xml:lang="en">To restrict file names to a specific set of chars.</xs:documentation>
         </xs:annotation>
     </xs:element>
+    <xs:element name="keyword" type="xs:token">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Keywords.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="license" type="xs:token">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Licenses.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:element type="relationType" name="relation">
         <xs:annotation>
             <xs:documentation xml:lang="en">To express the relation between component versions.</xs:documentation>
@@ -45,7 +55,9 @@ TODO: documentation
     <xs:complexType name="distributionType">
         <xs:sequence>
             <xs:element ref="filename"/>
+            <xs:element ref="keyword" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="description" minOccurs="0"/>
+            <xs:element ref="license" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="resource" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element ref="extends" minOccurs="0"/>
             <xs:element ref="dependencies"/>
@@ -59,7 +71,6 @@ TODO: documentation
         </xs:sequence>
         <xs:attribute type="accessType" name="access" use="required"/>
         <xs:attributeGroup ref="nameAndVersion"/>
-        <xs:attribute type="xs:token" name="keywords"/>
         <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
         <xs:attribute type="xs:anyURI" name="build-generator-template" use="required"/>
     </xs:complexType>
@@ -152,18 +163,20 @@ TODO: documentation
     <xs:complexType name="projectType">
         <xs:sequence>
             <xs:element ref="filename"/>
+            <xs:element ref="keyword" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="description" minOccurs="0"/>
+            <xs:element ref="license" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="resource" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="dependencies" minOccurs="0"/>
             <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="accessType" name="access" use="required"/>
         <xs:attributeGroup ref="nameAndVersion"/>
-        <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:complexType name="hardwareType">
         <xs:sequence>
             <xs:element ref="filename"/>
+            <xs:element ref="keyword" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="description" minOccurs="0"/>
             <xs:element ref="resource" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="xs:token" name="modelType" minOccurs="0"/>
@@ -176,7 +189,6 @@ TODO: documentation
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="version" use="required"/>
-        <xs:attribute type="xs:token" name="keywords"/>
     </xs:complexType>
     <xs:complexType name="dependenciesType">
         <xs:sequence>
@@ -201,11 +213,6 @@ TODO: documentation
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="repositoriesType">
-        <xs:sequence>
-            <xs:element type="repositoryType" name="repository" maxOccurs="unbounded" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
     <xs:complexType name="repositoryType">
         <xs:simpleContent>
             <xs:extension base="xs:token">
@@ -215,7 +222,7 @@ TODO: documentation
     </xs:complexType>
     <xs:complexType name="systemType">
         <xs:sequence>
-            <xs:element type="repositoriesType" name="repositories" minOccurs="0"/>
+            <xs:element type="repositoryType" name="repository" minOccurs="0"/>
             <xs:element type="xs:token" name="dependency" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attributeGroup ref="nameAndVersion"/>
@@ -232,13 +239,12 @@ TODO: documentation
             <xs:element ref="filename"/>
             <xs:element ref="description" minOccurs="0"/>
             <xs:element ref="resource" maxOccurs="unbounded" minOccurs="0"/>
-            <xs:element type="xs:token" name="surname" minOccurs="0"/>
-            <xs:element type="xs:token" name="forename" minOccurs="0"/>
+            <xs:element type="xs:token" name="name" minOccurs="0"/>
             <xs:element type="xs:token" name="email" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="xs:token" name="provider"/>
-        <xs:attribute type="xs:token" name="id"/>
+        <xs:attribute type="xs:token" name="pid"/>
         <xs:attribute type="xs:anyURI" name="url"/>
     </xs:complexType>
     <xs:complexType name="resourceType">
