@@ -48,34 +48,37 @@ code.hljs {
     vertical-align: initial;
 }
 
+.card {
+    margin-bottom: .5rem;
+}
+
 h1 > .octicon {
     height: 2.5rem;
     width: 2.5rem;
-    float: left;
 }
 
 h2 > .octicon {
     height: 2rem;
     width: 2rem;
-    float: left;
 }
 
 h3 > .octicon {
     height: 1.75rem;
     width: 1.75rem;
-    float: left;
 }
 
 h4 > .octicon {
     height: 1.5rem;
     width: 1.5rem;
-    float: left;
 }
 
 h5 > .octicon {
     height: 1.25rem;
     width: 1.25rem;
-    float: left;
+}
+
+table td {
+    vertical-align: text-top;
 }
 
 span.capitalize {

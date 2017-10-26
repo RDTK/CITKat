@@ -211,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <table class="table">
+                                <table class="table-sm table-responsive">
                                     <tbody>
                                         <!--access type-->
                                         <xsl:apply-templates select="child::node()/@access" mode="catalog"/>
@@ -263,7 +263,7 @@
                                 <xsl:text>Resources</xsl:text></h5>
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table-sm table-responsive">
                                 <tbody>
                                     <xsl:apply-templates
                                             select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
@@ -702,7 +702,7 @@
     <xsl:template match="c:resource[not(@type = 'img') and not(@type = 'video')]" mode="catalog">
         <xsl:call-template name="log_template_info"/>
         <tr>
-            <td style="border-top: none; padding: initial;">
+            <td>
                 <xsl:choose>
                     <xsl:when test="@type = 'bugtracker'">
                         <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
@@ -718,7 +718,7 @@
                 </xsl:choose>
                 <xsl:text disable-output-escaping="yes">: </xsl:text>
             </td>
-            <td style="border-top: none; padding: initial;">
+            <td>
                 <a href="{@href}">
                     <xsl:choose>
                         <xsl:when test="@name">
@@ -839,9 +839,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <td>
                 <span class="date">
                     <xsl:value-of select="c:date/text()"/>
-                </span>
+                </span><br/>
                 <small>
-                    <xsl:text> (</xsl:text>
+                    <xsl:text>(</xsl:text>
                     <xsl:value-of select="c:id/text()"/>
                     <xsl:text>)</xsl:text>
                 </small>
