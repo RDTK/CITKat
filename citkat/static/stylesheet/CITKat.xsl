@@ -263,8 +263,14 @@
                                 <xsl:text>Resources</xsl:text></h5>
                         </div>
                         <div class="card-body">
-                            <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
-                                                 mode="catalog"/>
+                            <table class="table">
+                                <tbody>
+                                    <xsl:apply-templates
+                                            select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
+                                            mode="catalog"/>
+                                </tbody>
+                            </table>
+
                         </div>
                     </div>
                 </xsl:if>
@@ -695,8 +701,8 @@
     <!--other resource types-->
     <xsl:template match="c:resource[not(@type = 'img') and not(@type = 'video')]" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <div class="resource">
-            <span>
+        <tr>
+            <td style="border-top: none; padding: initial;">
                 <xsl:choose>
                     <xsl:when test="@type = 'bugtracker'">
                         <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
@@ -711,18 +717,20 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text disable-output-escaping="yes">: </xsl:text>
-            </span>
-            <a href="{@href}">
-                <xsl:choose>
-                    <xsl:when test="@name">
-                        <xsl:value-of select="@name"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="@href"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </a>
-        </div>
+            </td>
+            <td style="border-top: none; padding: initial;">
+                <a href="{@href}">
+                    <xsl:choose>
+                        <xsl:when test="@name">
+                            <xsl:value-of select="@name"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="@href"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </a>
+            </td>
+        </tr>
     </xsl:template>
 
     <!--jenkins api-->
