@@ -153,10 +153,14 @@
                     </xsl:attribute>
                 </xsl:if>
                 <!--recipes name and version as headline-->
-                <h1>
-                    <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'star'"/>
+                <h2>
+                    <!--<xsl:call-template name="includeOcticon">-->
+                        <!--<xsl:with-param name="name" select="'star'"/>-->
+                    <!--</xsl:call-template>-->
+                    <xsl:call-template name="capitalizeFirstLetter">
+                        <xsl:with-param name="in" select="name(*[1])"/>
                     </xsl:call-template>
+                    <xsl:text disable-output-escaping="yes"> Details: </xsl:text>
                     <xsl:choose>
                         <xsl:when test="child::node()/@name">
                             <xsl:value-of select="child::node()/@name"/>
@@ -170,36 +174,75 @@
                             <xsl:value-of select="child::node()/c:filename"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                </h1>
-                <h2>
-                    <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'book'"/>
-                    </xsl:call-template>
-                    <xsl:call-template name="capitalizeFirstLetter">
-                        <xsl:with-param name="in" select="name(*[1])"/>
-                    </xsl:call-template>
-                    <xsl:text disable-output-escaping="yes"> Details </xsl:text>
                 </h2>
+                <!--<h2>-->
+                    <!--<xsl:call-template name="includeOcticon">-->
+                        <!--<xsl:with-param name="name" select="'book'"/>-->
+                    <!--</xsl:call-template>-->
+                    <!--<xsl:call-template name="capitalizeFirstLetter">-->
+                        <!--<xsl:with-param name="in" select="name(*[1])"/>-->
+                    <!--</xsl:call-template>-->
+                    <!--<xsl:text disable-output-escaping="yes"> Details </xsl:text>-->
+                <!--</h2>-->
                 <!--general information for all but persons and publications-->
-                <xsl:if test="c:distribution | c:project | c:experiment | c:hardware | c:dataset">
-                    <h3>
-                        <xsl:text disable-output-escaping="yes">General Information</xsl:text>
-                    </h3>
-                    <div class="description">
-                        <xsl:choose>
-                            <xsl:when test="child::node()/c:description">
-                                <xsl:apply-templates select="child::node()/c:description" mode="catalog"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <p>
-                                    <xsl:text disable-output-escaping="yes">No description provided yet.</xsl:text>
-                                </p>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </div>
-                </xsl:if>
-                <!--person -->
-                <xsl:apply-templates select="c:person" mode="catalog"/>
+                <div class="card">
+                    <xsl:choose>
+                        <xsl:when test="c:distribution | c:project | c:experiment | c:hardware | c:dataset">
+                            <div class="card-header">
+                                <h3>
+                                    <xsl:call-template name="includeOcticon">
+                                        <xsl:with-param name="name" select="'file-text'"/>
+                                    </xsl:call-template>
+                                    <xsl:text disable-output-escaping="yes">General Information</xsl:text>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="description card-text">
+                                    <xsl:choose>
+                                        <xsl:when test="child::node()/c:description">
+                                            <xsl:apply-templates select="child::node()/c:description" mode="catalog"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <p>
+                                                <xsl:text disable-output-escaping="yes">No description provided yet.</xsl:text>
+                                            </p>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <table class="table">
+                                    <tbody>
+                                        <!--access type-->
+                                        <xsl:apply-templates select="child::node()/@access" mode="catalog"/>
+                                        <!--license-->
+                                        <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
+                                        <!--activities-->
+                                        <xsl:apply-templates select="child::node()/c:mostRecentActivity" mode="catalog"/>
+                                        <!--natures-->
+                                        <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
+                                        <!--languages-->
+                                        <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <div class="card-header">
+                                <!--person -->
+                                <xsl:apply-templates select="c:person" mode="catalog"/>
+                            </div>
+                            <xsl:if test="child::node()/c:description">
+                                <div class="card-body">
+                                    <xsl:apply-templates select="child::node()/c:description" mode="catalog"/>
+                                </div>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </div>
+
+
 
                 <!--image carousel-->
                 <xsl:if test="child::node()/c:resource[@type = 'img']">
@@ -208,40 +251,49 @@
                 <!--embed video-->
                 <xsl:apply-templates select="child::node()/c:resource[@type = 'video']" mode="catalog"/>
 
-                <!--access type-->
-                <xsl:apply-templates select="child::node()/@access" mode="catalog"/>
-                <!--license-->
-                <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
-                <!--activities-->
-                <xsl:apply-templates select="child::node()/c:mostRecentActivity" mode="catalog"/>
-                <!--natures-->
-                <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
-                <!--languages-->
-                <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
 
                 <!--other resources-->
-                <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
-                                     mode="catalog"/>
+                <xsl:if test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>
+                                <xsl:call-template name="includeOcticon">
+                                    <xsl:with-param name="name" select="'link-external'"/>
+                                </xsl:call-template>
+                                <xsl:text>Resources</xsl:text></h5>
+                        </div>
+                        <div class="card-body">
+                            <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
+                                                 mode="catalog"/>
+                        </div>
+                    </div>
+                </xsl:if>
                 <!--extends-->
                 <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
                 <!--Related Persons-->
                 <xsl:if test="child::node()/c:relation[@type = 'person']">
-                    <h5>
-                        <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'person'"/>
-                    </xsl:call-template>
-                        <xsl:text disable-output-escaping="yes">Involved </xsl:text>
-                        <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
-                        </xsl:call-template>
-                        <xsl:if test="count(child::node()/c:relation[@type = 'person']) > 1">
-                            <xsl:text>s</xsl:text>
-                        </xsl:if>
-                        <xsl:text disable-output-escaping="yes">:</xsl:text>
-                    </h5>
-                    <ul class="persons">
-                        <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="catalog"/>
-                    </ul>
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>
+                                <xsl:call-template name="includeOcticon">
+                                    <xsl:with-param name="name" select="'person'"/>
+                                </xsl:call-template>
+                                <xsl:text disable-output-escaping="yes">Involved </xsl:text>
+                                <xsl:call-template name="capitalizeFirstLetter">
+                                    <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
+                                </xsl:call-template>
+                                <xsl:if test="count(child::node()/c:relation[@type = 'person']) > 1">
+                                    <xsl:text>s</xsl:text>
+                                </xsl:if>
+                                <xsl:text disable-output-escaping="yes">:</xsl:text>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="persons">
+                                <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="catalog"/>
+                            </ul>
+                        </div>
+                    </div>
                 </xsl:if>
                 <!--Related Publications-->
                 <xsl:if test="child::node()/c:relation[@type = 'publication']">
@@ -439,6 +491,9 @@
     <xsl:template name="getBacklink">
         <xsl:message>INFO: Calling 'getBacklink' template</xsl:message>
         <xsl:element name="div">
+            <xsl:attribute name="class">
+                <xsl:text>card</xsl:text>
+            </xsl:attribute>
             <xsl:attribute name="id">
                 <xsl:text disable-output-escaping="yes">backlinks</xsl:text>
             </xsl:attribute>
@@ -722,98 +777,118 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <!--access type-->
     <xsl:template match="@access" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <h5>
-            <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="name" select="'lock'"/>
-            </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">Access: </xsl:text>
-            <span>
-                <xsl:choose>
-                    <xsl:when test=". = 'public'">
-                        <xsl:attribute name="class">badge badge-success</xsl:attribute>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:attribute name="class">badge badge-danger</xsl:attribute>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:value-of select="."/>
-            </span>
-        </h5>
+        <tr>
+            <td>
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="name" select="'lock'"/>
+                </xsl:call-template>
+                <xsl:text disable-output-escaping="yes">Access: </xsl:text>
+            </td>
+            <td>
+                <span>
+                    <xsl:choose>
+                        <xsl:when test=". = 'public'">
+                            <xsl:attribute name="class">badge badge-success</xsl:attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="class">badge badge-danger</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:value-of select="."/>
+                </span>
+            </td>
+        </tr>
     </xsl:template>
 
     <!--licenses-->
     <xsl:template match="c:license" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <h5>
-            <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="name" select="'law'"/>
-            </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">License: </xsl:text>
-            <span class="badge badge-info">
-                <xsl:value-of select="text()"/>
-            </span>
-        </h5>
+        <tr>
+            <td>
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="name" select="'law'"/>
+                </xsl:call-template>
+                <xsl:text disable-output-escaping="yes">License: </xsl:text>
+            </td>
+            <td>
+                <span class="badge badge-info">
+                    <xsl:value-of select="text()"/>
+                </span>
+            </td>
+        </tr>
     </xsl:template>
 
     <!--most recent activity-->
     <xsl:template match="c:mostRecentActivity" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <h5>
-            <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="name" select="'clock'"/>
-            </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
-            <span class="date">
-                <xsl:value-of select="c:date/text()"/>
-            </span>
-            <small>
-                <xsl:text> (</xsl:text>
-                <xsl:value-of select="c:id/text()"/>
-                <xsl:text>)</xsl:text>
-            </small>
-        </h5>
+        <tr>
+            <td>
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="name" select="'clock'"/>
+                </xsl:call-template>
+                <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
+            </td>
+            <td>
+                <span class="date">
+                    <xsl:value-of select="c:date/text()"/>
+                </span>
+                <small>
+                    <xsl:text> (</xsl:text>
+                    <xsl:value-of select="c:id/text()"/>
+                    <xsl:text>)</xsl:text>
+                </small>
+            </td>
+        </tr>
     </xsl:template>
 
     <!--natures-->
     <xsl:template match="c:natures" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <h5>
-            <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="name" select="'gear'"/>
-            </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">Nature</xsl:text>
-            <xsl:if test="count(c:nature) > 1">s</xsl:if>
-            <xsl:text disable-output-escaping="yes">: </xsl:text>
-            <xsl:for-each select="c:nature">
-                <span class="badge badge-info">
-                    <xsl:value-of select="text()"/>
-                </span>
-                <xsl:if test="position() != last()">
-                    <xsl:text> </xsl:text>
-                </xsl:if>
-            </xsl:for-each>
-        </h5>
+        <tr>
+            <td>
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="name" select="'gear'"/>
+                </xsl:call-template>
+                <xsl:text disable-output-escaping="yes">Nature</xsl:text>
+                <xsl:if test="count(c:nature) > 1">s</xsl:if>
+                <xsl:text disable-output-escaping="yes">: </xsl:text>
+            </td>
+            <td>
+                <xsl:for-each select="c:nature">
+                    <span class="badge badge-info">
+                        <xsl:value-of select="text()"/>
+                    </span>
+                    <xsl:if test="position() != last()">
+                        <xsl:text> </xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            </td>
+        </tr>
     </xsl:template>
 
     <!--programming languages-->
     <xsl:template match="c:programmingLanguages" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <h5>
-            <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="name" select="'code'"/>
-            </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
-            <xsl:if test="count(c:language) > 1">s</xsl:if>
-            <xsl:text disable-output-escaping="yes">: </xsl:text>
-            <xsl:for-each select="c:language">
-                <span class="badge badge-info">
-                    <xsl:value-of select="text()"/>
-                </span>
-                <xsl:if test="position() != last()">
-                    <xsl:text> </xsl:text>
-                </xsl:if>
-            </xsl:for-each>
-        </h5>
+        <tr>
+            <td>
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="name" select="'code'"/>
+                </xsl:call-template>
+                <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
+                <xsl:if test="count(c:language) > 1">s</xsl:if>
+                <xsl:text disable-output-escaping="yes">: </xsl:text>
+            </td>
+            <td>
+                <xsl:for-each select="c:language">
+                    <span class="badge badge-info">
+                        <xsl:value-of select="text()"/>
+                    </span>
+                    <xsl:if test="position() != last()">
+                        <xsl:text> </xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            </td>
+        </tr>
     </xsl:template>
 
     <!--linked fragments-->
@@ -831,7 +906,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:text>../</xsl:text>
                     <xsl:value-of select="@type"/>
                     <xsl:text disable-output-escaping="yes">/</xsl:text>
-                    <xsl:value-of select="."/>
+                    <xsl:value-of select="normalize-space(.)"/>
                     <xsl:text>.xml</xsl:text>
                 </xsl:attribute>
                 <xsl:if test="@type = 'experiment'">
@@ -888,42 +963,55 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <xsl:template match="c:distribution | c:project | c:experiment | c:dataset" mode="dependency">
         <xsl:call-template name="log_template_info"/>
         <xsl:if test="c:dependencies/c:directDependency">
-            <div id="directDependencies">
-                <h5>
-                    <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'package'"/>
-                    </xsl:call-template>
-                    <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
-                </h5>
-                <ul>
-                    <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency">
-                        <xsl:sort/>
-                    </xsl:apply-templates>
-                    <xsl:apply-templates
-                            select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']"
-                            mode="catalog"/>
-                </ul>
+            <div class="card">
+                <div id="directDependencies">
+                    <div class="card-header">
+                        <h5>
+                            <xsl:call-template name="includeOcticon">
+                                <xsl:with-param name="name" select="'package'"/>
+                            </xsl:call-template>
+                            <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency">
+                                <xsl:sort/>
+                            </xsl:apply-templates>
+                            <xsl:apply-templates
+                                    select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']"
+                                    mode="catalog"/>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </xsl:if>
-        <xsl:if test="c:dependencies/c:system/c:dependency">
-            <xsl:if test="local-name() = 'distribution'">
-                <h3>
-                    <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'repo-clone'"/>
-                    </xsl:call-template>
-                    <xsl:text disable-output-escaping="yes">Replication</xsl:text>
-                </h3>
-            </xsl:if>
-            <h5>
-                <xsl:call-template name="includeOcticon">
-                    <xsl:with-param name="name" select="'desktop-download'"/>
-                </xsl:call-template>
-                <xsl:text disable-output-escaping="yes">Install Required OS Packages:</xsl:text>
-            </h5>
-            <div id="systemDependencies" data-children=".system">
-                <xsl:apply-templates select="c:dependencies/c:system" mode="dependency"/>
+        <xsl:if test="local-name() = 'distribution'">
+            <div class="card">
+                <div class="card-header">
+                    <h3>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'repo-clone'"/>
+                        </xsl:call-template>
+                        <xsl:text disable-output-escaping="yes">Replication</xsl:text>
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    <xsl:if test="c:dependencies/c:system/c:dependency">
+                        <h5>
+                            <xsl:call-template name="includeOcticon">
+                                <xsl:with-param name="name" select="'desktop-download'"/>
+                            </xsl:call-template>
+                            <xsl:text disable-output-escaping="yes">Install Required OS Packages:</xsl:text>
+                        </h5>
+                        <div id="systemDependencies" data-children=".system">
+                            <xsl:apply-templates select="c:dependencies/c:system" mode="dependency"/>
+                        </div>
+                        <xsl:apply-templates select="." mode="gendist"/>
+                    </xsl:if>
+                </div>
             </div>
-            <xsl:apply-templates select="." mode="gendist"/>
         </xsl:if>
     </xsl:template>
 
@@ -1053,7 +1141,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:element name="a">
                 <xsl:attribute name="href">
                     <xsl:text disable-output-escaping="yes">../project/</xsl:text>
-                    <xsl:value-of select="."/>
+                    <xsl:value-of select="normalize-space(.)"/>
                     <xsl:text>.xml</xsl:text>
                 </xsl:attribute>
                 <xsl:attribute name="class">

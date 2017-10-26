@@ -45,6 +45,7 @@ code.hljs {
     margin-right: .5rem;
     height: 1rem;
     width: 1rem;
+    vertical-align: initial;
 }
 
 h1 > .octicon {

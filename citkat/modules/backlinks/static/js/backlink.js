@@ -20,10 +20,15 @@
         var types = {};
         var jsonAnswer = JSON.parse(response);
         if (jsonAnswer.length > 0) {
-            // console.log(jsonAnswer);
+            var cardDiv = document.createElement('div');
+            cardDiv.setAttribute('class', 'card-header');
             var h = document.createElement('h5');
+            h.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-link"><use xlink:href="#link"></use></svg>'
             h.appendChild(document.createTextNode('Recipe used by:'));
-            backlinksDiv.appendChild(h);
+            cardDiv.appendChild(h);
+            backlinksDiv.appendChild(cardDiv);
+            var cardBodyDiv = document.createElement('div');
+            cardBodyDiv.setAttribute('class', 'card-body');
             var ul = document.createElement('ul');
             jsonAnswer.forEach(function (elem) {
                 var li = document.createElement('li');
@@ -40,7 +45,8 @@
                 li.appendChild(document.createTextNode(typeText));
                 ul.appendChild(li);
             });
-            backlinksDiv.appendChild(ul);
+            cardBodyDiv.appendChild(ul);
+            backlinksDiv.appendChild(cardBodyDiv);
         }
     })
 })();
