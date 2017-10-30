@@ -251,95 +251,96 @@
 
 
                 <!--other resources-->
-                <xsl:if test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>
-                                <xsl:call-template name="includeOcticon">
-                                    <xsl:with-param name="name" select="'link-external'"/>
-                                </xsl:call-template>
-                                <xsl:text>Resources</xsl:text></h5>
-                        </div>
-                        <div class="card-body">
-                            <dl class="row">
-                                <xsl:apply-templates
-                                        select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
-                                        mode="catalog"/>
-                            </dl>
-
-                        </div>
-                    </div>
-                </xsl:if>
-                <!--extends-->
-                <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
-                <!--Related Persons-->
-                <xsl:if test="child::node()/c:relation[@type = 'person']">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>
-                                <xsl:call-template name="includeOcticon">
-                                    <xsl:with-param name="name" select="'person'"/>
-                                </xsl:call-template>
-                                <xsl:text disable-output-escaping="yes">Involved </xsl:text>
-                                <xsl:call-template name="capitalizeFirstLetter">
-                                    <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
-                                </xsl:call-template>
-                                <xsl:if test="count(child::node()/c:relation[@type = 'person']) > 1">
-                                    <xsl:text>s</xsl:text>
-                                </xsl:if>
-                                <xsl:text disable-output-escaping="yes">:</xsl:text>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <ul class="persons">
-                                <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="catalog"/>
-                            </ul>
-                        </div>
-                    </div>
-                </xsl:if>
-                <!--Related Publications-->
-                <xsl:if test="child::node()/c:relation[@type = 'publication']">
-                    <h5>
-                        <xsl:text disable-output-escaping="yes">Linked </xsl:text>
-                        <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'publication']/@type"/>
-                        </xsl:call-template>
-                        <xsl:if test="count(child::node()/c:relation[@type = 'publication']) > 1">
-                            <xsl:text>s</xsl:text>
-                        </xsl:if>
-                        <xsl:text disable-output-escaping="yes">:</xsl:text>
-                    </h5>
-                    <ul class="publications">
-                        <xsl:apply-templates select="child::node()/c:relation[@type = 'publication']" mode="catalog"/>
-                    </ul>
-                </xsl:if>
-                <!--Related Hardware-->
-                <xsl:if test="child::node()/c:relation[@type = 'hardware']">
-                    <h5>
-                        <xsl:call-template name="includeOcticon">
-                            <xsl:with-param name="name" select="'server'"/>
-                        </xsl:call-template>
-                        <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'hardware']/@type"/>
-                        </xsl:call-template>
-                        <xsl:text disable-output-escaping="yes">:</xsl:text>
-                    </h5>
-                    <ul class="hardware">
-                        <xsl:apply-templates select="child::node()/c:relation[@type = 'hardware']" mode="catalog"/>
-                    </ul>
-                </xsl:if>
-                <!--apply all dependency stuff-->
-                <xsl:apply-templates mode="dependency"/>
-                <!--additional experiment info-->
-                <xsl:if test="c:experiment">
-                    <xsl:call-template name="experimentMetrics"/>
-                </xsl:if>
-                <!--getBacklinks block-->
-                <xsl:call-template name="getBacklink"/>
-                <!--jenkins block-->
-                <xsl:if test="c:distribution | c:project | c:experiment">
-                    <xsl:call-template name="jenkinsApi"/>
-                </xsl:if>
+                <div class="card-columns">
+                    <xsl:if test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
+                            <div class="card ">
+                                <div class="card-header">
+                                    <h5>
+                                        <xsl:call-template name="includeOcticon">
+                                            <xsl:with-param name="name" select="'link-external'"/>
+                                        </xsl:call-template>
+                                        <xsl:text>Resources</xsl:text></h5>
+                                </div>
+                                <div class="card-body">
+                                    <dl>
+                                        <xsl:apply-templates
+                                                select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
+                                                mode="catalog"/>
+                                    </dl>
+                                </div>
+                            </div>
+                    </xsl:if>
+                    <!--extends-->
+                    <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
+                    <!--Related Persons-->
+                    <xsl:if test="child::node()/c:relation[@type = 'person']">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>
+                                        <xsl:call-template name="includeOcticon">
+                                            <xsl:with-param name="name" select="'person'"/>
+                                        </xsl:call-template>
+                                        <xsl:text disable-output-escaping="yes">Involved </xsl:text>
+                                        <xsl:call-template name="capitalizeFirstLetter">
+                                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
+                                        </xsl:call-template>
+                                        <xsl:if test="count(child::node()/c:relation[@type = 'person']) > 1">
+                                            <xsl:text>s</xsl:text>
+                                        </xsl:if>
+                                        <xsl:text disable-output-escaping="yes">:</xsl:text>
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="persons">
+                                        <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="catalog"/>
+                                    </ul>
+                                </div>
+                            </div>
+                    </xsl:if>
+                    <!--Related Publications-->
+                    <xsl:if test="child::node()/c:relation[@type = 'publication']">
+                        <h5>
+                            <xsl:text disable-output-escaping="yes">Linked </xsl:text>
+                            <xsl:call-template name="capitalizeFirstLetter">
+                                <xsl:with-param name="in" select="child::node()/c:relation[@type = 'publication']/@type"/>
+                            </xsl:call-template>
+                            <xsl:if test="count(child::node()/c:relation[@type = 'publication']) > 1">
+                                <xsl:text>s</xsl:text>
+                            </xsl:if>
+                            <xsl:text disable-output-escaping="yes">:</xsl:text>
+                        </h5>
+                        <ul class="publications">
+                            <xsl:apply-templates select="child::node()/c:relation[@type = 'publication']" mode="catalog"/>
+                        </ul>
+                    </xsl:if>
+                    <!--Related Hardware-->
+                    <xsl:if test="child::node()/c:relation[@type = 'hardware']">
+                        <h5>
+                            <xsl:call-template name="includeOcticon">
+                                <xsl:with-param name="name" select="'server'"/>
+                            </xsl:call-template>
+                            <xsl:call-template name="capitalizeFirstLetter">
+                                <xsl:with-param name="in" select="child::node()/c:relation[@type = 'hardware']/@type"/>
+                            </xsl:call-template>
+                            <xsl:text disable-output-escaping="yes">:</xsl:text>
+                        </h5>
+                        <ul class="hardware">
+                            <xsl:apply-templates select="child::node()/c:relation[@type = 'hardware']" mode="catalog"/>
+                        </ul>
+                    </xsl:if>
+                    <!--apply all dependency stuff-->
+                    <xsl:apply-templates mode="dependency"/>
+                    <!--additional experiment info-->
+                    <xsl:if test="c:experiment">
+                        <xsl:call-template name="experimentMetrics"/>
+                    </xsl:if>
+                    <!--getBacklinks block-->
+                    <xsl:call-template name="getBacklink"/>
+                    <!--jenkins block-->
+                    <xsl:if test="c:distribution | c:project | c:experiment">
+                        <xsl:call-template name="jenkinsApi"/>
+                    </xsl:if>
+                </div>
             </xsl:element>
         </div>
     </xsl:template>
@@ -492,25 +493,25 @@
     <!--backlinks creating-->
     <xsl:template name="getBacklink">
         <xsl:message>INFO: Calling 'getBacklink' template</xsl:message>
-        <xsl:element name="div">
-            <xsl:attribute name="class">
-                <xsl:text>card</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="id">
-                <xsl:text disable-output-escaping="yes">backlinks</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="type">
-                <xsl:value-of select="name(*[1])"/>
-            </xsl:attribute>
-            <xsl:attribute name="data-backlinks">
-                <xsl:value-of select="child::node()/c:filename"/>
-            </xsl:attribute>
-            <xsl:for-each select="child::node()/@*">
-                <xsl:attribute name="{local-name()}">
-                    <xsl:value-of select="."/>
+            <xsl:element name="div">
+                <xsl:attribute name="class">
+                    <xsl:text>card</xsl:text>
                 </xsl:attribute>
-            </xsl:for-each>
-        </xsl:element>
+                <xsl:attribute name="id">
+                    <xsl:text disable-output-escaping="yes">backlinks</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="type">
+                    <xsl:value-of select="name(*[1])"/>
+                </xsl:attribute>
+                <xsl:attribute name="data-backlinks">
+                    <xsl:value-of select="child::node()/c:filename"/>
+                </xsl:attribute>
+                <xsl:for-each select="child::node()/@*">
+                    <xsl:attribute name="{local-name()}">
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                </xsl:for-each>
+            </xsl:element>
         <script src="/api/backlinks/static/js/backlink.js"/>
     </xsl:template>
 
@@ -697,36 +698,34 @@
     <!--other resource types-->
     <xsl:template match="c:resource[not(@type = 'img') and not(@type = 'video')]" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <!--<tr>-->
-            <dt class="col-12">
+        <dt>
+            <xsl:choose>
+                <xsl:when test="@type = 'bugtracker'">
+                    <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
+                </xsl:when>
+                <xsl:when test="@type = 'scmbrowser'">
+                    <xsl:text disable-output-escaping="yes">SCM</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="capitalizeFirstLetter">
+                        <xsl:with-param name="in" select="@type"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text disable-output-escaping="yes">: </xsl:text>
+        </dt>
+        <dd>
+            <a href="{@href}">
                 <xsl:choose>
-                    <xsl:when test="@type = 'bugtracker'">
-                        <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="@type = 'scmbrowser'">
-                        <xsl:text disable-output-escaping="yes">SCM</xsl:text>
+                    <xsl:when test="@name">
+                        <xsl:value-of select="@name"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:call-template name="capitalizeFirstLetter">
-                            <xsl:with-param name="in" select="@type"/>
-                        </xsl:call-template>
+                        <xsl:value-of select="@href"/>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:text disable-output-escaping="yes">: </xsl:text>
-            </dt>
-            <dd class="col-12">
-                <a href="{@href}">
-                    <xsl:choose>
-                        <xsl:when test="@name">
-                            <xsl:value-of select="@name"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="@href"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </a>
-            </dd>
-        <!--</tr>-->
+            </a>
+        </dd>
     </xsl:template>
 
     <!--jenkins api-->
@@ -957,28 +956,28 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <xsl:template match="c:distribution | c:project | c:experiment | c:dataset" mode="dependency">
         <xsl:call-template name="log_template_info"/>
         <xsl:if test="c:dependencies/c:directDependency">
-            <div class="card">
-                <div id="directDependencies">
-                    <div class="card-header">
-                        <h5>
-                            <xsl:call-template name="includeOcticon">
-                                <xsl:with-param name="name" select="'package'"/>
-                            </xsl:call-template>
-                            <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ul>
-                            <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency">
-                                <xsl:sort/>
-                            </xsl:apply-templates>
-                            <xsl:apply-templates
-                                    select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']"
-                                    mode="catalog"/>
-                        </ul>
+                <div class="card">
+                    <div id="directDependencies">
+                        <div class="card-header">
+                            <h5>
+                                <xsl:call-template name="includeOcticon">
+                                    <xsl:with-param name="name" select="'package'"/>
+                                </xsl:call-template>
+                                <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency">
+                                    <xsl:sort/>
+                                </xsl:apply-templates>
+                                <xsl:apply-templates
+                                        select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']"
+                                        mode="catalog"/>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
         </xsl:if>
         <xsl:if test="local-name() = 'distribution'">
             <div class="card">

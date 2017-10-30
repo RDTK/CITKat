@@ -49,7 +49,7 @@ code.hljs {
 }
 
 .card {
-    margin-bottom: .5rem;
+    margin-bottom: 1.5rem;
 }
 
 h1 > .octicon {
@@ -109,8 +109,15 @@ ol.carousel-indicators > li {
     max-height: 300px;
 }
 
+.card-columns {
+    column-count: 1;
+}
 
 @media (min-width: 768px) {
+    .card-columns {
+        column-count: 2;
+    }
+
     #carouselImgs {
         height: 400px;
     }
