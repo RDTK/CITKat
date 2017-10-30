@@ -211,21 +211,19 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <table class="table-sm table-responsive">
-                                    <tbody>
-                                        <!--access type-->
-                                        <xsl:apply-templates select="child::node()/@access" mode="catalog"/>
-                                        <!--license-->
-                                        <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
-                                        <!--activities-->
-                                        <xsl:apply-templates select="child::node()/c:mostRecentActivity" mode="catalog"/>
-                                        <!--natures-->
-                                        <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
-                                        <!--languages-->
-                                        <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
-                                    </tbody>
-                                </table>
-
+                                <dl class="row">
+                                    <!--access type-->
+                                    <xsl:apply-templates select="child::node()/@access" mode="catalog"/>
+                                    <!--languages-->
+                                    <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
+                                    <!--license-->
+                                    <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
+                                    <!--natures-->
+                                    <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
+                                    <dt class="w-100"></dt>
+                                    <!--activities-->
+                                    <xsl:apply-templates select="child::node()/c:mostRecentActivity" mode="catalog"/>
+                                </dl>
                             </div>
                         </xsl:when>
                         <xsl:otherwise>
@@ -263,13 +261,11 @@
                                 <xsl:text>Resources</xsl:text></h5>
                         </div>
                         <div class="card-body">
-                            <table class="table-sm table-responsive">
-                                <tbody>
-                                    <xsl:apply-templates
-                                            select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
-                                            mode="catalog"/>
-                                </tbody>
-                            </table>
+                            <dl class="row">
+                                <xsl:apply-templates
+                                        select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
+                                        mode="catalog"/>
+                            </dl>
 
                         </div>
                     </div>
@@ -701,8 +697,8 @@
     <!--other resource types-->
     <xsl:template match="c:resource[not(@type = 'img') and not(@type = 'video')]" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <tr>
-            <td>
+        <!--<tr>-->
+            <dt class="col-12">
                 <xsl:choose>
                     <xsl:when test="@type = 'bugtracker'">
                         <xsl:text disable-output-escaping="yes">Bug Tracker</xsl:text>
@@ -717,8 +713,8 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text disable-output-escaping="yes">: </xsl:text>
-            </td>
-            <td>
+            </dt>
+            <dd class="col-12">
                 <a href="{@href}">
                     <xsl:choose>
                         <xsl:when test="@name">
@@ -729,8 +725,8 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </a>
-            </td>
-        </tr>
+            </dd>
+        <!--</tr>-->
     </xsl:template>
 
     <!--jenkins api-->
@@ -785,118 +781,108 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <!--access type-->
     <xsl:template match="@access" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <tr>
-            <td>
-                <xsl:call-template name="includeOcticon">
-                    <xsl:with-param name="name" select="'lock'"/>
-                </xsl:call-template>
-                <xsl:text disable-output-escaping="yes">Access: </xsl:text>
-            </td>
-            <td>
-                <span>
-                    <xsl:choose>
-                        <xsl:when test=". = 'public'">
-                            <xsl:attribute name="class">badge badge-success</xsl:attribute>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:attribute name="class">badge badge-danger</xsl:attribute>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <xsl:value-of select="."/>
-                </span>
-            </td>
-        </tr>
+        <dt class="col-6 col-lg-3">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'lock'"/>
+            </xsl:call-template>
+            <xsl:text disable-output-escaping="yes">Access: </xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-3">
+            <span>
+                <xsl:choose>
+                    <xsl:when test=". = 'public'">
+                        <xsl:attribute name="class">badge badge-success</xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="class">badge badge-danger</xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:value-of select="."/>
+            </span>
+        </dd>
     </xsl:template>
 
     <!--licenses-->
     <xsl:template match="c:license" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <tr>
-            <td>
-                <xsl:call-template name="includeOcticon">
-                    <xsl:with-param name="name" select="'law'"/>
-                </xsl:call-template>
-                <xsl:text disable-output-escaping="yes">License: </xsl:text>
-            </td>
-            <td>
-                <span class="badge badge-info">
-                    <xsl:value-of select="text()"/>
-                </span>
-            </td>
-        </tr>
+        <dt class="col-6 col-lg-3">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'law'"/>
+            </xsl:call-template>
+            <xsl:text disable-output-escaping="yes">License: </xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-3">
+            <span class="badge badge-info">
+                <xsl:value-of select="text()"/>
+            </span>
+        </dd>
     </xsl:template>
 
     <!--most recent activity-->
     <xsl:template match="c:mostRecentActivity" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <tr>
-            <td>
-                <xsl:call-template name="includeOcticon">
-                    <xsl:with-param name="name" select="'clock'"/>
-                </xsl:call-template>
-                <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
-            </td>
-            <td>
-                <span class="date">
-                    <xsl:value-of select="c:date/text()"/>
-                </span><br/>
-                <small>
-                    <xsl:text>(</xsl:text>
-                    <xsl:value-of select="c:id/text()"/>
-                    <xsl:text>)</xsl:text>
-                </small>
-            </td>
-        </tr>
+        <dt class="col-6 col-lg-3 text-truncate">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'clock'"/>
+            </xsl:call-template>
+            <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-9">
+            <span class="date">
+                <xsl:value-of select="c:date/text()"/>
+            </span><br/>
+            <small>
+                <xsl:text>(</xsl:text>
+                <xsl:value-of select="c:id/text()"/>
+                <xsl:text>)</xsl:text>
+            </small>
+        </dd>
     </xsl:template>
 
     <!--natures-->
     <xsl:template match="c:natures" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <tr>
-            <td>
-                <xsl:call-template name="includeOcticon">
-                    <xsl:with-param name="name" select="'gear'"/>
-                </xsl:call-template>
-                <xsl:text disable-output-escaping="yes">Nature</xsl:text>
-                <xsl:if test="count(c:nature) > 1">s</xsl:if>
-                <xsl:text disable-output-escaping="yes">: </xsl:text>
-            </td>
-            <td>
-                <xsl:for-each select="c:nature">
-                    <span class="badge badge-info">
-                        <xsl:value-of select="text()"/>
-                    </span>
-                    <xsl:if test="position() != last()">
-                        <xsl:text> </xsl:text>
-                    </xsl:if>
-                </xsl:for-each>
-            </td>
-        </tr>
+        <dt class="col-6 col-lg-3">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'gear'"/>
+            </xsl:call-template>
+            <xsl:text disable-output-escaping="yes">Nature</xsl:text>
+            <xsl:if test="count(c:nature) > 1">s</xsl:if>
+            <xsl:text disable-output-escaping="yes">: </xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-3">
+            <xsl:for-each select="c:nature">
+                <span class="badge badge-info">
+                    <xsl:value-of select="text()"/>
+                </span>
+                <xsl:if test="position() != last()">
+                    <xsl:text> </xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+        </dd>
     </xsl:template>
 
     <!--programming languages-->
     <xsl:template match="c:programmingLanguages" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <tr>
-            <td>
-                <xsl:call-template name="includeOcticon">
-                    <xsl:with-param name="name" select="'code'"/>
-                </xsl:call-template>
-                <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
-                <xsl:if test="count(c:language) > 1">s</xsl:if>
-                <xsl:text disable-output-escaping="yes">: </xsl:text>
-            </td>
-            <td>
-                <xsl:for-each select="c:language">
-                    <span class="badge badge-info">
-                        <xsl:value-of select="text()"/>
-                    </span>
-                    <xsl:if test="position() != last()">
-                        <xsl:text> </xsl:text>
-                    </xsl:if>
-                </xsl:for-each>
-            </td>
-        </tr>
+        <dt class="col-6 col-lg-3 text-truncate">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'code'"/>
+            </xsl:call-template>
+            <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
+            <xsl:if test="count(c:language) > 1">s</xsl:if>
+            <xsl:text disable-output-escaping="yes">: </xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-3">
+            <xsl:for-each select="c:language">
+                <span class="badge badge-info">
+                    <xsl:value-of select="text()"/>
+                </span>
+                <xsl:if test="position() != last()">
+                    <xsl:text> </xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+        </dd>
     </xsl:template>
 
     <!--linked fragments-->
