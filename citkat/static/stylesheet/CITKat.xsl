@@ -221,8 +221,8 @@
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
                                     <dt class="w-100"></dt>
-                                    <!--activities-->
-                                    <xsl:apply-templates select="child::node()/c:mostRecentActivity" mode="catalog"/>
+                                    <!--scm-->
+                                    <xsl:apply-templates select="child::node()/c:scm" mode="catalog"/>
                                 </dl>
                             </div>
                         </xsl:when>
@@ -839,25 +839,45 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         </dd>
     </xsl:template>
 
-    <!--most recent activity-->
-    <xsl:template match="c:mostRecentActivity" mode="catalog">
+    <!--scm-->
+    <xsl:template match="c:scm" mode="catalog">
         <xsl:call-template name="log_template_info"/>
+
+        <dt class="col-6 col-lg-3 text-truncate">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'repo'"/>
+            </xsl:call-template>
+            <xsl:text disable-output-escaping="yes">Source control: </xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-3">
+          <xsl:choose>
+            <xsl:when test="c:kind">
+              <xsl:value-of select="c:kind/text()"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <span class="badge badge-danger">none</span>
+            </xsl:otherwise>
+          </xsl:choose>
+        </dd>
+
+        <xsl:if test="c:revision">
         <dt class="col-6 col-lg-3 text-truncate">
             <xsl:call-template name="includeOcticon">
                 <xsl:with-param name="name" select="'clock'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
         </dt>
-        <dd class="col-6 col-lg-9">
+        <dd class="col-6 col-lg-3">
             <span class="date">
-                <xsl:value-of select="c:date/text()"/>
+                <xsl:value-of select="c:revision/c:date/text()"/>
             </span><br/>
             <small>
                 <xsl:text>(</xsl:text>
-                <xsl:value-of select="c:id/text()"/>
+                <xsl:value-of select="c:revision/c:id/text()"/>
                 <xsl:text>)</xsl:text>
             </small>
         </dd>
+        </xsl:if>
     </xsl:template>
 
     <!--natures-->
