@@ -497,6 +497,7 @@
                 <xsl:attribute name="class">
                     <xsl:text>card</xsl:text>
                 </xsl:attribute>
+                <xsl:attribute name="hidden"/>
                 <xsl:attribute name="id">
                     <xsl:text disable-output-escaping="yes">backlinks</xsl:text>
                 </xsl:attribute>

@@ -57,12 +57,7 @@
             countBadge.appendChild(countSpan);
             var h = backlinksDiv.querySelector('.card-header *');
             h.appendChild(countBadge);
+            backlinksDiv.removeAttribute('hidden');
         }
     });
-//    <small>
-//                                    <span class="badge badge-pill badge-info" style="float:right;">
-//                                        <xsl:value-of select="count(c:dependencies/c:directDependency)"/>
-//                                    </span>
-//                                </small>
-
 })();
