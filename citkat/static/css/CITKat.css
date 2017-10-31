@@ -199,3 +199,6 @@ input:checked + .inner::after {
   pointer-events: none;
 }
 
+.badge a {
+    color: white;
+}

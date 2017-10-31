@@ -797,7 +797,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:attribute name="class">badge badge-danger</xsl:attribute>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:value-of select="."/>
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:text>/search/access/</xsl:text>
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:value-of select="."/>
+                </a>
             </span>
         </dd>
     </xsl:template>
@@ -813,7 +819,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         </dt>
         <dd class="col-6 col-lg-3">
             <span class="badge badge-info">
-                <xsl:value-of select="text()"/>
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:text>/search/license/</xsl:text>
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:value-of select="."/>
+                </a>
             </span>
         </dd>
     </xsl:template>
@@ -853,7 +865,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <dd class="col-6 col-lg-3">
             <xsl:for-each select="c:nature">
                 <span class="badge badge-info">
-                    <xsl:value-of select="text()"/>
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:text>/search/nature/</xsl:text>
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:value-of select="."/>
+                </a>
                 </span>
                 <xsl:if test="position() != last()">
                     <xsl:text> </xsl:text>
@@ -876,7 +894,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <dd class="col-6 col-lg-3">
             <xsl:for-each select="c:language">
                 <span class="badge badge-info">
-                    <xsl:value-of select="text()"/>
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:text>/search/lang/</xsl:text>
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:value-of select="."/>
+                </a>
                 </span>
                 <xsl:if test="position() != last()">
                     <xsl:text> </xsl:text>
@@ -984,10 +1008,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         </div>
                     </div>
                 </div>
-
         </xsl:if>
         <xsl:if test="local-name() = 'distribution'">
-            <div class="card">
+            <div class="card ">
                 <div class="card-header">
                     <h3>
                         <xsl:call-template name="includeOcticon">
@@ -997,7 +1020,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     </h3>
                 </div>
                 <div class="card-body">
-
                     <xsl:if test="c:dependencies/c:system/c:dependency">
                         <h5>
                             <xsl:call-template name="includeOcticon">
