@@ -47,6 +47,22 @@
             });
             cardBodyDiv.appendChild(ul);
             backlinksDiv.appendChild(cardBodyDiv);
+
+            var countBadge = document.createElement('small');
+            var countSpan = document.createElement('span');
+            countSpan.setAttribute('class', 'badge badge-pill badge-info');
+            countSpan.setAttribute('style', 'float: right;');
+            var count = backlinksDiv.querySelectorAll('li').length;
+            countSpan.appendChild(document.createTextNode(count));
+            countBadge.appendChild(countSpan);
+            var h = backlinksDiv.querySelector('.card-header *');
+            h.appendChild(countBadge);
         }
-    })
+    });
+//    <small>
+//                                    <span class="badge badge-pill badge-info" style="float:right;">
+//                                        <xsl:value-of select="count(c:dependencies/c:directDependency)"/>
+//                                    </span>
+//                                </small>
+
 })();

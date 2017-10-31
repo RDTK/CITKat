@@ -22,7 +22,7 @@
 * linked recipe
 * more experiment information
 * ~~differentiate between recipe-maintainer and maintainer~~ done: @role has no restrictions
-
+* flexbox height calculation is wrong in chrome
 
 
 

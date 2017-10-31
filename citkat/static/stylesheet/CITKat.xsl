@@ -196,7 +196,7 @@
                                     <xsl:text disable-output-escaping="yes">General Information</xsl:text>
                                 </h3>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body hideContent">
                                 <div class="description card-text">
                                     <xsl:choose>
                                         <xsl:when test="child::node()/c:description">
@@ -964,9 +964,14 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                     <xsl:with-param name="name" select="'package'"/>
                                 </xsl:call-template>
                                 <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
+                                <small>
+                                    <span class="badge badge-pill badge-info" style="float:right;">
+                                        <xsl:value-of select="count(c:dependencies/c:directDependency)"/>
+                                    </span>
+                                </small>
                             </h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body hideContent">
                             <ul>
                                 <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency">
                                     <xsl:sort/>
@@ -978,6 +983,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         </div>
                     </div>
                 </div>
+
         </xsl:if>
         <xsl:if test="local-name() = 'distribution'">
             <div class="card">
