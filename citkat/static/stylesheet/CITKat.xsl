@@ -915,12 +915,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <dd class="col-6 col-lg-3">
             <xsl:choose>
                 <xsl:when test="c:kind">
-                    <a data-toggle="popover" title="Popover title" data-placement="bottom" data-content="And here's some amazing content. It's very engaging. Right?">
-                        <xsl:value-of select="c:kind/text()"/>
-                    </a>
+                    <xsl:value-of select="c:kind/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <span class="badge badge-warning">
+                    <span class="badge badge-warning text-light">
                         <small>
                             <xsl:call-template name="includeOcticon">
                                 <xsl:with-param name="name" select="'alert'"/>
@@ -943,14 +941,31 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <span class="date">
                     <xsl:value-of select="c:revision/c:date/text()"/>
                 </span>
-                <br/>
-                <small>
-                    <xsl:text>(</xsl:text>
-                    <xsl:value-of select="c:revision/c:id/text()"/>
-                    <xsl:text>)</xsl:text>
-                </small>
+                <!--<br/>-->
+                <!--<small>-->
+                    <!--<xsl:text>(</xsl:text>-->
+                    <!--<xsl:value-of select="c:revision/c:id/text()"/>-->
+                    <!--<xsl:text>)</xsl:text>-->
+                <!--</small>-->
             </dd>
         </xsl:if>
+        <dt class="col-6 col-lg-3 text-truncate">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'desktop-download'"/>
+            </xsl:call-template>
+            <xsl:text>Download Sourcecode:</xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-3">
+            <!--TODO: github style download-->
+            <button type="button" class="btn btn-sm btn-outline-success" data-toggle="popover" style="padding: 0 .5rem;">
+                <xsl:attribute name="data-content">And here's some &lt;strong>amazing&lt;/strong> content. It's
+                    very engaging. Right?And here's some &lt;strong>amazing&lt;/strong> content. It's
+                    very engaging. Right?And here's some &lt;strong>amazing&lt;/strong> content. It's
+                    very engaging. Right?
+                </xsl:attribute>
+                <xsl:text>Get the code</xsl:text>
+            </button>
+        </dd>
     </xsl:template>
 
     <!--natures-->
