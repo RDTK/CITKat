@@ -19,32 +19,33 @@ def search(keyword='', access='', license='', nature='', lang=''):
     Very simple search.
     :return:
     """
-    ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
+    ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat',
+          'r': 'http://exslt.org/regular-expressions'}
     xpath_search = ''
     term = ''
     if keyword:
-        xpath_search = XPath('/c:catalog[contains(./child::node()/c:keywords/c:keyword, $searchstring)]/child::node()',
+        xpath_search = XPath("/c:catalog/child::node()/c:keywords/c:keyword[r:test(., $searchstring, 'i')]/../..",
                              namespaces=ns)
         term = 'keyword '
     elif access:
-        xpath_search = XPath('/c:catalog[contains(./child::node()/c:access, $searchstring)]/child::node()',
+        xpath_search = XPath("/c:catalog/child::node()/c:access[r:test(., $searchstring, 'i')]/..",
                              namespaces=ns)
         term = 'access '
     elif license:
-        xpath_search = XPath('/c:catalog[contains(./child::node()/c:license, $searchstring)]/child::node()',
+        xpath_search = XPath("/c:catalog/child::node()/c:license[r:test(., $searchstring, 'i')]/..",
                              namespaces=ns)
         term = 'license '
     elif nature:
-        xpath_search = XPath('/c:catalog[contains(./child::node()/c:natures/c:nature, $searchstring)]/child::node()',
+        xpath_search = XPath("/c:catalog/child::node()/c:natures/c:nature[r:test(., $searchstring, 'i')]/../..",
                              namespaces=ns)
         term = 'nature '
     elif lang:
         xpath_search = XPath(
-            '/c:catalog[contains(./child::node()/c:programmingLanguages/c:language, $searchstring)]/child::node()',
+            "/c:catalog/child::node()/c:programmingLanguage/c:language[r:test(., $searchstring, 'i')]/../..",
             namespaces=ns)
         term = 'programming language '
     else:
-        xpath_search = XPath('/c:catalog[contains(.//*, $searchstring)]/child::node()', namespaces=ns)
+        xpath_search = XPath("/c:catalog[r:test(.//*, $searchstring, 'i')]/child::node()", namespaces=ns)
     xpath_name = XPath('@name', namespaces=ns)
     xpath_version = XPath('@version', namespaces=ns)
     xpath_filename = XPath('c:filename/text()', namespaces=ns)
