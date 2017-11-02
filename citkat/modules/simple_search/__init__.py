@@ -41,7 +41,7 @@ def search(keyword='', access='', license='', nature='', lang=''):
         term = 'nature '
     elif lang:
         xpath_search = XPath(
-            "/c:catalog/child::node()/c:programmingLanguage/c:language[r:test(., $searchstring, 'i')]/../..",
+            "/c:catalog/child::node()/c:programmingLanguages/c:language[r:test(., $searchstring, 'i')]/../..",
             namespaces=ns)
         term = 'programming language '
     else:
