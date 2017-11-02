@@ -821,10 +821,14 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <span>
                 <xsl:choose>
                     <xsl:when test=". = 'public'">
-                        <xsl:attribute name="class">badge badge-success</xsl:attribute>
+                        <xsl:attribute name="class">
+                            <xsl:text>badge badge-success</xsl:text>
+                        </xsl:attribute>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:attribute name="class">badge badge-danger</xsl:attribute>
+                        <xsl:attribute name="class">
+                            <xsl:text>badge badge-secondary</xsl:text>
+                        </xsl:attribute>
                     </xsl:otherwise>
                 </xsl:choose>
                 <a>
@@ -902,7 +906,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:value-of select="c:kind/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <span class="badge badge-danger">
+                    <span class="badge badge-warning">
                         <small>
                             <xsl:call-template name="includeOcticon">
                                 <xsl:with-param name="name" select="'alert'"/>
