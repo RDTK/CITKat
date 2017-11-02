@@ -217,6 +217,7 @@
                                     <!--languages-->
                                     <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
                                     <!--license-->
+                                    <!-- TODO unknown license should result in danger badge -->
                                     <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
@@ -836,6 +837,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:value-of select="."/>
                 </a>
             </span>
+            <span class="badge badge-danger">unknown</span>
         </dd>
     </xsl:template>
 
