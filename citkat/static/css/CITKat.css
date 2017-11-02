@@ -202,3 +202,5 @@ input:checked + .inner::after {
 .badge a {
     color: white;
 }
+
+.highlight {background-color: yellow}

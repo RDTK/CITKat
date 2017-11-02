@@ -20,6 +20,7 @@ def search(keyword='', access='', license='', nature='', lang=''):
     Very simple search.
     :return:
     """
+    # TODO: highlight search result?
     ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat',
           'r': 'http://exslt.org/regular-expressions'}
     xpath_search = ''
