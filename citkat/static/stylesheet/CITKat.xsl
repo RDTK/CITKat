@@ -239,17 +239,6 @@
                                     <!--scm-->
                                     <xsl:apply-templates select="child::node()/c:scm" mode="catalog"/>
                                 </dl>
-                                <hr></hr>
-                                <sup>
-                                    <dl class="row">
-                                        <dt class="col-6 col-lg-3">
-                                            fooo
-                                        </dt>
-                                        <dd class="col-6 col-lg-3">
-                                            bar
-                                        </dd>
-                                    </dl>
-                                </sup>
                             </div>
                         </xsl:when>
                         <xsl:otherwise>
