@@ -824,6 +824,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>/search/access/</xsl:text>
                         <xsl:value-of select="."/>
                     </xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:text>Search for other </xsl:text>
+                        <xsl:value-of select="."/>
+                        <xsl:text> recipes</xsl:text>
+                    </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
@@ -848,6 +853,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="href">
                         <xsl:text>/search/license/</xsl:text>
                         <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:text>Search for other </xsl:text>
+                        <xsl:value-of select="."/>
+                        <xsl:text> recipes</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
@@ -919,6 +929,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>/search/nature/</xsl:text>
                         <xsl:value-of select="."/>
                     </xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:text>Search for other </xsl:text>
+                        <xsl:value-of select="."/>
+                        <xsl:text> recipes</xsl:text>
+                    </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
@@ -950,6 +965,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="href">
                         <xsl:text>/search/lang/</xsl:text>
                         <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:text>Search for other </xsl:text>
+                        <xsl:value-of select="."/>
+                        <xsl:text> recipes</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
