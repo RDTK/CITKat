@@ -217,7 +217,19 @@
                                     <!--languages-->
                                     <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
                                     <!--license-->
-                                    <!-- TODO unknown license should result in danger badge -->
+                                    <xsl:if test="not(c:distribution) and not(child::node()/c:license)">
+                                        <dt class="col-6 col-lg-3">
+                                            <xsl:call-template name="includeOcticon">
+                                                <xsl:with-param name="name" select="'law'"/>
+                                            </xsl:call-template>
+                                            <xsl:text disable-output-escaping="yes">License: </xsl:text>
+                                        </dt>
+                                        <dd class="col-6 col-lg-3">
+                                            <span class="badge badge-danger">
+                                                <xsl:text>unknown</xsl:text>
+                                            </span>
+                                        </dd>
+                                    </xsl:if>
                                     <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
@@ -753,13 +765,13 @@
 
     <!--description-->
     <xsl:template match="c:description" mode="catalog">
-      <xsl:choose>
-        <xsl:when test="@format=text/markdown">
-          <div style="white-space: pre-line;" data-markdown="true">
-            <xsl:value-of select="." disable-output-escaping="yes"/>
-          </div>
-          <script src="/static/node_modules/marked/marked.min.js"></script>
-          <script><![CDATA[
+        <xsl:choose>
+            <xsl:when test="@format='text/markdown'">
+                <div style="white-space: pre-line;" data-markdown="true">
+                    <xsl:value-of select="." disable-output-escaping="yes"/>
+                </div>
+                <script src="/static/node_modules/marked/marked.min.js"></script>
+                <script><![CDATA[
 // add +3 to the heading level of Markdown text
 var renderer = new marked.Renderer();
 renderer.heading = function(text, level, raw) {
@@ -778,14 +790,14 @@ renderer.heading = function(text, level, raw) {
 document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.body.querySelector('[data-markdown=true]').textContent, { renderer: renderer });
 document.body.querySelector('[data-markdown=true]').removeAttribute('style');
 ]]>
-          </script>
-        </xsl:when>
-        <xsl:otherwise>
-          <div style="white-space: pre-line;">
-            <xsl:value-of select="." disable-output-escaping="yes"/>
-          </div>
-        </xsl:otherwise>
-      </xsl:choose>
+                </script>
+            </xsl:when>
+            <xsl:otherwise>
+                <div style="white-space: pre-line;">
+                    <xsl:value-of select="." disable-output-escaping="yes"/>
+                </div>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!--access type-->
@@ -837,7 +849,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:value-of select="."/>
                 </a>
             </span>
-            <span class="badge badge-danger">unknown</span>
         </dd>
     </xsl:template>
 
@@ -852,33 +863,34 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:text disable-output-escaping="yes">Source control: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
-          <xsl:choose>
-            <xsl:when test="c:kind">
-              <xsl:value-of select="c:kind/text()"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <span class="badge badge-danger">none</span>
-            </xsl:otherwise>
-          </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="c:kind">
+                    <xsl:value-of select="c:kind/text()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <span class="badge badge-danger">none</span>
+                </xsl:otherwise>
+            </xsl:choose>
         </dd>
 
         <xsl:if test="c:revision">
-        <dt class="col-6 col-lg-3 text-truncate">
-            <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="name" select="'clock'"/>
-            </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
-        </dt>
-        <dd class="col-6 col-lg-3">
-            <span class="date">
-                <xsl:value-of select="c:revision/c:date/text()"/>
-            </span><br/>
-            <small>
-                <xsl:text>(</xsl:text>
-                <xsl:value-of select="c:revision/c:id/text()"/>
-                <xsl:text>)</xsl:text>
-            </small>
-        </dd>
+            <dt class="col-6 col-lg-3 text-truncate">
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="name" select="'clock'"/>
+                </xsl:call-template>
+                <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
+            </dt>
+            <dd class="col-6 col-lg-3">
+                <span class="date">
+                    <xsl:value-of select="c:revision/c:date/text()"/>
+                </span>
+                <br/>
+                <small>
+                    <xsl:text>(</xsl:text>
+                    <xsl:value-of select="c:revision/c:id/text()"/>
+                    <xsl:text>)</xsl:text>
+                </small>
+            </dd>
         </xsl:if>
     </xsl:template>
 
