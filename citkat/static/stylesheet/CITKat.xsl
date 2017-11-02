@@ -228,6 +228,11 @@
                                         </dt>
                                         <dd class="col-6 col-lg-3">
                                             <span class="badge badge-danger">
+                                                <small>
+                                                    <xsl:call-template name="includeOcticon">
+                                                        <xsl:with-param name="name" select="'alert'"/>
+                                                    </xsl:call-template>
+                                                </small>
                                                 <xsl:text>unknown</xsl:text>
                                             </span>
                                         </dd>
@@ -897,7 +902,14 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:value-of select="c:kind/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <span class="badge badge-danger">none</span>
+                    <span class="badge badge-danger">
+                        <small>
+                            <xsl:call-template name="includeOcticon">
+                                <xsl:with-param name="name" select="'alert'"/>
+                            </xsl:call-template>
+                        </small>
+                        <xsl:text>none</xsl:text>
+                    </span>
                 </xsl:otherwise>
             </xsl:choose>
         </dd>
