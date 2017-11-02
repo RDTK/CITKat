@@ -837,9 +837,15 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:value-of select="."/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
-                        <xsl:text>Search for other </xsl:text>
+                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
                         <xsl:value-of select="."/>
-                        <xsl:text> recipes</xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-toggle">
+                        <xsl:text>tooltip</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-placement">
+                        <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
@@ -872,9 +878,15 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:value-of select="."/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
-                        <xsl:text>Search for other </xsl:text>
+                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
                         <xsl:value-of select="."/>
-                        <xsl:text> recipes</xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-toggle">
+                        <xsl:text>tooltip</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-placement">
+                        <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
@@ -903,7 +915,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <dd class="col-6 col-lg-3">
             <xsl:choose>
                 <xsl:when test="c:kind">
-                    <xsl:value-of select="c:kind/text()"/>
+                    <a data-toggle="popover" title="Popover title" data-placement="bottom" data-content="And here's some amazing content. It's very engaging. Right?">
+                        <xsl:value-of select="c:kind/text()"/>
+                    </a>
                 </xsl:when>
                 <xsl:otherwise>
                     <span class="badge badge-warning">
@@ -959,9 +973,15 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:value-of select="."/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
-                        <xsl:text>Search for other </xsl:text>
+                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
                         <xsl:value-of select="."/>
-                        <xsl:text> recipes</xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-toggle">
+                        <xsl:text>tooltip</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-placement">
+                        <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
@@ -1001,9 +1021,15 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:value-of select="."/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
-                        <xsl:text>Search for other </xsl:text>
+                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
                         <xsl:value-of select="."/>
-                        <xsl:text> recipes</xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-toggle">
+                        <xsl:text>tooltip</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-placement">
+                        <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
