@@ -25,7 +25,9 @@ $('[data-toggle="popover"]').popover({
     html: true,
     trigger: 'click'
 });
-window.onload = hideLongContent()
+window.addEventListener('load', function() {
+    hideLongContent();
+}, true);
 ]]>
         </script>
 
