@@ -118,8 +118,16 @@
         <xsl:copy-of select="$includefooter"/>
         <script src="/static/js/linkParams.js"/>
         <script src="/static/js/oldAndroid.js"/>
-        <!--TODO: include build-gen version, xml-generation teimestamp and recipe url-->
-        <div style="font-size: .7rem;" class="container text-muted"><samp class="text-muted">build-gen</samp> 0.123, 2017-08-12T15:50:55.000000+02:00, <a href="#" class="text-muted">Recipe-Url</a></div>
+        <!--TODO: include recipe url-->
+        <div style="font-size: .7rem;" class="container text-muted">
+          <samp>build-gen</samp>
+          <xsl:text> </xsl:text>
+          <xsl:value-of select="/c:catalog/@generatorVersion"/>
+          <xsl:text>, </xsl:text>
+          <xsl:value-of select="/c:catalog/@creationTime"/>
+          <xsl:text> | </xsl:text>
+          <a href="#" class="text-muted">Recipe-Url</a>
+        </div>
     </xsl:template>
 
     <!--catalog content-->
