@@ -255,8 +255,6 @@
                     </xsl:choose>
                 </div>
 
-
-
                 <!--image carousel-->
                 <xsl:if test="child::node()/c:resource[@type = 'img']">
                     <xsl:call-template name="imgCarousel"/>
