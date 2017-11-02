@@ -730,6 +730,9 @@
         </dt>
         <dd>
             <a href="{@href}">
+                <!--<xsl:call-template name="includeOcticon">-->
+                    <!--<xsl:with-param name="name" select="'link-external'"/>-->
+                <!--</xsl:call-template>-->
                 <xsl:choose>
                     <xsl:when test="@name">
                         <xsl:value-of select="@name"/>
@@ -832,6 +835,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'tag'"/>
+                        </xsl:call-template>
+                    </small>
                     <xsl:value-of select="."/>
                 </a>
             </span>
@@ -862,6 +870,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'tag'"/>
+                        </xsl:call-template>
+                    </small>
                     <xsl:value-of select="."/>
                 </a>
             </span>
@@ -937,6 +950,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'tag'"/>
+                        </xsl:call-template>
+                    </small>
                     <xsl:value-of select="."/>
                 </a>
                 </span>
@@ -974,6 +992,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="class">
                         <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'tag'"/>
+                        </xsl:call-template>
+                    </small>
                     <xsl:value-of select="."/>
                 </a>
                 </span>

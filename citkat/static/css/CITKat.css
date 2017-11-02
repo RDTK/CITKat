@@ -48,6 +48,11 @@ code.hljs {
     vertical-align: initial;
 }
 
+small > .octicon {
+    height: .7rem;
+    margin-right: 0.1rem;
+}
+
 .card {
     margin-bottom: .75rem;
 }
