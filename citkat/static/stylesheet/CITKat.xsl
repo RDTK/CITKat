@@ -818,7 +818,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:text disable-output-escaping="yes">Access: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
-            <span>
+            <a>
                 <xsl:choose>
                     <xsl:when test=". = 'public'">
                         <xsl:attribute name="class">
@@ -831,33 +831,28 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         </xsl:attribute>
                     </xsl:otherwise>
                 </xsl:choose>
-                <a>
-                    <xsl:attribute name="href">
-                        <xsl:text>/search/access/</xsl:text>
-                        <xsl:value-of select="."/>
-                    </xsl:attribute>
-                    <xsl:attribute name="title">
-                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
-                        <xsl:value-of select="."/>
-                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="data-toggle">
-                        <xsl:text>tooltip</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="data-placement">
-                        <xsl:text>bottom</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="class">
-                        <xsl:text>text-light</xsl:text>
-                    </xsl:attribute>
-                    <small>
-                        <xsl:call-template name="includeOcticon">
-                            <xsl:with-param name="name" select="'tag'"/>
-                        </xsl:call-template>
-                    </small>
+                <xsl:attribute name="href">
+                    <xsl:text>/search/access/</xsl:text>
                     <xsl:value-of select="."/>
-                </a>
-            </span>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="data-toggle">
+                    <xsl:text>tooltip</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="data-placement">
+                    <xsl:text>bottom</xsl:text>
+                </xsl:attribute>
+                <small>
+                    <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="name" select="'tag'"/>
+                    </xsl:call-template>
+                </small>
+                <xsl:value-of select="."/>
+            </a>
         </dd>
     </xsl:template>
 
@@ -871,34 +866,32 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:text disable-output-escaping="yes">License: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
-            <span class="badge badge-info">
-                <a>
-                    <xsl:attribute name="href">
-                        <xsl:text>/search/license/</xsl:text>
-                        <xsl:value-of select="."/>
-                    </xsl:attribute>
-                    <xsl:attribute name="title">
-                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
-                        <xsl:value-of select="."/>
-                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="data-toggle">
-                        <xsl:text>tooltip</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="data-placement">
-                        <xsl:text>bottom</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="class">
-                        <xsl:text>text-light</xsl:text>
-                    </xsl:attribute>
-                    <small>
-                        <xsl:call-template name="includeOcticon">
-                            <xsl:with-param name="name" select="'tag'"/>
-                        </xsl:call-template>
-                    </small>
+            <a>
+                <xsl:attribute name="href">
+                    <xsl:text>/search/license/</xsl:text>
                     <xsl:value-of select="."/>
-                </a>
-            </span>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="data-toggle">
+                    <xsl:text>tooltip</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="data-placement">
+                    <xsl:text>bottom</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="class">
+                    <xsl:text>badge badge-info</xsl:text>
+                </xsl:attribute>
+                <small>
+                    <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="name" select="'tag'"/>
+                    </xsl:call-template>
+                </small>
+                <xsl:value-of select="."/>
+            </a>
         </dd>
     </xsl:template>
 
@@ -957,14 +950,19 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         </dt>
         <dd class="col-6 col-lg-3">
             <!--TODO: github style download-->
-            <button type="button" class="btn btn-sm btn-outline-success" data-toggle="popover" style="padding: 0 .5rem;">
+            <a href="javascript:void(0);" class="text-light badge badge-success" data-toggle="popover">
                 <xsl:attribute name="data-content">And here's some &lt;strong>amazing&lt;/strong> content. It's
                     very engaging. Right?And here's some &lt;strong>amazing&lt;/strong> content. It's
                     very engaging. Right?And here's some &lt;strong>amazing&lt;/strong> content. It's
                     very engaging. Right?
                 </xsl:attribute>
+                <small>
+                    <xsl:call-template name="includeOcticon">
+                        <xsl:with-param name="name" select="'arrow-down'"/>
+                    </xsl:call-template>
+                </small>
                 <xsl:text>Get the code</xsl:text>
-            </button>
+            </a>
         </dd>
     </xsl:template>
 
@@ -981,7 +979,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         </dt>
         <dd class="col-6 col-lg-3">
             <xsl:for-each select="c:nature">
-                <span class="badge badge-info">
                 <a>
                     <xsl:attribute name="href">
                         <xsl:text>/search/nature/</xsl:text>
@@ -999,7 +996,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
-                        <xsl:text>text-light</xsl:text>
+                        <xsl:text>badge badge-info</xsl:text>
                     </xsl:attribute>
                     <small>
                         <xsl:call-template name="includeOcticon">
@@ -1008,7 +1005,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     </small>
                     <xsl:value-of select="."/>
                 </a>
-                </span>
                 <xsl:if test="position() != last()">
                     <xsl:text> </xsl:text>
                 </xsl:if>
@@ -1029,7 +1025,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         </dt>
         <dd class="col-6 col-lg-3">
             <xsl:for-each select="c:language">
-                <span class="badge badge-info">
                 <a>
                     <xsl:attribute name="href">
                         <xsl:text>/search/lang/</xsl:text>
@@ -1047,7 +1042,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
-                        <xsl:text>text-light</xsl:text>
+                        <xsl:text>badge badge-info</xsl:text>
                     </xsl:attribute>
                     <small>
                         <xsl:call-template name="includeOcticon">
@@ -1056,7 +1051,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     </small>
                     <xsl:value-of select="."/>
                 </a>
-                </span>
                 <xsl:if test="position() != last()">
                     <xsl:text> </xsl:text>
                 </xsl:if>
