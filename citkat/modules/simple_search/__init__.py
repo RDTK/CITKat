@@ -3,6 +3,7 @@ from glob import glob
 
 from flask import Blueprint, request, current_app, render_template
 from lxml.etree import XPath, XMLParser, parse
+from re import escape
 
 simple_search_blueprint = Blueprint(name='simple_search', import_name=__name__, template_folder='templates',
                                     url_prefix='/search')
@@ -60,6 +61,9 @@ def search(keyword='', access='', license='', nature='', lang=''):
             if keyword or access or license or nature or lang or ('s' in request.args and request.args['s']):
                 search_term = keyword or access or license or nature or lang or request.args['s']
                 title = "Search result for " + term + "'" + search_term + "':"
+                # emulate full text search with regexp and escape special chars:
+                search_term = '\W+(?:\w+\W+){1,6}?'.join((lambda x: escape(x))(x) for x in search_term.split(' '))
+                print search_term
                 search_results = xpath_search(doc, searchstring=search_term)
                 for i in search_results:
                     name = xpath_name(i)
@@ -77,5 +81,4 @@ def search(keyword='', access='', license='', nature='', lang=''):
             else:
                 title = "Error: Empty Search String."
     results = OrderedDict(sorted(results.iteritems()))
-
-    return render_template('search.html', **locals())
+    return render_template('searchResult.html', **locals())
