@@ -752,11 +752,13 @@
 
     <!--description-->
     <xsl:template match="c:description" mode="catalog">
-        <div data-markdown="true" style="white-space: pre-line;">
+      <xsl:choose>
+        <xsl:when test="@format=text/markdown">
+          <div style="white-space: pre-line;" data-markdown="true">
             <xsl:value-of select="." disable-output-escaping="yes"/>
-        </div>
-        <script src="/static/node_modules/marked/marked.min.js"></script>
-        <script><![CDATA[
+          </div>
+          <script src="/static/node_modules/marked/marked.min.js"></script>
+          <script><![CDATA[
 // add +3 to the heading level of Markdown text
 var renderer = new marked.Renderer();
 renderer.heading = function(text, level, raw) {
@@ -775,7 +777,14 @@ renderer.heading = function(text, level, raw) {
 document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.body.querySelector('[data-markdown=true]').textContent, { renderer: renderer });
 document.body.querySelector('[data-markdown=true]').removeAttribute('style');
 ]]>
-        </script>
+          </script>
+        </xsl:when>
+        <xsl:otherwise>
+          <div style="white-space: pre-line;">
+            <xsl:value-of select="." disable-output-escaping="yes"/>
+          </div>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <!--access type-->
