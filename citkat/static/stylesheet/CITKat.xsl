@@ -118,6 +118,8 @@
         <xsl:copy-of select="$includefooter"/>
         <script src="/static/js/linkParams.js"/>
         <script src="/static/js/oldAndroid.js"/>
+        <!--TODO: include build-gen version, xml-generation teimestamp and recipe url-->
+        <div style="font-size: .7rem;" class="container text-muted"><samp class="text-muted">build-gen</samp> 0.123, 2017-08-12T15:50:55.000000+02:00, <a href="#" class="text-muted">Recipe-Url</a></div>
     </xsl:template>
 
     <!--catalog content-->
@@ -237,6 +239,17 @@
                                     <!--scm-->
                                     <xsl:apply-templates select="child::node()/c:scm" mode="catalog"/>
                                 </dl>
+                                <hr></hr>
+                                <sup>
+                                    <dl class="row">
+                                        <dt class="col-6 col-lg-3">
+                                            fooo
+                                        </dt>
+                                        <dd class="col-6 col-lg-3">
+                                            bar
+                                        </dd>
+                                    </dl>
+                                </sup>
                             </div>
                         </xsl:when>
                         <xsl:otherwise>
@@ -824,6 +837,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>/search/access/</xsl:text>
                         <xsl:value-of select="."/>
                     </xsl:attribute>
+                    <xsl:attribute name="class">
+                        <xsl:text>text-light</xsl:text>
+                    </xsl:attribute>
                     <xsl:value-of select="."/>
                 </a>
             </span>
@@ -845,6 +861,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="href">
                         <xsl:text>/search/license/</xsl:text>
                         <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:attribute name="class">
+                        <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
                     <xsl:value-of select="."/>
                 </a>
@@ -913,6 +932,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>/search/nature/</xsl:text>
                         <xsl:value-of select="."/>
                     </xsl:attribute>
+                    <xsl:attribute name="class">
+                        <xsl:text>text-light</xsl:text>
+                    </xsl:attribute>
                     <xsl:value-of select="."/>
                 </a>
                 </span>
@@ -941,6 +963,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="href">
                         <xsl:text>/search/lang/</xsl:text>
                         <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:attribute name="class">
+                        <xsl:text>text-light</xsl:text>
                     </xsl:attribute>
                     <xsl:value-of select="."/>
                 </a>
