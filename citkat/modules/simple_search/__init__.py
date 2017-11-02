@@ -30,7 +30,7 @@ def search(keyword='', access='', license='', nature='', lang=''):
                              namespaces=ns)
         term = 'keyword '
     elif access:
-        xpath_search = XPath("/c:catalog/child::node()/c:access[r:test(., $searchstring, 'i')]/..",
+        xpath_search = XPath("/c:catalog/child::node()[r:test(@access, $searchstring, 'i')]",
                              namespaces=ns)
         term = 'access '
     elif license:
@@ -64,7 +64,6 @@ def search(keyword='', access='', license='', nature='', lang=''):
                 title = "Search result for " + term + "'" + search_term + "':"
                 # emulate full text search with regexp and escape special chars:
                 search_term = '\W+(?:\w+\W+){0,6}?'.join((lambda x: '\w?' + escape(x) + '\w?')(x) for x in search_term.split(' '))
-                print search_term
                 search_results = xpath_search(doc, searchstring=search_term)
                 for i in search_results:
                     name = xpath_name(i)
