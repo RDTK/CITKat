@@ -28,7 +28,7 @@
             cardDiv.appendChild(h);
             backlinksDiv.appendChild(cardDiv);
             var cardBodyDiv = document.createElement('div');
-            cardBodyDiv.setAttribute('class', 'card-body');
+            cardBodyDiv.setAttribute('class', 'card-body hideContent');
             var ul = document.createElement('ul');
             jsonAnswer.forEach(function (elem) {
                 var li = document.createElement('li');

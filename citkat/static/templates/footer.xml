@@ -20,6 +20,12 @@ $('[data-toggle="tooltip"]').tooltip({
     placement: 'bottom',
     html: true
 });
+$('[data-toggle="popover"]').popover({
+    placement: 'bottom',
+    html: true,
+    trigger: 'click'
+});
+window.onload = hideLongContent()
 ]]>
         </script>
 

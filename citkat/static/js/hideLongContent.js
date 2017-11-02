@@ -1,4 +1,4 @@
-window.onload = function hideLongContent () {
+function hideLongContent() {
     var rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
     content = document.querySelectorAll('.hideContent');
     for (var i=0, len=content.length; i < len; i++) {
