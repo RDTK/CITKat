@@ -167,7 +167,7 @@ input:checked ~ label:after {
 
 .inner {
   position: relative;
-  max-height:15rem;
+  max-height:12rem;
   overflow:hidden;
   transition:all .3s ease;
 }

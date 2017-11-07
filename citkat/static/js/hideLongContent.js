@@ -2,7 +2,7 @@ function hideLongContent() {
     var rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
     content = document.querySelectorAll('.hideContent');
     for (var i=0, len=content.length; i < len; i++) {
-        if (content[i].offsetHeight > 16 * rem) {
+        if (content[i].offsetHeight > 18 * rem) {
             content[i].classList.remove('hideContent');
             var inner = content[i].firstChild;
             inner.setAttribute('class', inner.getAttribute('class') + ' inner');

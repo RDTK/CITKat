@@ -961,7 +961,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:with-param name="name" select="'arrow-down'"/>
                     </xsl:call-template>
                 </small>
-                <xsl:text>Get the code</xsl:text>
+                <xsl:text>get the code</xsl:text>
             </a>
         </dd>
     </xsl:template>

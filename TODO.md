@@ -24,7 +24,7 @@
 * more experiment information
 * ~~differentiate between recipe-maintainer and maintainer~~ done: @role has no restrictions
 * ~~flexbox height calculation is wrong in chrome~~ wontfix. Chrome bug
-
+* http://0.0.0.0:5000/project/cl-protobuf-master.xml license text too long
 
 
 ## after 1.0:
