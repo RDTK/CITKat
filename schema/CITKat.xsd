@@ -12,7 +12,7 @@ TODO: documentation
             <xs:documentation xml:lang="en">The Root-element of the document.</xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element type="xs:string" name="description">
+    <xs:element type="descriptionType" name="description">
         <xs:annotation>
             <xs:documentation xml:lang="en">Description, either plain text or with Markdown syntax.</xs:documentation>
         </xs:annotation>
@@ -52,6 +52,9 @@ TODO: documentation
             <xs:documentation xml:lang="en">A resource contains a hyper-ref of a linked (external) artifact, like SCM, bug tracking, homepage, etc.</xs:documentation>
         </xs:annotation>
     </xs:element>
+    <xs:element name="natures" type="naturesType"/>
+    <xs:element name="scm" type="scmType"/>
+    <xs:element name="programmingLanguages" type="programmingLanguagesType"/>
     <xs:complexType name="distributionType">
         <xs:sequence>
             <xs:element ref="filename"/>
@@ -73,6 +76,48 @@ TODO: documentation
         <xs:attributeGroup ref="nameAndVersion"/>
         <xs:attribute type="xs:anyURI" name="buildServerBaseURL" use="required"/>
         <xs:attribute type="xs:anyURI" name="build-generator-template" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="naturesType">
+        <xs:sequence>
+            <xs:element name="nature" maxOccurs="unbounded" type="xs:token"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="scmType">
+        <xs:sequence>
+            <xs:element name="kind" type="xs:token"/>
+            <xs:element name="repository" type="xs:token"/>
+            <xs:element name="revision">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:token"/>
+                        <xs:element name="date" type="xs:dateTime"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="programmingLanguagesType">
+        <xs:sequence>
+            <xs:element name="language" maxOccurs="unbounded" type="xs:token"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="descriptionType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="format">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:enumeration value="text/markdown"/>
+                            <xs:enumeration value="text/plain"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
 
     <xs:simpleType name="filenameTypeType">
@@ -124,6 +169,8 @@ TODO: documentation
                 </xs:element>
             </xs:choice>
         </xs:sequence>
+        <xs:attribute name="generatorVersion" type="xs:token"/>
+        <xs:attribute name="creationTime" type="xs:dateTime"/>
     </xs:complexType>
     <xs:complexType name="relationType">
         <xs:simpleContent>
@@ -137,7 +184,12 @@ TODO: documentation
     </xs:complexType>
     <xs:simpleType name="relationTypeType">
         <xs:restriction base="xs:token">
-            <xs:pattern value="project|person|hardware|dataset|experiment|publication"/>
+            <xs:enumeration value="project"/>
+            <xs:enumeration value="person"/>
+            <xs:enumeration value="hardware"/>
+            <xs:enumeration value="dataset"/>
+            <xs:enumeration value="experiment"/>
+            <xs:enumeration value="publication"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="publicationType">
@@ -166,8 +218,11 @@ TODO: documentation
             <xs:element ref="keyword" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="description" minOccurs="0"/>
             <xs:element ref="license" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element ref="resource" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="scm"/>
+            <xs:element ref="natures" minOccurs="0"/>
+            <xs:element ref="programmingLanguages" minOccurs="0"/>
             <xs:element ref="dependencies" minOccurs="0"/>
+            <xs:element ref="resource" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="relation" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute type="accessType" name="access" use="required"/>
@@ -255,7 +310,13 @@ TODO: documentation
     </xs:complexType>
     <xs:simpleType name="resourceTypeType">
         <xs:restriction base="xs:token">
-            <xs:pattern value="img|homepage|scm|bugtracker|documentation|video"/>
+            <xs:enumeration value="img"/>
+            <xs:enumeration value="homepage"/>
+            <xs:enumeration value="scm"/>
+            <xs:enumeration value="bugtracker"/>
+            <xs:enumeration value="documentation"/>
+            <xs:enumeration value="video"/>
+            <xs:enumeration value="wiki"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
