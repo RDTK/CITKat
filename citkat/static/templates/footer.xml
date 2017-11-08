@@ -27,10 +27,11 @@ $('[data-toggle="popover"]').popover({
 });
 window.addEventListener('load', function() {
     hideLongContent();
+    dateConvertLocale();
+    linkParams();
 }, true);
 ]]>
         </script>
-
     </div>
 </div>
 

@@ -119,14 +119,16 @@
         <script src="/static/js/linkParams.js"/>
         <script src="/static/js/oldAndroid.js"/>
         <!--TODO: include recipe url-->
-        <div style="font-size: .7rem;" class="container text-muted">
-          <samp>build-gen</samp>
-          <xsl:text> </xsl:text>
-          <xsl:value-of select="/c:catalog/@generatorVersion"/>
-          <xsl:text>, </xsl:text>
-          <xsl:value-of select="/c:catalog/@creationTime"/>
-          <xsl:text> | </xsl:text>
-          <a href="#" class="text-muted">Recipe-Url</a>
+        <div style="font-size: .5rem;" class="container text-muted">
+            <samp>build-gen</samp>
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="/c:catalog/@generatorVersion"/>
+            <xsl:text>, </xsl:text>
+            <span class="date">
+                <xsl:value-of select="/c:catalog/@creationTime"/>
+            </span>
+            <xsl:text> || </xsl:text>
+            <a href="#" class="text-muted">Recipe-Url</a>
         </div>
     </xsl:template>
 

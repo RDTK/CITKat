@@ -1,4 +1,4 @@
-(function () {
+function linkParams() {
     var catalog = document.querySelector('#catalog');
     var type = catalog.getAttribute('type');
     var paramString = '';
@@ -14,4 +14,4 @@
             elem.setAttribute('href', elem.getAttribute('href') + paramString)
         });
     }
-})();
+}
