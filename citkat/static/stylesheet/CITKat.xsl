@@ -944,10 +944,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <span class="date">
                     <xsl:value-of select="c:revision/c:date/text()"/>
                 </span>
-                <!--<br/>-->
-                <!--<small>-->
-                    <!--<xsl:text>(</xsl:text>-->
-                    <!--<xsl:value-of select="c:revision/c:id/text()"/>-->
+                <!--<small class="text-muted">-->
+                    <!--<xsl:text> (</xsl:text>-->
+                    <!--<xsl:value-of select="substring(c:revision/c:id, 1, 8)"/>-->
                     <!--<xsl:text>)</xsl:text>-->
                 <!--</small>-->
             </dd>
@@ -959,12 +958,12 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:text>Download Sourcecode:</xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
-            <!--TODO: github style download-->
             <a href="javascript:void(0);" class="text-light badge badge-success" data-toggle="popover">
                 <xsl:attribute name="data-content">
                     <xsl:choose>
                         <xsl:when test="c:kind = 'GIT'">
                             <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                <!--first step-->
                                 <xsl:text>Clone the content:</xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
                                     <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="git clone </xsl:text>
@@ -982,13 +981,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                         <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
                                     <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-
+                                <!--second step-->
                                 <xsl:text>Then checkout the specific version:</xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
                                     <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
                                         <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                         <xsl:text disable-output-escaping="yes">; git checkout </xsl:text>
-                                        <xsl:value-of select="c:revision/c:id"/>
+                                        <xsl:value-of select="substring(c:revision/c:id, 1, 8)"/>
                                         <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                         <xsl:value-of select="c:repository"/>
                                         <xsl:text disable-output-escaping="yes">"/></xsl:text>
