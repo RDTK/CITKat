@@ -632,7 +632,7 @@
             <xsl:call-template name="includeOcticon">
                 <xsl:with-param name="name" select="'person'"/>
             </xsl:call-template>
-            <xsl:value-of select="c:name/text()"/>
+            <xsl:value-of select="c:name"/>
         </h4>
         <xsl:if test="c:email">
             <ul>
@@ -651,21 +651,21 @@
             <a>
                 <xsl:attribute name="href">
                     <xsl:choose>
-                        <xsl:when test="contains(text(), 'mailto:')">
-                            <xsl:value-of select="text()"/>
+                        <xsl:when test="contains(., 'mailto:')">
+                            <xsl:value-of select="."/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:text>mailto:</xsl:text>
-                            <xsl:value-of select="text()"/>
+                            <xsl:value-of select="."/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
                 <xsl:choose>
-                    <xsl:when test="contains(text(), 'mailto:')">
-                        <xsl:value-of select="substring-after(text(), 'mailto:')"/>
+                    <xsl:when test="contains(., 'mailto:')">
+                        <xsl:value-of select="substring-after(., 'mailto:')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="text()"/>
+                        <xsl:value-of select="."/>
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
@@ -918,7 +918,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <dd class="col-6 col-lg-3">
             <xsl:choose>
                 <xsl:when test="c:kind">
-                    <xsl:value-of select="c:kind/text()"/>
+                    <xsl:value-of select="c:kind"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <span class="badge badge-warning text-light">
@@ -942,7 +942,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             </dt>
             <dd class="col-6 col-lg-3">
                 <span class="date">
-                    <xsl:value-of select="c:revision/c:date/text()"/>
+                    <xsl:value-of select="c:revision/c:date"/>
                 </span>
                 <!--<small class="text-muted">-->
                     <!--<xsl:text> (</xsl:text>-->
