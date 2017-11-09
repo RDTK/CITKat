@@ -24,7 +24,15 @@
             cardDiv.setAttribute('class', 'card-header');
             var h = document.createElement('h5');
             h.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-link"><use xlink:href="#link"></use></svg>'
-            h.appendChild(document.createTextNode('Recipe used by:'));
+            var text = ''
+            switch(type) {
+                case 'person':
+                    text = 'Person involved in:';
+                    break;
+                default:
+                    text = 'Recipe used by:';
+            }
+            h.appendChild(document.createTextNode(text));
             cardDiv.appendChild(h);
             backlinksDiv.appendChild(cardDiv);
             var cardBodyDiv = document.createElement('div');
