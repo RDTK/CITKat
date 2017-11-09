@@ -1,12 +1,11 @@
 <div>
     <div id="footer" class="container">
         <div id="copyright">
-            <!--<span style="transform: rotateY(180deg); display: inline-block; font: Arial, sans-serif; ">©</span>-->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 980" style="width: .7rem; margin-right: .25rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 980" style="width: .75rem;">
                 <circle cx="490" cy="490" r="440" fill="none" stroke="#000" stroke-width="100"/>
                 <path d="M219,428H350a150,150 0 1 1 0,125H219a275,275 0 1 0 0-125z"/>
             </svg>
-            <span id="copyright-year"></span>, Bielefeld University
+            <span id="copyright-year"> </span>, Bielefeld University
             <script><![CDATA[
 document.body.querySelector('#copyright-year').innerHTML += (new Date()).getFullYear();
 ]]>
@@ -33,7 +32,9 @@ $('[data-toggle="popover"]').popover({
 window.addEventListener('load', function() {
     hideLongContent();
     dateConvertLocale();
-    linkParams();
+    if (typeof linkParams === 'function'){
+        linkParams();
+    }
 }, true);
 ]]>
         </script>
