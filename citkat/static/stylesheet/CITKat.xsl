@@ -961,10 +961,49 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <dd class="col-6 col-lg-3">
             <!--TODO: github style download-->
             <a href="javascript:void(0);" class="text-light badge badge-success" data-toggle="popover">
-                <xsl:attribute name="data-content">And here's some &lt;strong>amazing&lt;/strong> content. It's
-                    very engaging. Right?And here's some &lt;strong>amazing&lt;/strong> content. It's
-                    very engaging. Right?And here's some &lt;strong>amazing&lt;/strong> content. It's
-                    very engaging. Right?
+                <xsl:attribute name="data-content">
+                    <xsl:choose>
+                        <xsl:when test="c:kind = 'GIT'">
+                            <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                <xsl:text>Clone the content:</xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="git clone </xsl:text>
+                                        <xsl:value-of select="c:repository"/>
+                                        <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                        <xsl:value-of select="c:repository"/>
+                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;button aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-clone')"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+
+                                <xsl:text>Then checkout the specific version:</xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
+                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                        <xsl:text disable-output-escaping="yes">; git checkout </xsl:text>
+                                        <xsl:value-of select="c:revision/c:id"/>
+                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                        <xsl:value-of select="c:repository"/>
+                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;button aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-checkout')"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                            <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise><!--TODO--></xsl:otherwise>
+                    </xsl:choose>
                 </xsl:attribute>
                 <small>
                     <xsl:call-template name="includeOcticon">

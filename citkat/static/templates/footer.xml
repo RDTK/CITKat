@@ -25,6 +25,7 @@ $('[data-toggle="tooltip"]').tooltip({
     html: true
 });
 $('[data-toggle="popover"]').popover({
+    container: '#catalog',
     placement: 'bottom',
     html: true,
     trigger: 'click'
@@ -36,6 +37,14 @@ window.addEventListener('load', function() {
         linkParams();
     }
 }, true);
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).val()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
+
 ]]>
         </script>
     </div>

@@ -129,6 +129,10 @@ ol.carousel-indicators > li {
     .carousel-item > picture * {
         max-height: 400px;
     }
+
+    .popover {
+        width: 720px;
+    }
 }
 
 @media (min-width: 992px) {
@@ -138,6 +142,10 @@ ol.carousel-indicators > li {
     .carousel-item > picture * {
         max-height: 520px;
     }
+
+    .popover {
+        width: 940px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -146,6 +154,10 @@ ol.carousel-indicators > li {
     }
     .carousel-item > picture * {
         max-height: 640px;
+    }
+
+    .popover {
+        width: 1100px;
     }
 }
 
@@ -204,5 +216,8 @@ input:checked + .inner::after {
   pointer-events: none;
 }
 
+.popover {
+    max-width: 100%;
+}
 
 .highlight {background-color: yellow}
