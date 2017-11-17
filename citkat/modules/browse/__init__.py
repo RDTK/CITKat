@@ -15,7 +15,7 @@ class Browse(object):
 
     def get_name(self, entity, file):
         parser = XMLParser(remove_blank_text=True)
-        doc = parse(entity + file, parser=parser)
+        doc = parse(safe_join(current_app.config['catalog-directory'], entity, file), parser=parser)
         name = self.xpath_entity_name(doc)
         if not name:
             name = file[:-4]
