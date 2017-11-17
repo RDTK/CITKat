@@ -1,5 +1,5 @@
 from glob import glob
-from flask import Blueprint
+from flask import Blueprint, current_app
 from flask_restful import Resource, Api
 from flask_restful.inputs import regex
 from lxml.etree import XPath, XMLParser, parse
@@ -33,7 +33,7 @@ class Backlinks(Resource):
         except ValueError:
             return 406
         return_list = []
-        for file_path in glob('*/*.xml'):
+        for file_path in glob(current_app.config['catalog-directory'] + '/*/*.xml'):
             parser = XMLParser(remove_blank_text=True)
             doc = parse(file_path, parser=parser)
             if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
