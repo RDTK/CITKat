@@ -66,7 +66,7 @@
             var h = backlinksDiv.querySelector('.card-header *');
             h.appendChild(countBadge);
             backlinksDiv.removeAttribute('hidden');
-            hideContent();
+            hideLongContent();
         }
     });
 })();
