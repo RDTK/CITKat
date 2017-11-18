@@ -5,6 +5,8 @@ from flask import Blueprint, request, current_app, render_template
 from lxml.etree import XPath, XMLParser, parse
 from re import escape
 
+from os import getcwd
+
 simple_search_blueprint = Blueprint(name='simple_search', import_name=__name__, template_folder='templates',
                                     url_prefix='/search')
 
@@ -56,7 +58,7 @@ def search(keyword='', access='', license='', nature='', lang=''):
     title = ''
 
     if 'catalog-directory' in current_app.config:
-        for f in glob(current_app.config['catalog-directory'] + '/*/*.xml'):
+        for f in glob(getcwd() + '/*/*.xml'):
             parser = XMLParser(remove_blank_text=True)
             doc = parse(f, parser=parser)
             if keyword or access or license or nature or lang or ('s' in request.args and request.args['s']):
