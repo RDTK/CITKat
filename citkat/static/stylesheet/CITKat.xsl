@@ -1026,7 +1026,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                         <xsl:value-of select="c:repository"/>
                                         <xsl:text disable-output-escaping="yes">"/></xsl:text>
                                     <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-clone')"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-clone')"></xsl:text>
                                             <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
                                                 <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
                                             <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
@@ -1044,7 +1044,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                         <xsl:value-of select="c:repository"/>
                                         <xsl:text disable-output-escaping="yes">"/></xsl:text>
                                     <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-checkout')"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-checkout')"></xsl:text>
                                             <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
                                                 <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
                                             <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
