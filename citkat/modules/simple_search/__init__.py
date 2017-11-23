@@ -57,30 +57,29 @@ def search(keyword='', access='', license='', nature='', lang=''):
     search_term = ''
     title = ''
 
-    if 'catalog-directory' in current_app.config:
-        for f in glob(getcwd() + '/*/*.xml'):
-            parser = XMLParser(remove_blank_text=True)
-            doc = parse(f, parser=parser)
-            if keyword or access or license or nature or lang or ('s' in request.args and request.args['s']):
-                search_term = keyword or access or license or nature or lang or request.args['s']
-                title = "Search result for " + term + "'" + search_term + "':"
-                # emulate full text search with regexp and escape special chars:
-                search_term = '\W+(?:\w+\W+){0,6}?'.join((lambda x: '\w?' + escape(x) + '\w?')(x) for x in search_term.split(' '))
-                search_results = xpath_search(doc, searchstring=search_term)
-                for i in search_results:
-                    name = xpath_name(i)
-                    if name:
-                        name = name[0]
-                        version = xpath_version(i)
-                        if version:
-                            name += ' (' + version[0] + ')'
-                    else:
-                        name = xpath_filename(i)[0]
-                    fs_path = f.split('/')
-                    path = fs_path[-2] + '/' + fs_path[-1]
-                    results[path] = name
-                    break
-            else:
-                title = "Error: Empty Search String."
+    for f in glob(getcwd() + '/*/*.xml'):
+        parser = XMLParser(remove_blank_text=True)
+        doc = parse(f, parser=parser)
+        if keyword or access or license or nature or lang or ('s' in request.args and request.args['s']):
+            search_term = keyword or access or license or nature or lang or request.args['s']
+            title = "Search result for " + term + "'" + search_term + "':"
+            # emulate full text search with regexp and escape special chars:
+            search_term = '\W+(?:\w+\W+){0,6}?'.join((lambda x: '\w?' + escape(x) + '\w?')(x) for x in search_term.split(' '))
+            search_results = xpath_search(doc, searchstring=search_term)
+            for i in search_results:
+                name = xpath_name(i)
+                if name:
+                    name = name[0]
+                    version = xpath_version(i)
+                    if version:
+                        name += ' (' + version[0] + ')'
+                else:
+                    name = xpath_filename(i)[0]
+                fs_path = f.split('/')
+                path = fs_path[-2] + '/' + fs_path[-1]
+                results[path] = name
+                break
+        else:
+            title = "Error: Empty Search String."
     results = OrderedDict(sorted(results.iteritems()))
     return render_template('searchResult.html', **locals())
