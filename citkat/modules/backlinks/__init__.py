@@ -1,8 +1,8 @@
 from glob import glob
-from flask import Blueprint
+from flask import Blueprint, current_app
 from flask_restful import Resource, Api
 from flask_restful.inputs import regex
-from lxml.etree import XPath, XMLParser, parse
+from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 
 backlinks_blueprint = Blueprint(name='backlinks', import_name=__name__, url_prefix='/api/backlinks', static_folder='static')
 
@@ -35,7 +35,10 @@ class Backlinks(Resource):
         return_list = []
         for file_path in glob('*/*.xml'):
             parser = XMLParser(remove_blank_text=True)
-            doc = parse(file_path, parser=parser)
+            try:
+                doc = parse(file_path, parser=parser)
+            except XMLSyntaxError as e:
+                current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
             if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
                     or self.xpath_directDependency_contains(doc, filename_wo_suffix=filename_wo_suffix) \
                     or self.xpath_extends_contains(doc, filename_wo_suffix=filename_wo_suffix):

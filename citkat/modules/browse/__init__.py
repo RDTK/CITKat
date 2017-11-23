@@ -1,8 +1,8 @@
 from glob import glob
 from collections import OrderedDict
 
-from flask import Blueprint, render_template, safe_join
-from lxml.etree import XPath, XMLParser, parse
+from flask import Blueprint, render_template, safe_join, current_app
+from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 from os import getcwd
 
 browse_blueprint = Blueprint(name='browse', import_name=__name__, url_prefix='/browse', template_folder='templates')
@@ -43,5 +43,9 @@ def browse(entity):
     listing = OrderedDict()
     b = Browse()
     for itm in sorted(glob(safe_join(getcwd(), entity, '*.xml'))):
-        listing[itm.split('/')[-1]] = b.get_name(entity, itm.split('/')[-1])
+        try:
+            listing[itm.split('/')[-1]] = b.get_name(entity, itm.split('/')[-1])
+        except XMLSyntaxError as e:
+            current_app.logger.warning('Syntax error in catalog file "%s": \n%s', itm, e)
+            pass
     return render_template('browse.html', **locals())
