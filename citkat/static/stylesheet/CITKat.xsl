@@ -628,6 +628,16 @@
     <!--person -->
     <xsl:template match="c:person" mode="catalog">
         <xsl:call-template name="log_template_info"/>
+        <xsl:if test="c:gravatar">
+            <div style="float: right">
+                <img>
+                    <xsl:attribute name="src">
+                        http://www.gravatar.com/avatar/<xsl:value-of select="c:gravatar/text()"/>.jpg?s=240
+                    </xsl:attribute>
+                </img>
+            </div>
+        </xsl:if>
+
         <h4>
             <xsl:call-template name="includeOcticon">
                 <xsl:with-param name="name" select="'person'"/>
