@@ -229,24 +229,6 @@
                                     <!--languages-->
                                     <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
                                     <!--license-->
-                                    <xsl:if test="not(c:distribution) and not(child::node()/c:license)">
-                                        <dt class="col-6 col-lg-3">
-                                            <xsl:call-template name="includeOcticon">
-                                                <xsl:with-param name="name" select="'law'"/>
-                                            </xsl:call-template>
-                                            <xsl:text disable-output-escaping="yes">License: </xsl:text>
-                                        </dt>
-                                        <dd class="col-6 col-lg-3">
-                                            <span class="badge badge-danger">
-                                                <small>
-                                                    <xsl:call-template name="includeOcticon">
-                                                        <xsl:with-param name="name" select="'alert'"/>
-                                                    </xsl:call-template>
-                                                </small>
-                                                <xsl:text>unknown</xsl:text>
-                                            </span>
-                                        </dd>
-                                    </xsl:if>
                                     <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
@@ -844,12 +826,12 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:choose>
                     <xsl:when test=". = 'public'">
                         <xsl:attribute name="class">
-                            <xsl:text>badge badge-success</xsl:text>
+                            <xsl:text>badge badge-success text-light</xsl:text>
                         </xsl:attribute>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="class">
-                            <xsl:text>badge badge-secondary</xsl:text>
+                            <xsl:text>badge badge-secondary text-light</xsl:text>
                         </xsl:attribute>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -904,15 +886,30 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:attribute name="data-placement">
                     <xsl:text>bottom</xsl:text>
                 </xsl:attribute>
-                <xsl:attribute name="class">
-                    <xsl:text>badge badge-info</xsl:text>
-                </xsl:attribute>
-                <small>
-                    <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'tag'"/>
-                    </xsl:call-template>
-                </small>
-                <xsl:value-of select="."/>
+                <xsl:choose>
+                    <xsl:when test=". = '-unknown-' or . = 'unknown'">
+                        <xsl:attribute name="class">
+                            <xsl:text>badge badge-danger text-light</xsl:text>
+                        </xsl:attribute>
+                        <small>
+                            <xsl:call-template name="includeOcticon">
+                                <xsl:with-param name="name" select="'alert'"/>
+                            </xsl:call-template>
+                        </small>
+                        <xsl:value-of select="."/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="class">
+                            <xsl:text>badge badge-info text-light</xsl:text>
+                        </xsl:attribute>
+                        <small>
+                            <xsl:call-template name="includeOcticon">
+                                <xsl:with-param name="name" select="'tag'"/>
+                            </xsl:call-template>
+                        </small>
+                        <xsl:value-of select="."/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </a>
         </dd>
     </xsl:template>
@@ -960,7 +957,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:attribute name="class">
-                                    <xsl:text>badge badge-success text-light</xsl:text>
+                                    <xsl:text>badge badge-info text-light</xsl:text>
                                 </xsl:attribute>
                                 <small>
                                     <xsl:call-template name="includeOcticon">
@@ -996,11 +993,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <span class="date">
                     <xsl:value-of select="c:revision/c:date"/>
                 </span>
-                <!--<small class="text-muted">-->
-                    <!--<xsl:text> (</xsl:text>-->
-                    <!--<xsl:value-of select="substring(c:revision/c:id, 1, 8)"/>-->
-                    <!--<xsl:text>)</xsl:text>-->
-                <!--</small>-->
             </dd>
         </xsl:if>
         <dt class="col-6 col-lg-3 text-truncate">
@@ -1100,7 +1092,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
-                        <xsl:text>badge badge-info</xsl:text>
+                        <xsl:text>badge badge-info text-light</xsl:text>
                     </xsl:attribute>
                     <small>
                         <xsl:call-template name="includeOcticon">
@@ -1146,7 +1138,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:text>bottom</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="class">
-                        <xsl:text>badge badge-info</xsl:text>
+                        <xsl:text>badge badge-info text-light</xsl:text>
                     </xsl:attribute>
                     <small>
                         <xsl:call-template name="includeOcticon">
@@ -1243,7 +1235,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                 </xsl:call-template>
                                 <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
                                 <small>
-                                    <span class="badge badge-pill badge-info" style="float:right;">
+                                    <span class="badge badge-pill badge-info text-light" style="float:right;">
                                         <xsl:value-of select="count(c:dependencies/c:directDependency)"/>
                                     </span>
                                 </small>
