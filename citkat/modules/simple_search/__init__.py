@@ -2,7 +2,7 @@ from collections import OrderedDict
 from glob import glob
 
 from flask import Blueprint, request, render_template, current_app
-from lxml.etree import XPath, XMLParser, parse, XMLParserError
+from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 from re import escape
 
 from os import getcwd
@@ -67,7 +67,7 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
         parser = XMLParser(remove_blank_text=True)
         try:
             doc = parse(f, parser=parser)
-        except XMLParserError as e:
+        except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', f, e)
             pass
         if keyword or access or license or nature or lang or scm or ('s' in request.args and request.args['s']):
