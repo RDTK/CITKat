@@ -64,7 +64,6 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
     title = ''
 
     for f in glob(getcwd() + '/*/*.xml'):
-        print f
         parser = XMLParser(remove_blank_text=True)
         doc = parse(f, parser=parser)
         if keyword or access or license or nature or lang or scm or ('s' in request.args and request.args['s']):
