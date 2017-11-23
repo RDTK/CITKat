@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from glob import glob
 
-from flask import Blueprint, request, current_app, render_template
+from flask import Blueprint, request, render_template
 from lxml.etree import XPath, XMLParser, parse
 from re import escape
 
@@ -16,8 +16,9 @@ simple_search_blueprint = Blueprint(name='simple_search', import_name=__name__, 
 @simple_search_blueprint.route('/license/<string:license>')
 @simple_search_blueprint.route('/nature/<string:nature>')
 @simple_search_blueprint.route('/lang/<string:lang>')
+@simple_search_blueprint.route('/scm/<string:scm>')
 @simple_search_blueprint.route('/')
-def search(keyword='', access='', license='', nature='', lang=''):
+def search(keyword='', access='', license='', nature='', lang='', scm=''):
     """
     Very simple search.
     :return:
@@ -48,6 +49,11 @@ def search(keyword='', access='', license='', nature='', lang=''):
             "/c:catalog/child::node()/c:programmingLanguages/c:language[r:test(., $searchstring, 'i')]/../..",
             namespaces=ns)
         term = 'programming language '
+    elif scm:
+        xpath_search = XPath(
+            "/c:catalog/child::node()/c:scm/c:kind[r:test(., $searchstring, 'i')]/../..",
+            namespaces=ns)
+        term = 'SCM kind '
     else:
         xpath_search = XPath("/c:catalog[r:test(.//*, $searchstring, 'i')]/child::node()", namespaces=ns)
     xpath_name = XPath('@name', namespaces=ns)
@@ -58,10 +64,11 @@ def search(keyword='', access='', license='', nature='', lang=''):
     title = ''
 
     for f in glob(getcwd() + '/*/*.xml'):
+        print f
         parser = XMLParser(remove_blank_text=True)
         doc = parse(f, parser=parser)
-        if keyword or access or license or nature or lang or ('s' in request.args and request.args['s']):
-            search_term = keyword or access or license or nature or lang or request.args['s']
+        if keyword or access or license or nature or lang or scm or ('s' in request.args and request.args['s']):
+            search_term = keyword or access or license or nature or lang or scm or request.args['s']
             title = "Search result for " + term + "'" + search_term + "':"
             # emulate full text search with regexp and escape special chars:
             search_term = '\W+(?:\w+\W+){0,6}?'.join((lambda x: '\w?' + escape(x) + '\w?')(x) for x in search_term.split(' '))
