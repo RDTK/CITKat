@@ -1040,6 +1040,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                         <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                         <xsl:text disable-output-escaping="yes">; git checkout </xsl:text>
                                         <xsl:value-of select="substring(c:revision/c:id, 1, 8)"/>
+                                        <xsl:if test="c:sub-directory">
+                                            <xsl:text disable-output-escaping="yes">; cd </xsl:text>
+                                            <xsl:value-of select="c:sub-directory"/>
+                                        </xsl:if>
                                         <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                         <xsl:value-of select="c:repository"/>
                                         <xsl:text disable-output-escaping="yes">"/></xsl:text>
