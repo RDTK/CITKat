@@ -221,3 +221,8 @@ input:checked + .inner::after {
 }
 
 .highlight {background-color: yellow}
+
+dd {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
