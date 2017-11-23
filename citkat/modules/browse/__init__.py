@@ -32,7 +32,8 @@ titles = {'project': 'Project Versions',
           'distribution': 'System Versions',
           'experiment': 'Experiments',
           'dataset': 'Datasets',
-          'hardware': 'Hardware Versions'}
+          'hardware': 'Hardware Versions',
+          'person': 'Persons'}
 
 
 # TODO: pagenation, images?
