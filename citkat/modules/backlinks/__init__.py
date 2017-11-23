@@ -39,6 +39,7 @@ class Backlinks(Resource):
                 doc = parse(file_path, parser=parser)
             except XMLSyntaxError as e:
                 current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
+		pass
             if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
                     or self.xpath_directDependency_contains(doc, filename_wo_suffix=filename_wo_suffix) \
                     or self.xpath_extends_contains(doc, filename_wo_suffix=filename_wo_suffix):

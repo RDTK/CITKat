@@ -32,6 +32,15 @@ $ git submodule init; git submodule update  # get xs3p from submodule
 $ xsltproc -o schema/CITKat.xsd.html xs3p/xs3p.xsl schema/CITKat.xsd
 ```
 
+## Production Server Setup for Debian Stretch
+```bash
+wget --quiet -O - https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+export VERSION=node_9.x
+export DISTRO="$(lsb_release -s -c)"
+echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+```
+
 ## Production Server Setup for Ubuntu 16.04
 TODO: include emperor setup
 ### Apache with mod_uwsgi
@@ -39,7 +48,7 @@ TODO
 ### Nginx with uWSGI
 Install packages:
 ```bash
-apt install --no-install-recommends libxml2-dev libxslt1-dev nginx uwsgi uwsgi-plugin-python python2.7-minimal python-virtualenv npm
+apt install --no-install-recommends libxml2-dev libxslt1-dev nginx uwsgi uwsgi-plugin-python python2.7-minimal python-virtualenv python-dev built-essential libz-dev git npm
 ```
 
 Create `/etc/nginx/sites-available/citkat.conf`:
@@ -51,10 +60,12 @@ server {
     location / { try_files $uri @citkat; }
     location @citkat {
         include uwsgi_params;
-        uwsgi_pass unix:/var/run/uwsgi/citkat.sock;
+        uwsgi_pass unix:/var/run/uwsgi/citkat.socket;
     }
 }
 ```
+
+TODO: create
 
 Create `/var/www/citkat` and the python-virtualenv, then install CITKat:
 ```bash
@@ -65,9 +76,6 @@ git clone --branch <DESIRED_VERSION_TAG> https://opensource.cit-ec.de/git/citk.c
 cd citk.citkat
 ./setup.py install
 ```
-
-
-Create uWSGI dir by typing `mkdir /var/run/uwsgi`.
 
 Then create `/etc/uwsgi/apps-available/citkat.ini`:
 ```ini
@@ -100,7 +108,7 @@ After=syslog.target
 [Service]
 ExecStart=/usr/bin/uwsgi \
         --ini /etc/uwsgi/apps-available/%i.ini \
-        --socket /var/run/uwsgi/%i.sock
+        --socket /var/run/%i.socket
 User=www-%i
 Group=www-data
 Restart=on-failure
@@ -108,6 +116,9 @@ KillSignal=SIGQUIT
 Type=notify
 StandardError=syslog
 NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
 ```
 and `/etc/systemd/system/uwsgi@.socket`:
 ```
@@ -115,7 +126,7 @@ and `/etc/systemd/system/uwsgi@.socket`:
 Description=Socket for uWSGI app %i
 
 [Socket]
-ListenStream=/var/run/uwsgi/%i.socket
+ListenStream=/var/run/%i.socket
 SocketUser=www-%i
 SocketGroup=www-data
 SocketMode=0660
@@ -132,9 +143,11 @@ adduser www-citkat --disabled-login --disabled-password \
 
 Enable und start uWSGI:
 ```bash
+systemctl daemon-reload
 systemctl enable uwsgi@citkat.socket
 systemctl enable uwsgi@citkat.service
 systemctl start uwsgi@citkat.socket
+systemctl start uwsgi@citkat.service
 ```
 
 
