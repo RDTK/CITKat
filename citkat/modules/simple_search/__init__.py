@@ -1,8 +1,8 @@
 from collections import OrderedDict
 from glob import glob
 
-from flask import Blueprint, request, render_template
-from lxml.etree import XPath, XMLParser, parse
+from flask import Blueprint, request, render_template, current_app
+from lxml.etree import XPath, XMLParser, parse, XMLParserError
 from re import escape
 
 from os import getcwd
@@ -65,7 +65,11 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
 
     for f in glob(getcwd() + '/*/*.xml'):
         parser = XMLParser(remove_blank_text=True)
-        doc = parse(f, parser=parser)
+        try:
+            doc = parse(f, parser=parser)
+        except XMLParserError as e:
+            current_app.logger.warning('Syntax error in catalog file "%s": \n%s', f, e)
+            pass
         if keyword or access or license or nature or lang or scm or ('s' in request.args and request.args['s']):
             search_term = keyword or access or license or nature or lang or scm or request.args['s']
             title = "Search result for " + term + "'" + search_term + "':"
