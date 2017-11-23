@@ -1,10 +1,9 @@
-from collections import OrderedDict
 from os import listdir
-
 from flask import Blueprint, current_app, render_template
 from os.path import isfile, join, isdir
 
-gen_menu_items_blueprint = Blueprint(name='gen_menu_items', import_name=__name__, url_prefix='/menu', template_folder='templates')
+gen_menu_items_blueprint = Blueprint(name='gen_menu_items', import_name=__name__, url_prefix='/menu',
+                                     template_folder='templates')
 
 
 @gen_menu_items_blueprint.route('/additionalMenuItems.xml')
@@ -21,10 +20,10 @@ def gen_menu_items():
         if isfile(join(content_root, itm)) and not itm == 'Home.md':  # and not itm == 'About.md':
             menu_items.append(itm[:-3])
         elif isdir(join(content_root, itm)):
-            dir = {itm: []}
+            directory = {itm: []}
             for subitm in listdir(join(content_root, itm)):
                 if isfile(join(content_root, itm, subitm)):
-                    dir[itm].append(subitm[:-3])
-            dir[itm] = sorted(dir[itm])
-            menu_items.append(dir)
+                    directory[itm].append(subitm[:-3])
+            directory[itm] = sorted(directory[itm])
+            menu_items.append(directory)
     return render_template('menu.xml', **locals())
