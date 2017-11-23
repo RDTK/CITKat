@@ -930,7 +930,47 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <dd class="col-6 col-lg-3">
             <xsl:choose>
                 <xsl:when test="c:kind">
-                    <xsl:value-of select="c:kind"/>
+                    <a>
+                        <xsl:attribute name="href">
+                            <xsl:text>/search/scm/</xsl:text>
+                            <xsl:value-of select="c:kind"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                            <xsl:value-of select="c:kind"/>
+                            <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="data-toggle">
+                            <xsl:text>tooltip</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="data-placement">
+                            <xsl:text>bottom</xsl:text>
+                        </xsl:attribute>
+                        <xsl:choose>
+                            <xsl:when test="c:kind = 'archive' or c:kind = 'svn'">
+                                <xsl:attribute name="class">
+                                    <xsl:text>badge badge-warning text-light</xsl:text>
+                                </xsl:attribute>
+                                <small>
+                                    <xsl:call-template name="includeOcticon">
+                                        <xsl:with-param name="name" select="'alert'"/>
+                                    </xsl:call-template>
+                                </small>
+                                <xsl:value-of select="c:kind"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="class">
+                                    <xsl:text>badge badge-success text-light</xsl:text>
+                                </xsl:attribute>
+                                <small>
+                                    <xsl:call-template name="includeOcticon">
+                                        <xsl:with-param name="name" select="'tag'"/>
+                                    </xsl:call-template>
+                                </small>
+                                <xsl:value-of select="c:kind"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </a>
                 </xsl:when>
                 <xsl:otherwise>
                     <span class="badge badge-warning text-light">
@@ -973,7 +1013,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <a href="javascript:void(0);" class="text-light badge badge-success" data-toggle="popover">
                 <xsl:attribute name="data-content">
                     <xsl:choose>
-                        <xsl:when test="c:kind = 'GIT'">
+                        <xsl:when test="c:kind = 'git'">
                             <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
                                 <!--first step-->
                                 <xsl:text>Clone the content:</xsl:text>
