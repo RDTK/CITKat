@@ -629,10 +629,12 @@
     <xsl:template match="c:person" mode="catalog">
         <xsl:call-template name="log_template_info"/>
         <xsl:if test="c:gravatar">
-            <div style="float: right">
-                <img>
+            <div id="gravatar" style="float: right">
+                <img title="Gravatar" style="filter: brightness(97%)">
                     <xsl:attribute name="src">
-                        http://www.gravatar.com/avatar/<xsl:value-of select="c:gravatar/text()"/>.jpg?s=240
+                        <xsl:text>http://www.gravatar.com/avatar/</xsl:text>
+                        <xsl:value-of select="c:gravatar/text()"/>
+                        <xsl:text>?s=120&amp;d=identicon</xsl:text>
                     </xsl:attribute>
                 </img>
             </div>
