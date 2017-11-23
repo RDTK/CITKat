@@ -15,9 +15,9 @@ class Backlinks(Resource):
         self.valType = regex(expr_recipe_type, UNICODE)
         self.valFilename = regex(expr_filename, UNICODE)
         ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
-        self.xpath_relation_contains = XPath('//c:relation[contains(text(), $filename_wo_suffix)]', namespaces=ns)
-        self.xpath_directDependency_contains = XPath('//c:directDependency[contains(text(), $filename_wo_suffix)]', namespaces=ns)
-        self.xpath_extends_contains = XPath('//c:extends[contains(text(), $filename_wo_suffix)]', namespaces=ns)
+        self.xpath_relation_contains = XPath('//c:relation/text() = $filename_wo_suffix', namespaces=ns)
+        self.xpath_directDependency_contains = XPath('//c:directDependency/text() = $filename_wo_suffix', namespaces=ns)
+        self.xpath_extends_contains = XPath('//c:extends/text() = $filename_wo_suffix', namespaces=ns)
         self.xpath_catalog_children = XPath('/c:catalog/child::node()', namespaces=ns)
 
     def get(self, filename_wo_suffix, recipe_type):
