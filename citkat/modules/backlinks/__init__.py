@@ -2,7 +2,7 @@ from glob import glob
 from flask import Blueprint
 from flask_restful import Resource, Api
 from flask_restful.inputs import regex
-from lxml.etree import XPath, XMLParser, parse
+from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 
 backlinks_blueprint = Blueprint(name='backlinks', import_name=__name__, url_prefix='/api/backlinks', static_folder='static')
 
@@ -36,15 +36,18 @@ class Backlinks(Resource):
         for file_path in glob('*/*.xml'):
             parser = XMLParser(remove_blank_text=True)
             doc = parse(file_path, parser=parser)
-            if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
-                    or self.xpath_directDependency_contains(doc, filename_wo_suffix=filename_wo_suffix) \
-                    or self.xpath_extends_contains(doc, filename_wo_suffix=filename_wo_suffix):
-                return_dict = dict(self.xpath_catalog_children(doc)[0].attrib)
-                if 'keywords' in return_dict:
-                    del return_dict['keywords']
-                return_dict['path'] = file_path
-                return_dict['type'] = file_path.split('/')[0]
-                return_list.append(return_dict)
+            try:
+                if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
+                        or self.xpath_directDependency_contains(doc, filename_wo_suffix=filename_wo_suffix) \
+                        or self.xpath_extends_contains(doc, filename_wo_suffix=filename_wo_suffix):
+                    return_dict = dict(self.xpath_catalog_children(doc)[0].attrib)
+                    if 'keywords' in return_dict:
+                        del return_dict['keywords']
+                    return_dict['path'] = file_path
+                    return_dict['type'] = file_path.split('/')[0]
+                    return_list.append(return_dict)
+            except XMLSyntaxError:
+                pass
         return return_list
 
 
