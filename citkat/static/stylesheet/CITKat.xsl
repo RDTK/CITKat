@@ -614,7 +614,7 @@
             <div id="gravatar" style="float: right">
                 <img title="Gravatar" style="filter: brightness(97%)">
                     <xsl:attribute name="src">
-                        <xsl:text>http://www.gravatar.com/avatar/</xsl:text>
+                        <xsl:text>https://www.gravatar.com/avatar/</xsl:text>
                         <xsl:value-of select="c:gravatar/text()"/>
                         <xsl:text>?s=120&amp;d=identicon</xsl:text>
                     </xsl:attribute>
