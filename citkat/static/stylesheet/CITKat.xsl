@@ -302,7 +302,7 @@
                                 </div>
                                 <div class="card-body">
                                     <ul class="persons">
-                                        <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="catalog"/>
+                                        <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="person"/>
                                     </ul>
                                 </div>
                             </div>
@@ -1167,13 +1167,14 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:otherwise>
                             <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
                                 <!--first step-->
-                                <xsl:text disable-output-escaping="yes">Download the archive: &lt;a href="</xsl:text>
+                                <xsl:text disable-output-escaping="yes">Download the archive: &lt;br/> &lt;a href="</xsl:text>
                                 <xsl:value-of select="c:repository"/>
                                 <xsl:text disable-output-escaping="yes">" title="Download archive"></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-desktop-download" style="margin-right: 0.1rem; height: 0.7rem;"></xsl:text>
                                     <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#desktop-download">&lt;/use></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
                                 <xsl:value-of select="c:repository"/>
+                                <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
                             <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
                         </xsl:otherwise>
@@ -1285,12 +1286,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <xsl:template match="c:relation" mode="catalog">
         <xsl:call-template name="log_template_info"/>
         <li>
-            <xsl:if test="@role">
-                <span class="capitalize">
-                    <xsl:value-of select="@role"/>
-                </span>
-                <xsl:text disable-output-escaping="yes">: </xsl:text>
-            </xsl:if>
             <xsl:element name="a">
                 <xsl:attribute name="href">
                     <xsl:text>../</xsl:text>
@@ -1325,6 +1320,79 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </span>
             </xsl:if>
         </li>
+    </xsl:template>
+
+    <!--linked person-->
+    <xsl:template match="c:relation" mode="person">
+        <xsl:call-template name="log_template_info"/>
+        <xsl:variable name="actualNode">
+			<xsl:value-of select="."/>
+		</xsl:variable>
+        <xsl:if test="not(preceding-sibling::*[. = $actualNode])">
+            <li>
+                <!--<small>-->
+                    <!--<a class="badge badge-secondary text-light" href="javascript:void(0);"-->
+                       <!--data-toggle="tooltip" data-placement="bottom">-->
+                        <!--<xsl:attribute name="title">-->
+                            <!--<xsl:value-of select="@role"/>-->
+                        <!--</xsl:attribute>-->
+                        <!--<xsl:value-of select="substring(@role, 1, 1)"/>-->
+                    <!--</a>-->
+                    <!--<xsl:for-each select="following-sibling::*[. = $actualNode]">-->
+                        <!--<xsl:text disable-output-escaping="yes"> </xsl:text>-->
+                        <!--<a class="badge badge-secondary text-light" href="javascript:void(0);"-->
+                           <!--data-toggle="tooltip" data-placement="bottom">-->
+                            <!--<xsl:attribute name="title">-->
+                                <!--<xsl:value-of select="@role"/>-->
+                            <!--</xsl:attribute>-->
+                            <!--<xsl:value-of select="substring(@role, 1, 1)"/>-->
+                        <!--</a>-->
+                    <!--</xsl:for-each>-->
+                    <!--<xsl:text disable-output-escaping="yes"> </xsl:text>-->
+                <!--</small>-->
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:text>../</xsl:text>
+                        <xsl:value-of select="@type"/>
+                        <xsl:text disable-output-escaping="yes">/</xsl:text>
+                        <xsl:value-of select="normalize-space(.)"/>
+                        <xsl:text>.xml</xsl:text>
+                    </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="@name">
+                            <xsl:value-of select="@name"/>
+                            <xsl:if test="@version">
+                                <xsl:text disable-output-escaping="yes"> - </xsl:text>
+                                <xsl:value-of select="@version"/>
+                            </xsl:if>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:element>
+                <xsl:text disable-output-escaping="yes"> </xsl:text>
+                <small>
+                    <a class="badge badge-secondary text-light" href="javascript:void(0);"
+                       data-toggle="tooltip" data-placement="bottom">
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="@role"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="substring(@role, 1, 1)"/>
+                    </a>
+                    <xsl:for-each select="following-sibling::*[. = $actualNode]">
+                        <xsl:text disable-output-escaping="yes"> </xsl:text>
+                        <a class="badge badge-secondary text-light" href="javascript:void(0);"
+                           data-toggle="tooltip" data-placement="bottom">
+                            <xsl:attribute name="title">
+                                <xsl:value-of select="@role"/>
+                            </xsl:attribute>
+                            <xsl:value-of select="substring(@role, 1, 1)"/>
+                        </a>
+                    </xsl:for-each>
+                </small>
+            </li>
+        </xsl:if>
     </xsl:template>
 
     <!--extends other recipes-->
