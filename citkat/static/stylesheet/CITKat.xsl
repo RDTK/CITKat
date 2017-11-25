@@ -1330,6 +1330,24 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
 		</xsl:variable>
         <xsl:if test="not(preceding-sibling::*[. = $actualNode])">
             <li>
+                <a class="badge badge-secondary text-light" href="javascript:void(0);"
+                   data-toggle="tooltip" data-placement="bottom" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;'>
+                    <xsl:attribute name="title">
+                        <xsl:value-of select="@role"/>
+                    </xsl:attribute>
+                    <xsl:value-of select="substring(@role, 1, 1)"/>
+                </a>
+                <xsl:for-each select="following-sibling::*[. = $actualNode]">
+                    <xsl:text disable-output-escaping="yes"> </xsl:text>
+                    <a class="badge badge-secondary text-light" href="javascript:void(0);"
+                       data-toggle="tooltip" data-placement="bottom" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;'>
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="@role"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="substring(@role, 1, 1)"/>
+                    </a>
+                </xsl:for-each>
+                <xsl:text disable-output-escaping="yes"> </xsl:text>
                 <xsl:element name="a">
                     <xsl:attribute name="href">
                         <xsl:text>../</xsl:text>
@@ -1351,24 +1369,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:element>
-                <xsl:text disable-output-escaping="yes"> </xsl:text>
-                <a class="badge badge-secondary text-light" href="javascript:void(0);"
-                   data-toggle="tooltip" data-placement="bottom" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;'>
-                    <xsl:attribute name="title">
-                        <xsl:value-of select="@role"/>
-                    </xsl:attribute>
-                    <xsl:value-of select="substring(@role, 1, 1)"/>
-                </a>
-                <xsl:for-each select="following-sibling::*[. = $actualNode]">
-                    <xsl:text disable-output-escaping="yes"> </xsl:text>
-                    <a class="badge badge-secondary text-light" href="javascript:void(0);"
-                       data-toggle="tooltip" data-placement="bottom" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;'>
-                        <xsl:attribute name="title">
-                            <xsl:value-of select="@role"/>
-                        </xsl:attribute>
-                        <xsl:value-of select="substring(@role, 1, 1)"/>
-                    </a>
-                </xsl:for-each>
             </li>
         </xsl:if>
     </xsl:template>
