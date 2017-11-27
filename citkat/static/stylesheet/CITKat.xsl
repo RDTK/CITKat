@@ -165,9 +165,9 @@
                     </xsl:attribute>
                 </xsl:if>
                 <!--recipes name and version as headline-->
-                <h2>
+                <div class="h2 clearfix">
                     <!--<xsl:call-template name="includeOcticon">-->
-                        <!--<xsl:with-param name="name" select="'star'"/>-->
+                    <!--<xsl:with-param name="name" select="'star'"/>-->
                     <!--</xsl:call-template>-->
                     <xsl:call-template name="capitalizeFirstLetter">
                         <xsl:with-param name="in" select="name(*[1])"/>
@@ -176,26 +176,44 @@
                     <xsl:choose>
                         <xsl:when test="child::node()/@name">
                             <xsl:value-of select="child::node()/@name"/>
-                            <xsl:if test="child::node()/@version">
-                                <xsl:text disable-output-escaping="yes"> (</xsl:text>
-                                <xsl:value-of select="child::node()/@version"/>
-                                <xsl:text disable-output-escaping="yes">)</xsl:text>
-                            </xsl:if>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="child::node()/c:filename"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                </h2>
-                <!--<h2>-->
-                    <!--<xsl:call-template name="includeOcticon">-->
-                        <!--<xsl:with-param name="name" select="'book'"/>-->
-                    <!--</xsl:call-template>-->
-                    <!--<xsl:call-template name="capitalizeFirstLetter">-->
-                        <!--<xsl:with-param name="in" select="name(*[1])"/>-->
-                    <!--</xsl:call-template>-->
-                    <!--<xsl:text disable-output-escaping="yes"> Details </xsl:text>-->
-                <!--</h2>-->
+                    <span>
+                        <xsl:text disable-output-escaping="yes"> </xsl:text>
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="font-size: 1.5rem; line-height: 1.2rem; vertical-align: bottom;"
+                                title="Show other versions">
+                            <xsl:choose>
+                                <xsl:when test="child::node()/@version">
+                                    <xsl:value-of select="child::node()/@version"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text disable-output-escaping="yes">Versions</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item  active">
+                                <xsl:attribute name="href">
+                                    <xsl:text disable-output-escaping="yes">#</xsl:text>
+                                </xsl:attribute>
+                                <xsl:choose>
+                                    <xsl:when test="child::node()/@version">
+                                        <xsl:value-of select="child::node()/@version"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:text disable-output-escaping="yes">This version</xsl:text>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </a>
+                        </div>
+                    </span>
+                </div>
+
                 <!--general information for all but persons and publications-->
                 <div class="card">
                     <xsl:choose>
