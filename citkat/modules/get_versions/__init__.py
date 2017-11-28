@@ -11,11 +11,11 @@ class GetVersions(Resource):
     def __init__(self):
         ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
         self.xpath_has_other_versions = XPath(
-            "/c:catalog/child::node()[not(@version = $version) and contains(c:filename, $filename_wo_version) and c:filename = concat($filename_wo_version, '-', @version)]",
+            "/c:catalog/child::node()[not(@version = $version) and "
+            "contains(c:filename, $filename_wo_version) and "
+            "c:filename = concat($filename_wo_version, '-', @version)]",
             namespaces=ns)
         self.xpath_get_version = XPath('/c:catalog/child::node()/@version', namespaces=ns)
-        # self.xpath_version = XPath('@version', namespaces=ns)
-        self.xpath_filename_wo_suffix = XPath('c:filename', namespaces=ns)
 
     def get(self, filename_wo_suffix, recipe_type):
         """
