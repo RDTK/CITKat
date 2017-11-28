@@ -5,6 +5,7 @@ from os import environ
 
 from citkat.modules.browse import browse_blueprint
 from citkat.modules.backlinks import backlinks_blueprint
+from citkat.modules.get_versions import get_versions_blueprint
 from citkat.modules.include_xml_jinja2 import include_xml_jinja2_blueprint
 from citkat.modules.markdown_content import markdown_content_blueprint
 from citkat.modules.simple_search import simple_search_blueprint
@@ -23,6 +24,7 @@ citkat.register_blueprint(browse_blueprint)
 citkat.register_blueprint(include_xml_jinja2_blueprint)
 citkat.register_blueprint(simple_search_blueprint)
 citkat.register_blueprint(markdown_content_blueprint)
+citkat.register_blueprint(get_versions_blueprint)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'  # create in-memory database
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy()

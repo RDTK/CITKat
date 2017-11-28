@@ -181,38 +181,45 @@
                             <xsl:value-of select="child::node()/c:filename"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <span>
-                        <xsl:text disable-output-escaping="yes"> </xsl:text>
-                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                style="font-size: 1.5rem; line-height: 1.2rem; vertical-align: bottom;"
-                                title="Show other versions">
-                            <xsl:choose>
-                                <xsl:when test="child::node()/@version">
-                                    <xsl:value-of select="child::node()/@version"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text disable-output-escaping="yes">Versions</xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item  active">
-                                <xsl:attribute name="href">
-                                    <xsl:text disable-output-escaping="yes">#</xsl:text>
-                                </xsl:attribute>
+                    <xsl:if test="not(c:person)">
+                        <span>
+                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                            <button class="btn btn-light dropdown-toggle" type="button" id="versionsDropdown"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="font-size: 1.5rem; line-height: 1.2rem; vertical-align: bottom;"
+                                    title="Show other versions">
+                                <xsl:call-template name="includeOcticon">
+                                    <xsl:with-param name="name" select="'versions'"/>
+                                </xsl:call-template>
                                 <xsl:choose>
                                     <xsl:when test="child::node()/@version">
                                         <xsl:value-of select="child::node()/@version"/>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <xsl:text disable-output-escaping="yes">This version</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">Versions</xsl:text>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </a>
-                        </div>
-                    </span>
-                </div>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="versionsDropdown">
+                                <a class="dropdown-item  active" title="Selected version">
+                                    <xsl:attribute name="href">
+                                        <xsl:text disable-output-escaping="yes">#</xsl:text>
+                                    </xsl:attribute>
+                                    <xsl:choose>
+                                        <xsl:when test="child::node()/@version">
+                                            <xsl:value-of select="child::node()/@version"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text disable-output-escaping="yes">This version</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </a>
+                            </div>
+                        </span>
+                        <!--Doing the load-other-versions-part as AJAX request in order to reduce server load-->
+                        <script src="/api/versions/static/js/getVersions.js"/>
+                        </xsl:if>
+                    </div>
 
                 <!--general information for all but persons and publications-->
                 <div class="card">
