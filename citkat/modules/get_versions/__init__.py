@@ -3,14 +3,15 @@ from flask import Blueprint, current_app, safe_join
 from flask_restful import Resource, Api
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 
-get_versions_blueprint = Blueprint(name='get_versions', import_name=__name__, url_prefix='/api/versions', static_folder='static')
+get_versions_blueprint = Blueprint(name='get_versions', import_name=__name__, url_prefix='/api/versions',
+                                   static_folder='static')
 
 
 class GetVersions(Resource):
     def __init__(self):
         ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
         self.xpath_has_other_versions = XPath(
-            '/c:catalog/child::node()[not(@version = $version) and contains(c:filename, $filename_wo_version)]',
+            "/c:catalog/child::node()[not(@version = $version) and contains(c:filename, $filename_wo_version) and c:filename = concat($filename_wo_version, '-', @version)]",
             namespaces=ns)
         self.xpath_get_version = XPath('/c:catalog/child::node()/@version', namespaces=ns)
         # self.xpath_version = XPath('@version', namespaces=ns)
