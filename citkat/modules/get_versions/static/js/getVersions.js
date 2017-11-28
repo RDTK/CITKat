@@ -5,7 +5,7 @@
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/api/versions/' + type + '/' + filename);
         xhr.onload = function() {
-            if (xhr.status === 200) {
+            if (this.status === 200) {
                 var jsonResponse = JSON.parse(this.responseText);
                 [].forEach.call(jsonResponse, function (dictElem) {
                     Object.keys(dictElem).forEach(function(key) {
