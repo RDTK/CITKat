@@ -52,6 +52,7 @@
     }
 
     function emitElement(ul, element) {
+        var type = element['type']
         var name = element['name']
         var version = element['version']
 
@@ -61,15 +62,20 @@
         var anker = document.createElement('a');
         li.appendChild(anker);
         anker.setAttribute('href', '../' + element['path']);
-        anker.appendChild(document.createTextNode(name + ' - ' + version));
 
-        var typeText = '';
-        if (element['path'].match(/^(experiment\/).*/)) {
-            typeText = ' (Experiment)';
-        } else if (element['path'].match(/^(dataset\/).*/)) {
-            typeText = ' (Dataset)';
+        var icon = ''
+        switch (type) {
+        case 'distribution':
+            icon = octiconHTML('bug')
+            break;
+        default:
+            icon = octiconHTML(type)
         }
-        li.appendChild(document.createTextNode(typeText));
+        var iconSpan = document.createElement('span');
+        anker.appendChild(iconSpan);
+        iconSpan.innerHTML = icon;
+
+        anker.appendChild(document.createTextNode(name + ' - ' + version));
     }
 
     function emitList(cardBodyDiv, elements) {
