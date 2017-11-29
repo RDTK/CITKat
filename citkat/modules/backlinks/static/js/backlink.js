@@ -17,7 +17,6 @@
     var parameter = backlinksDiv.getAttribute('data-backlinks');
 
     loadJSON('/api/backlinks/' + type + '/' + parameter, function (response) {
-        var types = {};
         var jsonAnswer = JSON.parse(response);
         if (jsonAnswer.length > 0) {
             var cardDiv = document.createElement('div');
