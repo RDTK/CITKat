@@ -87,20 +87,82 @@
         });
     }
 
+    function emitElementWithVersions(ul, versions) {
+        var prototype = versions[0]
+        var type = prototype['type']
+        var name = prototype['name']
+        var version = prototype['version']
+
+        var li = document.createElement('li');
+        ul.appendChild(li);
+
+        var icon = ''
+        switch (type) {
+        case 'distribution':
+            icon = octiconHTML('bug')
+            break;
+        default:
+            icon = octiconHTML(type)
+        }
+        var iconSpan = document.createElement('span');
+        li.appendChild(iconSpan);
+        iconSpan.innerHTML = icon;
+
+        li.appendChild(document.createTextNode(name + ' — '));
+
+        var first = true;
+        versions.forEach(function (version) {
+            if (first) {
+                first = false;
+            } else {
+                li.appendChild(document.createTextNode(' • '));
+            }
+
+            var anchor = document.createElement('a');
+            li.appendChild(anchor);
+            anchor.appendChild(document.createTextNode(version['version']));
+            anchor.setAttribute('href', '../' + version['path']);
+        });
+    }
+
+    function emitListWithVersions(cardBodyDiv, elements) {
+        var ul = document.createElement('ul');
+        cardBodyDiv.appendChild(ul);
+
+        for (var name in elements) {
+            emitElementWithVersions(ul, elements[name]);
+        };
+    }
+
     var backlinksDiv = document.querySelector('#backlinks');
 
     var type = backlinksDiv.getAttribute('type');
     var parameter = backlinksDiv.getAttribute('data-backlinks');
 
     loadJSON('/api/backlinks/' + type + '/' + parameter, function (response) {
-        var jsonAnswer = JSON.parse(response);
-        if (jsonAnswer.length > 0) {
+        var elements = JSON.parse(response);
+        if (elements.length > 0) {
             var temp = setupCard(backlinksDiv);
             var h = temp[0], cardBodyDiv = temp[1];
 
-            emitCountBadge(h, jsonAnswer.length);
+            var groups = {};
+            var count = 0;
+            elements.forEach(function (element) {
+                var list = groups[element.name];
+                if (list === undefined) {
+                    list = [];
+                    groups[element.name] = list;
+                    count++;
+                }
+                list.push(element);
+            })
+            if (count == elements.length) {
+                emitList(cardBodyDiv, elements);
+            } else {
+                emitListWithVersions(cardBodyDiv, groups);
+            }
 
-            emitList(cardBodyDiv, jsonAnswer);
+            emitCountBadge(h, count);
 
             backlinksDiv.removeAttribute('hidden');
             if (typeof hideLongContent === 'function'){
