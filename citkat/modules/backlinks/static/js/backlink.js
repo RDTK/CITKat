@@ -11,6 +11,76 @@
         request.send(null)
     }
 
+    function octiconHTML(which) {
+        return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-' + which + '"><use xlink:href="#' + which + '"></use></svg>';
+    }
+
+    function setupCard(backlinksDiv) {
+        var cardDiv = document.createElement('div');
+        backlinksDiv.appendChild(cardDiv);
+        cardDiv.setAttribute('class', 'card-header');
+
+        var h = document.createElement('h5');
+        cardDiv.appendChild(h);
+        h.innerHTML = octiconHTML('link');
+
+        var text = ''
+        switch(type) {
+        case 'person':
+            text = 'Person involved in:';
+            break;
+        default:
+            text = 'Recipe used by:';
+        }
+        h.appendChild(document.createTextNode(text));
+
+        var cardBodyDiv = document.createElement('div');
+        backlinksDiv.appendChild(cardBodyDiv);
+        cardBodyDiv.setAttribute('class', 'card-body hideContent');
+        return [ h, cardBodyDiv ];
+    }
+
+    function emitCountBadge(h, count) {
+        var countBadge = document.createElement('small');
+        h.appendChild(countBadge);
+
+        var countSpan = document.createElement('span');
+        countBadge.appendChild(countSpan);
+        countSpan.setAttribute('class', 'badge badge-pill badge-info');
+        countSpan.setAttribute('style', 'float: right;');
+        countSpan.appendChild(document.createTextNode(count));
+    }
+
+    function emitElement(ul, element) {
+        var name = element['name']
+        var version = element['version']
+
+        var li = document.createElement('li');
+        ul.appendChild(li);
+
+        var anker = document.createElement('a');
+        li.appendChild(anker);
+        anker.setAttribute('href', '../' + element['path']);
+        anker.appendChild(document.createTextNode(name + ' - ' + version));
+
+        var typeText = '';
+        if (element['path'].match(/^(experiment\/).*/)) {
+            typeText = ' (Experiment)';
+        } else if (element['path'].match(/^(dataset\/).*/)) {
+            typeText = ' (Dataset)';
+        }
+        li.appendChild(document.createTextNode(typeText));
+    }
+
+    function emitList(cardBodyDiv, elements) {
+        var ul = document.createElement('ul');
+        cardBodyDiv.appendChild(ul);
+
+        elements.forEach(function (element) {
+            emitElement(ul, element);
+        });
+    }
+
     var backlinksDiv = document.querySelector('#backlinks');
 
     var type = backlinksDiv.getAttribute('type');
@@ -19,51 +89,13 @@
     loadJSON('/api/backlinks/' + type + '/' + parameter, function (response) {
         var jsonAnswer = JSON.parse(response);
         if (jsonAnswer.length > 0) {
-            var cardDiv = document.createElement('div');
-            cardDiv.setAttribute('class', 'card-header');
-            var h = document.createElement('h5');
-            h.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-link"><use xlink:href="#link"></use></svg>'
-            var text = ''
-            switch(type) {
-                case 'person':
-                    text = 'Person involved in:';
-                    break;
-                default:
-                    text = 'Recipe used by:';
-            }
-            h.appendChild(document.createTextNode(text));
-            cardDiv.appendChild(h);
-            backlinksDiv.appendChild(cardDiv);
-            var cardBodyDiv = document.createElement('div');
-            cardBodyDiv.setAttribute('class', 'card-body hideContent');
-            var ul = document.createElement('ul');
-            jsonAnswer.forEach(function (elem) {
-                var li = document.createElement('li');
-                var anker = document.createElement('a');
-                anker.setAttribute('href', '../' + elem['path']);
-                var typeText = '';
-                if (elem['path'].match(/^(experiment\/).*/)) {
-                    typeText = ' (Experiment)';
-                } else if (elem['path'].match(/^(dataset\/).*/)) {
-                    typeText = ' (Dataset)';
-                }
-                anker.appendChild(document.createTextNode(elem['name'] + ' - ' + elem['version']));
-                li.appendChild(anker);
-                li.appendChild(document.createTextNode(typeText));
-                ul.appendChild(li);
-            });
-            cardBodyDiv.appendChild(ul);
-            backlinksDiv.appendChild(cardBodyDiv);
+            var temp = setupCard(backlinksDiv);
+            var h = temp[0], cardBodyDiv = temp[1];
 
-            var countBadge = document.createElement('small');
-            var countSpan = document.createElement('span');
-            countSpan.setAttribute('class', 'badge badge-pill badge-info');
-            countSpan.setAttribute('style', 'float: right;');
-            var count = backlinksDiv.querySelectorAll('li').length;
-            countSpan.appendChild(document.createTextNode(count));
-            countBadge.appendChild(countSpan);
-            var h = backlinksDiv.querySelector('.card-header *');
-            h.appendChild(countBadge);
+            emitCountBadge(h, jsonAnswer.length);
+
+            emitList(cardBodyDiv, jsonAnswer);
+
             backlinksDiv.removeAttribute('hidden');
             if (typeof hideLongContent === 'function'){
                 hideLongContent();
