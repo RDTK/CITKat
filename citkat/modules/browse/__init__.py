@@ -47,5 +47,4 @@ def browse(entity):
             listing[itm.split('/')[-1]] = b.get_name(entity, itm.split('/')[-1])
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', itm, e)
-            pass
     return render_template('browse.html', **locals())

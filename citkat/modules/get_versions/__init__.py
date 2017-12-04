@@ -39,12 +39,11 @@ class GetVersions(Resource):
         for file_path in glob(safe_join(recipe_type, filename_wo_version) + '-*.xml'):
             try:
                 doc = parse(file_path, parser=parser)
+                if self.xpath_has_other_versions(doc, version=actual_version, filename_wo_version=filename_wo_version):
+                    return_dict = {self.xpath_get_version(doc)[0]: '/' + file_path}
+                    return_list.append(return_dict)
             except XMLSyntaxError as e:
                 current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
-                pass
-            if self.xpath_has_other_versions(doc, version=actual_version, filename_wo_version=filename_wo_version):
-                return_dict = {self.xpath_get_version(doc)[0]: '/' + file_path}
-                return_list.append(return_dict)
         return return_list
 
 

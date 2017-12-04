@@ -37,18 +37,18 @@ class Backlinks(Resource):
             parser = XMLParser(remove_blank_text=True)
             try:
                 doc = parse(file_path, parser=parser)
+                if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
+                        or self.xpath_directDependency_contains(doc, filename_wo_suffix=filename_wo_suffix) \
+                        or self.xpath_extends_contains(doc, filename_wo_suffix=filename_wo_suffix):
+                    return_dict = dict(self.xpath_catalog_children(doc)[0].attrib)
+                    if 'keywords' in return_dict:
+                        del return_dict['keywords']
+                    return_dict['path'] = file_path
+                    return_dict['type'] = file_path.split('/')[0]
+                    print(return_dict)
+                    return_list.append(return_dict)
             except XMLSyntaxError as e:
                 current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
-                pass
-            if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
-                    or self.xpath_directDependency_contains(doc, filename_wo_suffix=filename_wo_suffix) \
-                    or self.xpath_extends_contains(doc, filename_wo_suffix=filename_wo_suffix):
-                return_dict = dict(self.xpath_catalog_children(doc)[0].attrib)
-                if 'keywords' in return_dict:
-                    del return_dict['keywords']
-                return_dict['path'] = file_path
-                return_dict['type'] = file_path.split('/')[0]
-                return_list.append(return_dict)
         return return_list
 
 
