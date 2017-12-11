@@ -45,7 +45,6 @@ class Backlinks(Resource):
                         del return_dict['keywords']
                     return_dict['path'] = file_path
                     return_dict['type'] = file_path.split('/')[0]
-                    print(return_dict)
                     return_list.append(return_dict)
             except XMLSyntaxError as e:
                 current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
