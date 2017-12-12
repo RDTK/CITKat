@@ -542,7 +542,7 @@
     <!--resource type image, display in a carousel-->
     <xsl:template name="imgCarousel">
         <xsl:message>INFO: Calling 'imgCaroussel' template</xsl:message>
-        <div id="carouselImgs" class="carousel slide" data-ride="carousel">
+        <div id="carouselImgs" class="carousel slide card" data-ride="carousel" style="border: none;">
             <xsl:if test="count(child::node()/c:resource[@type = 'img']) > 1">
                 <ol class="carousel-indicators">
                     <xsl:for-each select="child::node()/c:resource[@type = 'img']">
@@ -682,7 +682,7 @@
     <!--video resources-->
     <xsl:template match="c:resource[@type = 'video']" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-        <div class="video">
+        <div class="video card" style="boder:none; ">
             <xsl:choose>
                 <xsl:when test="contains(@href, 'vimeo')">
                     <div id="vimeo-embed" data-href="{@href}" class="videoWrapper">Loading video...</div>
