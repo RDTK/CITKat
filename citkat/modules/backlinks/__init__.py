@@ -59,4 +59,4 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
 
     if not backlinks_items:
         return ''
-    return render_template('backlinks.xml', **locals())
+    return render_template('backlinks.html', **locals())
