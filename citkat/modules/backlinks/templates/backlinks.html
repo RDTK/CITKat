@@ -48,7 +48,7 @@
                                     {% for version in backlinks_items[type][name].keys() %}
                                     {% if not version == 'filename_wo_version' %}
                                     <div>
-                                        <a href="../{{ backlinks_items[type][name][version] }}.xml">{{ version }}</a>
+                                        <a href="../{{ backlinks_items[type][name][version] }}">{{ version }}</a>
                                     </div>
                                     {% endif %}
                                     {% endfor %}
