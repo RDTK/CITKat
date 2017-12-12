@@ -12,7 +12,6 @@ function loadXHR(url, callback) {
 (function () {
     var resourcesDiv = document.body.querySelector('#catalog div#resources');
     var url = '/api/backlinks' + window.location.pathname;
-    console.log(url.substring(0, -4));
     loadXHR(url, function (responseText) {
         resourcesDiv.appendChild(document.createRange().createContextualFragment(responseText));
     });
