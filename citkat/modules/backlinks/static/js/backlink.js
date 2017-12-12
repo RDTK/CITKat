@@ -15,6 +15,5 @@ function loadXHR(url, callback) {
     console.log(url.substring(0, -4));
     loadXHR(url, function (responseText) {
         resourcesDiv.appendChild(document.createRange().createContextualFragment(responseText));
-        hideLongContent();
     });
 })();
