@@ -28,7 +28,6 @@
                         </div>
                         {% else %}
                         <div id="{{ backlinks_items[type][name].type_filename_wo_version }}" data-children=".item">
-                            {% for version in backlinks_items[type][name].keys() %}
                             <div class="item">
                                 <a data-toggle="collapse"
                                    data-parent="{{ backlinks_items[type][name].type_filename_wo_version }}"
@@ -51,7 +50,6 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                            {% endfor %}
                         </div>
                         {% endif %}
                     </li>
