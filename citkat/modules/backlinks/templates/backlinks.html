@@ -45,13 +45,15 @@
                                 </a>
                                 <div id="{{ backlinks_items[type][name].filename_wo_version }}Box"
                                      class="collapse" role="tabpanel">
-                                    {% for version in backlinks_items[type][name].keys() %}
-                                    {% if not version == 'filename_wo_version' %}
-                                    <div>
-                                        <a href="../{{ backlinks_items[type][name][version] }}">{{ version }}</a>
-                                    </div>
-                                    {% endif %}
-                                    {% endfor %}
+                                    <ul class="list-group">
+                                        {% for version in backlinks_items[type][name].keys() %}
+                                        {% if not version == 'filename_wo_version' %}
+                                        <li class="list-group-item">
+                                            <a href="../{{ backlinks_items[type][name][version] }}">{{ version }}</a>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
