@@ -13,11 +13,11 @@
     </div>
     <div class="card-body hideContent">
         <dl>
-            {% for type in backlinks_items.keys() %}
+            {% for type in backlinks_items.keys()|sort %}
             <dt>{{ type|title }}:</dt>
             <dd>
                 <ul>
-                    {% for name in backlinks_items[type].keys() %}
+                    {% for name in backlinks_items[type].keys()|sort %}
                     <li>
                         {% if backlinks_items[type][name]|length == 2 %}
                         <div>
@@ -44,7 +44,7 @@
                                 <div id="{{ backlinks_items[type][name].filename_wo_version }}-versions"
                                      class="collapse" role="tabpanel">
                                     <ul>
-                                        {% for version in backlinks_items[type][name].keys() %}
+                                        {% for version in backlinks_items[type][name].keys()|sort %}
                                         {% if not version == 'filename_wo_version' %}
                                         <li>
                                             <a href="../{{ backlinks_items[type][name][version] }}">{{ version }}</a>

@@ -41,18 +41,18 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                 _catalog_first_child_filename_wo_version = _catalog_first_child_filename[
                                                           :-1 - len(_catalog_first_child_version)]
                 _url = '../' + _catalog_first_child_type + '/' + _catalog_first_child_filename + '.xml'
+                _title = _titles[_catalog_first_child_type]
                 _name = ''
-                title = _titles[_catalog_first_child_type]
                 if 'name' in _catalog_first_child.attrib:
                     _name = _catalog_first_child.attrib['name']
                 else:
                     _name = _catalog_first_child_filename_wo_version
-                if title not in backlinks_items:
-                    backlinks_items[title] = dict()
-                if _name not in backlinks_items[title]:
-                    backlinks_items[title][_name] = dict()
-                backlinks_items[title][_name][_catalog_first_child_version] = _url
-                backlinks_items[title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
+                if _title not in backlinks_items:
+                    backlinks_items[_title] = dict()
+                if _name not in backlinks_items[_title]:
+                    backlinks_items[_title][_name] = dict()
+                backlinks_items[_title][_name][_catalog_first_child_version] = _url
+                backlinks_items[_title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
                 count += 1
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
