@@ -53,6 +53,7 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                 if _name not in backlinks_items[title]:
                     backlinks_items[title][_name] = dict()
                 backlinks_items[title][_name][_catalog_first_child_version] = _url
+                backlinks_items[title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
 
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)

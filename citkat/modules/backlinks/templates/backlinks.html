@@ -41,8 +41,8 @@
                                         </span>
                                     </small>
                                 </a>
-                                <div id="{{ backlinks_items[type][name].type_filename_wo_version }}Box"
-                                     class="collapse show" role="tabpanel">
+                                <div id="{{ backlinks_items[type][name].filename_wo_version }}Box"
+                                     class="collapse" role="tabpanel">
                                     {% for version in backlinks_items[type][name].keys() %}
                                     <div>
                                         <a href="../{{ backlinks_items[type][name][version] }}.xml">{{ version }}</a>
