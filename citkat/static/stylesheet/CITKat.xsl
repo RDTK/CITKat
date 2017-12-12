@@ -258,7 +258,7 @@
                                     <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
-                                    <dt class="w-100"></dt>
+                                    <dt class="w-100"><hr/></dt>
                                     <!--scm-->
                                     <xsl:apply-templates select="child::node()/c:scm" mode="catalog"/>
                                 </dl>
