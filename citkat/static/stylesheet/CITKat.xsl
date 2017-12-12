@@ -258,7 +258,6 @@
                                     <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
-                                    <dt class="w-100"><hr/></dt>
                                     <!--scm-->
                                     <xsl:apply-templates select="child::node()/c:scm" mode="catalog"/>
                                 </dl>
@@ -930,7 +929,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <!--scm-->
     <xsl:template match="c:scm" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-
+        <dt class="w-100">
+            <hr/>
+        </dt>
         <dt class="col-6 col-lg-3 text-truncate">
             <xsl:call-template name="includeOcticon">
                 <xsl:with-param name="name" select="'repo'"/>
