@@ -33,17 +33,16 @@
                             <div class="item">
                                 <a data-toggle="collapse"
                                    data-parent="{{ backlinks_items[type][name].filename_wo_version }}"
-                                   href="#{{ backlinks_items[type][name].filename_wo_version }}Box"
+                                   href="#{{ backlinks_items[type][name].filename_wo_version }}-versions"
                                    aria-expanded="false"
-                                   aria-controls="{{ backlinks_items[type][name].filename_wo_version }}Box">
-                                    {{ name }} - Show versions
-                                    <small>
+                                   aria-controls="{{ backlinks_items[type][name].filename_wo_version }}-versions">
+                                    {{ name }} - <small>
                                         <span class="badge badge-pill badge-secondary text-light">
                                             {{ backlinks_items[type][name].keys()|length - 1 }}
                                         </span>
-                                    </small>
+                                    </small> versions
                                 </a>
-                                <div id="{{ backlinks_items[type][name].filename_wo_version }}Box"
+                                <div id="{{ backlinks_items[type][name].filename_wo_version }}-versions"
                                      class="collapse" role="tabpanel">
                                     <ul>
                                         {% for version in backlinks_items[type][name].keys() %}
