@@ -3,8 +3,9 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
                 exclude-result-prefixes="c arr">
-    <xsl:output method="html" cdata-section-elements="script" indent="no" media-type="text/html" version="5.0"
-                encoding="UTF-8" doctype-system="about:legacy-compat"/>
+    <xsl:output method="html" indent="no" media-type="text/html" version="5.0"
+                encoding="UTF-8" doctype-system="about:legacy-compat"
+                cdata-section-elements="script" />
     <!--root template-->
     <xsl:template match="/">
         <html>
@@ -286,7 +287,7 @@
 
 
                 <!--other resources-->
-                <div class="card-columns">
+                <div class="card-columns" id="resources">
                     <xsl:if test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
                             <div class="card ">
                                 <div class="card-header">
@@ -525,29 +526,16 @@
     </xsl:template>
 
 
-    <!--backlinks creating-->
+    <!--create backlinks-->
     <xsl:template name="getBacklink">
         <xsl:message>INFO: Calling 'getBacklink' template</xsl:message>
-            <xsl:element name="div">
-                <xsl:attribute name="class">
-                    <xsl:text>card</xsl:text>
-                </xsl:attribute>
-                <xsl:attribute name="hidden"/>
-                <xsl:attribute name="id">
-                    <xsl:text disable-output-escaping="yes">backlinks</xsl:text>
-                </xsl:attribute>
-                <xsl:attribute name="type">
-                    <xsl:value-of select="name(*[1])"/>
-                </xsl:attribute>
-                <xsl:attribute name="data-backlinks">
-                    <xsl:value-of select="child::node()/c:filename"/>
-                </xsl:attribute>
-                <xsl:for-each select="child::node()/@*">
-                    <xsl:attribute name="{local-name()}">
-                        <xsl:value-of select="."/>
-                    </xsl:attribute>
-                </xsl:for-each>
-            </xsl:element>
+        <!--<xsl:copy-of-->
+                <!--select="document(-->
+                                 <!--concat('/api/backlinks/',-->
+                                        <!--name(*[1]),-->
+                                        <!--'/',-->
+                                        <!--child::node()/c:filename)-->
+                                 <!--)/child::node()"/>-->
         <script src="/api/backlinks/static/js/backlink.js"/>
     </xsl:template>
 
@@ -782,17 +770,17 @@
     <!--jenkins api-->
     <xsl:template name="jenkinsApi">
         <xsl:message>INFO: Calling 'jenkinsApi' template</xsl:message>
-        <xsl:element name="div">
-            <xsl:attribute name="id">
-                <xsl:text disable-output-escaping="yes">jenkinsState</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="type">
-                <xsl:value-of select="name(*[1])"/>
-            </xsl:attribute>
-            <xsl:attribute name="name">
-                <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
-            </xsl:attribute>
-        </xsl:element>
+        <!--<xsl:element name="div">-->
+            <!--<xsl:attribute name="id">-->
+                <!--<xsl:text disable-output-escaping="yes">jenkinsState</xsl:text>-->
+            <!--</xsl:attribute>-->
+            <!--<xsl:attribute name="type">-->
+                <!--<xsl:value-of select="name(*[1])"/>-->
+            <!--</xsl:attribute>-->
+            <!--<xsl:attribute name="name">-->
+                <!--<xsl:value-of select="/c:catalog/child::node()/c:filename"/>-->
+            <!--</xsl:attribute>-->
+        <!--</xsl:element>-->
         <xsl:element name="script">
             <xsl:attribute name="src">
                 <xsl:text disable-output-escaping="yes">/static/js/jenkins-api.js</xsl:text>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div class="card" id="backlinks">
+    <div class="card-header">
+        <h5>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                 class="octicon octicon-link">
+                <use xlink:href="#link"/>
+            </svg>
+            Recipe used by:
+            <small>
+                <span class="badge badge-pill badge-info" style="float: right;">{{ count }}</span>
+            </small>
+        </h5>
+    </div>
+    <div class="card-body hideContent">
+        <dl>
+            {% for type in backlinks_items.keys() %}
+            <dt>{{ type|title }}:</dt>
+            <dd>
+                <ul>
+                    {% for name in backlinks_items[type].keys() %}
+                    <li>
+                        {% if backlinks_items[type][name]|length == 1 %}
+                        <div>
+                            {% for version in backlinks_items[type][name].keys() %}
+                            <a href="{{ backlinks_items[type][name][version] }}">{{ name }} - {{ version }}</a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div id="{{ backlinks_items[type][name].type_filename_wo_version }}" data-children=".item">
+                            {% for version in backlinks_items[type][name].keys() %}
+                            <div class="item">
+                                <a data-toggle="collapse"
+                                   data-parent="{{ backlinks_items[type][name].type_filename_wo_version }}"
+                                   href="#{{ backlinks_items[type][name]['type_filename_wo_version'] }}Box"
+                                   aria-expanded="false"
+                                   aria-controls="{{ backlinks_items[type][name].type_filename_wo_version }}Box">
+                                    {{ name }} - Show versions
+                                    <small>
+                                        <span class="badge badge-pill badge-secondary text-light">
+                                            {{ backlinks_items[type][name].keys()|length }}
+                                        </span>
+                                    </small>
+                                </a>
+                                <div id="{{ backlinks_items[type][name].type_filename_wo_version }}Box"
+                                     class="collapse show" role="tabpanel">
+                                    {% for version in items[name].keys() %}
+                                    <div>
+                                        <a href="../{{ backlinks_items[type][name][version] }}.xml">{{ version }}</a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </dd>
+            {% endfor %}
+        </dl>
+    </div>
+</div>

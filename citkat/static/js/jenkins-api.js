@@ -25,7 +25,9 @@
             request.send(null)
         }
 
-        var jenkinsDiv = document.querySelector('#jenkinsState');
+        var resourceDiv = document.querySelector('#catalog div#resources');
+        var jenkinsDiv = document.createElement('div');
+//        resourceDiv.appendChild(jenkinsDiv);  // append this later
         var catalog = document.querySelector('#catalog');
         var url = '';
         var urlParam =

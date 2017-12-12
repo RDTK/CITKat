@@ -1,55 +1,62 @@
 from glob import glob
-from flask import Blueprint, current_app
-from flask_restful import Resource, Api
-from flask_restful.inputs import regex
+from flask import Blueprint, current_app, render_template
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 
-backlinks_blueprint = Blueprint(name='backlinks', import_name=__name__, url_prefix='/api/backlinks', static_folder='static')
+backlinks_blueprint = Blueprint(name='backlinks', import_name=__name__, url_prefix='/api/backlinks',
+                                static_folder='static', template_folder='templates')
 
 
-class Backlinks(Resource):
-    def __init__(self):
-        from re import UNICODE
-        expr_recipe_type = '^(distribution|project|experiment|hardware|publication|person|dataset){1}$'
-        expr_filename = '^[^\.][\w\-\.@:]+(?<!.xml)(?<!.html)(?<!.htm)$'
-        self.valType = regex(expr_recipe_type, UNICODE)
-        self.valFilename = regex(expr_filename, UNICODE)
-        ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
-        self.xpath_relation_contains = XPath('//c:relation/text() = $filename_wo_suffix', namespaces=ns)
-        self.xpath_directDependency_contains = XPath('//c:directDependency/text() = $filename_wo_suffix', namespaces=ns)
-        self.xpath_extends_contains = XPath('//c:extends/text() = $filename_wo_suffix', namespaces=ns)
-        self.xpath_catalog_children = XPath('/c:catalog/child::node()', namespaces=ns)
+@backlinks_blueprint.route('/<string:recipe_type>/<string:filename_wo_suffix>.xml')
+def gen_backlinks_page(recipe_type, filename_wo_suffix):
 
-    def get(self, filename_wo_suffix, recipe_type):
-        """
-        Find backlinks.
-        :param filename_wo_suffix:
-        :param recipe_type:
-        :return: json list with backlinks dict
-        """
+    _ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
+    _xpath_relation_contains = XPath('//c:relation/text() = $filename_wo_suffix', namespaces=_ns)
+    _xpath_directDependency_contains = XPath('//c:directDependency/text() = $filename_wo_suffix', namespaces=_ns)
+    _xpath_extends_contains = XPath('//c:extends/text() = $filename_wo_suffix', namespaces=_ns)
+    _xpath_catalog_children = XPath('/c:catalog/child::node()', namespaces=_ns)
+    _xpath_catalog_fist_child_filenames = XPath('/c:catalog/child::node()/c:filename', namespaces=_ns)
+
+    _titles = {'project': 'Project',
+              'distribution': 'System',
+              'experiment': 'Experiment',
+              'dataset': 'Dataset',
+              'hardware': 'Hardware',
+              'person': 'Person'}
+
+    count = 0
+    backlinks_items = dict()
+
+    _parser = XMLParser(remove_blank_text=True)
+
+    for file_path in glob('*/*.xml'):
         try:
-            self.valFilename(filename_wo_suffix)
-            self.valType(recipe_type)
-        except ValueError:
-            return 406
-        return_list = []
-        for file_path in glob('*/*.xml'):
-            parser = XMLParser(remove_blank_text=True)
-            try:
-                doc = parse(file_path, parser=parser)
-                if self.xpath_relation_contains(doc, filename_wo_suffix=filename_wo_suffix) \
-                        or self.xpath_directDependency_contains(doc, filename_wo_suffix=filename_wo_suffix) \
-                        or self.xpath_extends_contains(doc, filename_wo_suffix=filename_wo_suffix):
-                    return_dict = dict(self.xpath_catalog_children(doc)[0].attrib)
-                    if 'keywords' in return_dict:
-                        del return_dict['keywords']
-                    return_dict['path'] = file_path
-                    return_dict['type'] = file_path.split('/')[0]
-                    return_list.append(return_dict)
-            except XMLSyntaxError as e:
-                current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
-        return return_list
+            _doc = parse(file_path, parser=_parser)
+            if _xpath_relation_contains(_doc, filename_wo_suffix=filename_wo_suffix) \
+                    or _xpath_directDependency_contains(_doc, filename_wo_suffix=filename_wo_suffix) \
+                    or _xpath_extends_contains(_doc, filename_wo_suffix=filename_wo_suffix):
+                count += 1
+                _catalog_first_child = _xpath_catalog_children(_doc)[0]
+                _catalog_first_child_type = _catalog_first_child.tag[2 + len(_ns['c']):]
+                _catalog_first_child_version = _catalog_first_child.attrib['version']
+                _catalog_first_child_filename = _xpath_catalog_fist_child_filenames(_doc)[0].text
+                _catalog_first_child_filename_wo_version = _catalog_first_child_filename[
+                                                          :-1 - len(_catalog_first_child_version)]
+                _url = '../' + _catalog_first_child_type + '/' + _catalog_first_child_filename + '.xml'
+                _name = ''
+                title = _titles[_catalog_first_child_type]
+                if 'name' in _catalog_first_child.attrib:
+                    _name = _catalog_first_child.attrib['name']
+                else:
+                    _name = _catalog_first_child_filename_wo_version
+                if title not in backlinks_items:
+                    backlinks_items[title] = dict()
+                if _name not in backlinks_items[title]:
+                    backlinks_items[title][_name] = dict()
+                backlinks_items[title][_name][_catalog_first_child_version] = _url
 
+        except XMLSyntaxError as e:
+            current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
 
-api = Api(backlinks_blueprint)
-api.add_resource(Backlinks, '/<string:recipe_type>/<string:filename_wo_suffix>')
+    if not backlinks_items:
+        return ''
+    return render_template('backlinks.xml', **locals())
