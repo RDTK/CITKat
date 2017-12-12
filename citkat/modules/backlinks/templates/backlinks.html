@@ -20,10 +20,12 @@
                 <ul>
                     {% for name in backlinks_items[type].keys() %}
                     <li>
-                        {% if backlinks_items[type][name]|length == 1 %}
+                        {% if backlinks_items[type][name]|length == 2 %}
                         <div>
                             {% for version in backlinks_items[type][name].keys() %}
+                            {% if not version == 'filename_wo_version' %}
                             <a href="{{ backlinks_items[type][name][version] }}">{{ name }} - {{ version }}</a>
+                            {% endif %}
                             {% endfor %}
                         </div>
                         {% else %}
@@ -42,11 +44,13 @@
                                     </small>
                                 </a>
                                 <div id="{{ backlinks_items[type][name].filename_wo_version }}Box"
-                                     class="collapse" role="tabpanel">
+                                     class="collapse show" role="tabpanel">
                                     {% for version in backlinks_items[type][name].keys() %}
+                                    {% if not version == 'filename_wo_version' %}
                                     <div>
                                         <a href="../{{ backlinks_items[type][name][version] }}.xml">{{ version }}</a>
                                     </div>
+                                    {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
