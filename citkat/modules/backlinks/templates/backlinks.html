@@ -39,16 +39,16 @@
                                     {{ name }} - Show versions
                                     <small>
                                         <span class="badge badge-pill badge-secondary text-light">
-                                            {{ backlinks_items[type][name].keys()|length }}
+                                            {{ backlinks_items[type][name].keys()|length - 1 }}
                                         </span>
                                     </small>
                                 </a>
                                 <div id="{{ backlinks_items[type][name].filename_wo_version }}Box"
                                      class="collapse" role="tabpanel">
-                                    <ul class="list-group">
+                                    <ul>
                                         {% for version in backlinks_items[type][name].keys() %}
                                         {% if not version == 'filename_wo_version' %}
-                                        <li class="list-group-item">
+                                        <li>
                                             <a href="../{{ backlinks_items[type][name][version] }}">{{ version }}</a>
                                         </li>
                                         {% endif %}

@@ -34,7 +34,6 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
             if _xpath_relation_contains(_doc, filename_wo_suffix=filename_wo_suffix) \
                     or _xpath_directDependency_contains(_doc, filename_wo_suffix=filename_wo_suffix) \
                     or _xpath_extends_contains(_doc, filename_wo_suffix=filename_wo_suffix):
-                count += 1
                 _catalog_first_child = _xpath_catalog_children(_doc)[0]
                 _catalog_first_child_type = _catalog_first_child.tag[2 + len(_ns['c']):]
                 _catalog_first_child_version = _catalog_first_child.attrib['version']
@@ -54,7 +53,7 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                     backlinks_items[title][_name] = dict()
                 backlinks_items[title][_name][_catalog_first_child_version] = _url
                 backlinks_items[title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
-
+                count += 1
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
 
