@@ -5,7 +5,11 @@
                  class="octicon octicon-link">
                 <use xlink:href="#link"/>
             </svg>
+            {% if recipe_type == 'person' %}
+            Person involved in:
+            {% else %}
             Recipe used by:
+            {% endif %}
             <small>
                 <span class="badge badge-pill badge-info" style="float: right;">{{ count }}</span>
             </small>
