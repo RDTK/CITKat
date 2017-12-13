@@ -13,6 +13,17 @@
             <small>
                 <span class="badge badge-pill badge-info" style="float: right;">{{ count }}</span>
             </small>
+            {% if err_count %}
+            <small>
+                <span class="badge badge-pill badge-warning" style="float: right;"
+                      title="{{ err_count }} doublettes found! See server log for more details">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                         class="octicon octicon-issue-opened">
+                        <use xlink:href="#issue-opened"/>
+                    </svg>
+                </span>
+            </small>
+            {% endif %}
         </h5>
     </div>
     <div class="card-body hideContent">
@@ -39,11 +50,13 @@
                                    href="#{{ backlinks_items[type][name].filename_wo_version }}-versions"
                                    aria-expanded="false"
                                    aria-controls="{{ backlinks_items[type][name].filename_wo_version }}-versions">
-                                    {{ name }} - <small>
+                                    {{ name }} -
+                                    <small>
                                         <span class="badge badge-pill badge-secondary text-light">
                                             {{ backlinks_items[type][name].keys()|length - 1 }}
                                         </span>
-                                    </small> versions
+                                    </small>
+                                    versions
                                 </a>
                                 <div id="{{ backlinks_items[type][name].filename_wo_version }}-versions"
                                      class="collapse" role="tabpanel">

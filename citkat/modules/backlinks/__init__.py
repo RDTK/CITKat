@@ -24,6 +24,7 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
 
     count = 0
     backlinks_items = dict()
+    err_count = 0
 
     _parser = XMLParser(remove_blank_text=True)
 
@@ -51,6 +52,7 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                 if _name not in backlinks_items[_title]:
                     backlinks_items[_title][_name] = dict()
                 if _catalog_first_child_version in backlinks_items[_title][_name]:
+                    err_count += 1
                     count -= 1
                     current_app.logger.warning('Doublette entry (name and version): \n    %s\n    %s',
                                                backlinks_items[_title][_name][_catalog_first_child_version], _url)
