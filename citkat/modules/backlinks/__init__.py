@@ -8,7 +8,6 @@ backlinks_blueprint = Blueprint(name='backlinks', import_name=__name__, url_pref
 
 @backlinks_blueprint.route('/<string:recipe_type>/<string:filename_wo_suffix>.xml')
 def gen_backlinks_page(recipe_type, filename_wo_suffix):
-
     _ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat'}
     _xpath_relation_contains = XPath('//c:relation/text() = $filename_wo_suffix', namespaces=_ns)
     _xpath_directDependency_contains = XPath('//c:directDependency/text() = $filename_wo_suffix', namespaces=_ns)
@@ -17,11 +16,11 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
     _xpath_catalog_fist_child_filenames = XPath('/c:catalog/child::node()/c:filename', namespaces=_ns)
 
     _titles = {'project': 'Project',
-              'distribution': 'System',
-              'experiment': 'Experiment',
-              'dataset': 'Dataset',
-              'hardware': 'Hardware',
-              'person': 'Person'}
+               'distribution': 'System',
+               'experiment': 'Experiment',
+               'dataset': 'Dataset',
+               'hardware': 'Hardware',
+               'person': 'Person'}
 
     count = 0
     backlinks_items = dict()
@@ -39,7 +38,7 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                 _catalog_first_child_version = _catalog_first_child.attrib['version']
                 _catalog_first_child_filename = _xpath_catalog_fist_child_filenames(_doc)[0].text
                 _catalog_first_child_filename_wo_version = _catalog_first_child_filename[
-                                                          :-1 - len(_catalog_first_child_version)]
+                                                           :-1 - len(_catalog_first_child_version)]
                 _url = '../' + _catalog_first_child_type + '/' + _catalog_first_child_filename + '.xml'
                 _title = _titles[_catalog_first_child_type]
                 _name = ''
@@ -51,6 +50,10 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                     backlinks_items[_title] = dict()
                 if _name not in backlinks_items[_title]:
                     backlinks_items[_title][_name] = dict()
+                if _catalog_first_child_version in backlinks_items[_title][_name]:
+                    count -= 1
+                    current_app.logger.warning('Doublette entry (name and version): \n    %s\n    %s',
+                                               backlinks_items[_title][_name][_catalog_first_child_version], _url)
                 backlinks_items[_title][_name][_catalog_first_child_version] = _url
                 backlinks_items[_title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
                 count += 1
