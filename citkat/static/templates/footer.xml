@@ -35,7 +35,7 @@ $('[data-toggle="popover"]').popover({
     trigger: 'click'
 });
 window.addEventListener('load', function() {
-    hideLongContent();
+    //hideLongContent();  // TODO: implementation is buggy, needs to be replaced soon!
     dateConvertLocale();
     if (typeof linkParams === 'function'){
         linkParams();
