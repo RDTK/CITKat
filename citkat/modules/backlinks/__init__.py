@@ -44,26 +44,29 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                 _catalog_first_child_filename = _xpath_catalog_fist_child_filenames(_doc)[0].text
                 _catalog_first_child_filename_wo_version = _catalog_first_child_filename[
                                                            :_catalog_first_child_version_len]
-                _url = '../' + _catalog_first_child_type + '/' + _catalog_first_child_filename + '.xml'
-                _title = _titles[_catalog_first_child_type]
-                _name = ''
-                if 'name' in _catalog_first_child.attrib:
-                    _name = _catalog_first_child.attrib['name']
-                else:
-                    _name = _catalog_first_child_filename_wo_version
-                if _title not in backlinks_items:
-                    backlinks_items[_title] = dict()
-                if _name not in backlinks_items[_title]:
-                    backlinks_items[_title][_name] = dict()
-                if _catalog_first_child_version and _catalog_first_child_version in backlinks_items[_title][_name]:
-                    err_count += 1
-                    count -= 1
-                    current_app.logger.warning('Doublette entry (name and version): \n    %s\n    %s',
-                                               backlinks_items[_title][_name][_catalog_first_child_version], _url)
-                # if _catalog_first_child_version:
-                backlinks_items[_title][_name][_catalog_first_child_version] = _url
-                backlinks_items[_title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
-                count += 1
+
+                if not (_catalog_first_child_type == recipe_type
+                        and _catalog_first_child_filename == filename_wo_suffix):
+                    _url = '../' + _catalog_first_child_type + '/' + _catalog_first_child_filename + '.xml'
+                    _title = _titles[_catalog_first_child_type]
+                    _name = ''
+                    if 'name' in _catalog_first_child.attrib:
+                        _name = _catalog_first_child.attrib['name']
+                    else:
+                        _name = _catalog_first_child_filename_wo_version
+                    if _title not in backlinks_items:
+                        backlinks_items[_title] = dict()
+                    if _name not in backlinks_items[_title]:
+                        backlinks_items[_title][_name] = dict()
+                    if _catalog_first_child_version and _catalog_first_child_version in backlinks_items[_title][_name]:
+                        err_count += 1
+                        count -= 1
+                        current_app.logger.warning('Doublette entry (name and version): \n    %s\n    %s',
+                                                   backlinks_items[_title][_name][_catalog_first_child_version], _url)
+                    # if _catalog_first_child_version:
+                    backlinks_items[_title][_name][_catalog_first_child_version] = _url
+                    backlinks_items[_title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
+                    count += 1
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
 
