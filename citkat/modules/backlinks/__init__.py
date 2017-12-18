@@ -36,10 +36,14 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                     or _xpath_extends_contains(_doc, filename_wo_suffix=filename_wo_suffix):
                 _catalog_first_child = _xpath_catalog_children(_doc)[0]
                 _catalog_first_child_type = _catalog_first_child.tag[2 + len(_ns['c']):]
-                _catalog_first_child_version = _catalog_first_child.attrib['version']
+                _catalog_first_child_version = ''
+                _catalog_first_child_version_len = 0
+                if 'version' in _catalog_first_child.attrib:
+                    _catalog_first_child_version = _catalog_first_child.attrib['version']
+                    _catalog_first_child_version_len = -1 - len(_catalog_first_child_version)
                 _catalog_first_child_filename = _xpath_catalog_fist_child_filenames(_doc)[0].text
                 _catalog_first_child_filename_wo_version = _catalog_first_child_filename[
-                                                           :-1 - len(_catalog_first_child_version)]
+                                                           :_catalog_first_child_version_len]
                 _url = '../' + _catalog_first_child_type + '/' + _catalog_first_child_filename + '.xml'
                 _title = _titles[_catalog_first_child_type]
                 _name = ''
@@ -51,11 +55,12 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
                     backlinks_items[_title] = dict()
                 if _name not in backlinks_items[_title]:
                     backlinks_items[_title][_name] = dict()
-                if _catalog_first_child_version in backlinks_items[_title][_name]:
+                if _catalog_first_child_version and _catalog_first_child_version in backlinks_items[_title][_name]:
                     err_count += 1
                     count -= 1
                     current_app.logger.warning('Doublette entry (name and version): \n    %s\n    %s',
                                                backlinks_items[_title][_name][_catalog_first_child_version], _url)
+                # if _catalog_first_child_version:
                 backlinks_items[_title][_name][_catalog_first_child_version] = _url
                 backlinks_items[_title][_name]['filename_wo_version'] = _catalog_first_child_filename_wo_version
                 count += 1

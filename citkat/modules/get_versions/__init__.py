@@ -30,21 +30,27 @@ class GetVersions(Resource):
         except IOError as e:
             current_app.logger.error(e)
             return []
-        actual_version = self.xpath_get_version(actual_doc)[0]
+        versions = self.xpath_get_version(actual_doc)
+        actual_version = ''
+        actual_version_len = 0
+        if versions:
+            actual_version = versions[0]
+            actual_version_len = len(actual_version) + 1
 
-        filename_wo_version = filename_wo_suffix[:-(len(actual_version)+1)]
+        filename_wo_version = filename_wo_suffix[:-actual_version_len]
 
         return_list = []
-
-        for file_path in glob(safe_join(recipe_type, filename_wo_version) + '-*.xml'):
-            try:
-                doc = parse(file_path, parser=parser)
-                if self.xpath_has_other_versions(doc, version=actual_version, filename_wo_version=filename_wo_version):
-                    return_dict = {self.xpath_get_version(doc)[0]: '/' + file_path}
-                    return_list.append(return_dict)
-            except XMLSyntaxError as e:
-                current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
-        return return_list
+        if actual_version:
+            for file_path in glob(safe_join(recipe_type, filename_wo_version) + '-*.xml'):
+                try:
+                    doc = parse(file_path, parser=parser)
+                    if self.xpath_has_other_versions(doc, version=actual_version,
+                                                     filename_wo_version=filename_wo_version):
+                        return_dict = {self.xpath_get_version(doc)[0]: '/' + file_path}
+                        return_list.append(return_dict)
+                except XMLSyntaxError as e:
+                    current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
+            return return_list
 
 
 api = Api(get_versions_blueprint)
