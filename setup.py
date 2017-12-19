@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from distutils import dir_util
 from setuptools import setup, Command, find_packages
@@ -65,7 +65,6 @@ class build(_build):
 
 setup(
     name='citkat',
-    version='0.2.4',
     long_description=__doc__,
     packages=find_packages(exclude=('tests',)),
     include_package_data=True,
@@ -75,9 +74,9 @@ setup(
     url='https://opensource.cit-ec.de/projects/citk/repository/citkat',
     install_requires=[
         'flask>=0.12.2',
-        'flask_restful>=0.3.5',
-        'lxml>=4.0',
-        'markdown'
+        'flask_restful>=0.3.6',
+        'lxml>=4.1.1',
+        'markdown>=2.6.10'
     ],
     cmdclass={
         'build': build,

@@ -2,7 +2,7 @@
 {% block content %}
 <h1>{{ title }}:</h1>
 <ul>
-{% for key, value in listing.iteritems() %}
+{% for (key, value) in iteritems(listing) %}
     <li><a href="../../{{ entity }}{{ key }}">{{ value }}</a></li>
 {% endfor %}
 </ul>

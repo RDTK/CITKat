@@ -15,7 +15,7 @@ def include_xml_template(template_name):
     html_fragments_str = ''
     for elem in doc.xpath('/child::node()/*'):
         # because Jinja2 produces HTML5 instead of XHTML, we need to re-parse the fragments:
-        html_fragments_str += html_to_string(html_fragment_from_string(xml_to_string(elem)))
+        html_fragments_str += html_to_string(html_fragment_from_string(xml_to_string(elem))).decode('utf-8')
     return Markup(html_fragments_str)
 
 
@@ -26,5 +26,5 @@ def include_additional_menu_items():
     html_fragments_str = ''
     for elem in doc.xpath('/child::node()/*'):
         # because Jinja2 produces HTML5 instead of XHTML, we need to re-parse the fragments:
-        html_fragments_str += html_to_string(html_fragment_from_string(xml_to_string(elem)))
+        html_fragments_str += html_to_string(html_fragment_from_string(xml_to_string(elem))).decode('utf-8')
     return Markup(html_fragments_str)

@@ -5,6 +5,8 @@ from flask import Blueprint, render_template, safe_join, current_app
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 from os import getcwd
 
+from six import iteritems as six_iteritems
+
 browse_blueprint = Blueprint(name='browse', import_name=__name__, url_prefix='/browse', template_folder='templates')
 
 
@@ -42,6 +44,7 @@ def browse(entity):
     title = 'Browse ' + titles[entity[:-1]]
     listing = OrderedDict()
     b = Browse()
+    iteritems = six_iteritems
     for itm in sorted(glob(safe_join(getcwd(), entity, '*.xml'))):
         try:
             listing[itm.split('/')[-1]] = b.get_name(entity, itm.split('/')[-1])
