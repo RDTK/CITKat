@@ -76,7 +76,8 @@ setup(
         'flask>=0.12.2',
         'flask_restful>=0.3.6',
         'lxml>=4.1.1',
-        'markdown>=2.6.10'
+        'markdown>=2.6.10',
+        'six'
     ],
     cmdclass={
         'build': build,
