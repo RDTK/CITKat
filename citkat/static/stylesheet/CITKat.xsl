@@ -258,6 +258,8 @@
                                     <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
+                                    <!--keywords-->
+                                    <xsl:apply-templates select="child::node()/c:keywords" mode="catalog"/>
                                     <!--scm-->
                                     <xsl:apply-templates select="child::node()/c:scm" mode="catalog"/>
                                 </dl>
@@ -923,6 +925,52 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
+        </dd>
+    </xsl:template>
+
+    <!--keywords-->
+    <xsl:template match="c:keywords" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
+        <dt class="col-6 col-lg-3 text-truncate">
+            <xsl:call-template name="includeOcticon">
+                <xsl:with-param name="name" select="'tag'"/>
+            </xsl:call-template>
+            <xsl:text disable-output-escaping="yes">Keyword</xsl:text>
+            <xsl:if test="count(c:keyword) > 1">s</xsl:if>
+            <xsl:text disable-output-escaping="yes">: </xsl:text>
+        </dt>
+        <dd class="col-6 col-lg-3">
+            <xsl:for-each select="c:keyword">
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:text>/search/keyword/</xsl:text>
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                    <xsl:attribute name="title">
+                        <xsl:text disable-output-escaping="yes">Search for other recipes with keyword &lt;strong></xsl:text>
+                        <xsl:value-of select="."/>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong></xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-toggle">
+                        <xsl:text>tooltip</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-placement">
+                        <xsl:text>bottom</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="class">
+                        <xsl:text>badge badge-info text-light</xsl:text>
+                    </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'tag'"/>
+                        </xsl:call-template>
+                    </small>
+                    <xsl:value-of select="."/>
+                </a>
+                <xsl:if test="position() != last()">
+                    <xsl:text> </xsl:text>
+                </xsl:if>
+            </xsl:for-each>
         </dd>
     </xsl:template>
 
