@@ -5,6 +5,8 @@ from flask import Blueprint, request, render_template, current_app
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 from re import escape
 
+from six import iteritems as six_iteritems
+
 from os import getcwd
 
 simple_search_blueprint = Blueprint(name='simple_search', import_name=__name__, template_folder='templates',
@@ -91,5 +93,6 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
                 title = "Error: Empty Search String."
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', f, e)
-    results = OrderedDict(sorted(results.iteritems()))
+    results = OrderedDict(sorted(six_iteritems(results)))
+    iteritems = six_iteritems
     return render_template('searchResult.html', **locals())

@@ -3,7 +3,7 @@
 <h1>{{ title }}</h1>
     {% if results and search_term %}
     <ul>
-        {% for key, value in results.iteritems() %}
+        {% for (key, value) in iteritems(results) %}
             <li><a href="/{{ key }}">{{ value }}</a></li>
         {% endfor %}
     </ul>
