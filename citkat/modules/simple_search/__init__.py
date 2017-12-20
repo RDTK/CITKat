@@ -5,8 +5,6 @@ from flask import Blueprint, request, render_template, current_app
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 from re import escape
 
-from six import iteritems as six_iteritems
-
 from os import getcwd
 
 simple_search_blueprint = Blueprint(name='simple_search', import_name=__name__, template_folder='templates',
@@ -30,6 +28,14 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
           'r': 'http://exslt.org/regular-expressions'}
     xpath_search = ''
     term = ''
+
+    _titles = {'project': 'Project',
+               'distribution': 'System',
+               'experiment': 'Experiment',
+               'dataset': 'Dataset',
+               'hardware': 'Hardware',
+               'person': 'Person'}
+
     if keyword:
         xpath_search = XPath("/c:catalog/child::node()/c:keywords/c:keyword[r:test(., $searchstring, 'i')]/../..",
                              namespaces=ns)
@@ -78,6 +84,9 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
                 search_results = xpath_search(doc, searchstring=search_term)
                 for i in search_results:
                     name = xpath_name(i)
+                    recipe_type = i.tag[2 + len(ns['c']):]
+                    if _titles[recipe_type] not in results:
+                        results[_titles[recipe_type]] = dict()
                     if name:
                         name = name[0]
                         version = xpath_version(i)
@@ -87,12 +96,10 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
                         name = xpath_filename(i)[0]
                     fs_path = f.split('/')
                     path = fs_path[-2] + '/' + fs_path[-1]
-                    results[path] = name
+                    results[_titles[recipe_type]][path] = name
                     break
             else:
                 title = "Error: Empty Search String."
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', f, e)
-    results = OrderedDict(sorted(six_iteritems(results)))
-    iteritems = six_iteritems
     return render_template('searchResult.html', **locals())

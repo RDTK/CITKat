@@ -2,11 +2,18 @@
 {% block content %}
 <h1>{{ title }}</h1>
     {% if results and search_term %}
-    <ul>
-        {% for (key, value) in iteritems(results) %}
-            <li><a href="/{{ key }}">{{ value }}</a></li>
+    <dl>
+        {% for (key, nested_dict) in results|dictsort %}
+        <dt>{{ key }}:</dt>
+        <dd>
+            <ul>
+                {% for (key, value) in nested_dict|dictsort(false, 'value') %}
+                    <li><a href="/{{ key }}">{{ value }}</a></li>
+                {% endfor %}
+            </ul>
         {% endfor %}
-    </ul>
+        </dd>
+    </dl>
     {% elif search_term %}
         <h4>Nothing found.</h4>
     {% endif %}
