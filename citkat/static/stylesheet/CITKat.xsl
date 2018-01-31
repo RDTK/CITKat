@@ -182,7 +182,7 @@
                             <xsl:value-of select="child::node()/c:filename"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <xsl:if test="not(c:person)">
+                    <xsl:if test="child::node()/@version and not(c:person)">
                         <span>
                             <xsl:text disable-output-escaping="yes"> </xsl:text>
                             <button class="btn btn-light dropdown-toggle" type="button" id="versionsDropdown"
@@ -192,28 +192,14 @@
                                 <xsl:call-template name="includeOcticon">
                                     <xsl:with-param name="name" select="'versions'"/>
                                 </xsl:call-template>
-                                <xsl:choose>
-                                    <xsl:when test="child::node()/@version">
-                                        <xsl:value-of select="child::node()/@version"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text disable-output-escaping="yes">Versions</xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
+                                <xsl:value-of select="child::node()/@version"/>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="versionsDropdown">
                                 <a class="dropdown-item  active" title="Selected version">
                                     <xsl:attribute name="href">
                                         <xsl:text disable-output-escaping="yes">#</xsl:text>
                                     </xsl:attribute>
-                                    <xsl:choose>
-                                        <xsl:when test="child::node()/@version">
-                                            <xsl:value-of select="child::node()/@version"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:text disable-output-escaping="yes">This version</xsl:text>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
+                                    <xsl:value-of select="child::node()/@version"/>
                                 </a>
                             </div>
                         </span>
