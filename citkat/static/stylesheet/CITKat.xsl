@@ -287,7 +287,8 @@
                                 <div class="card-body">
                                     <dl>
                                         <xsl:apply-templates
-                                                select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]"
+                                                select="child::node()/c:resource[not(@type = 'img')
+                                                        and not(@type = 'video')]"
                                                 mode="catalog"/>
                                     </dl>
                                 </div>
@@ -1043,199 +1044,201 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </span>
             </dd>
         </xsl:if>
-        <dt class="col-6 col-lg-3 text-truncate">
-            <xsl:call-template name="includeOcticon">
-                <xsl:with-param name="name" select="'desktop-download'"/>
-            </xsl:call-template>
-            <xsl:text>Download Sourcecode:</xsl:text>
-        </dt>
-        <dd class="col-6 col-lg-3">
-            <a href="javascript:void(0);" class="text-light badge badge-success" data-toggle="popover">
-                <xsl:attribute name="data-content">
-                    <xsl:choose>
-                        <xsl:when test="c:kind = 'git'">
-                            <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
-                                <!--first step-->
-                                <xsl:text>Clone the content:</xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="git clone </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes"> </xsl:text>
-                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
-                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-clone')"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+        <xsl:if test="c:repository">
+            <dt class="col-6 col-lg-3 text-truncate">
+                <xsl:call-template name="includeOcticon">
+                    <xsl:with-param name="name" select="'desktop-download'"/>
+                </xsl:call-template>
+                <xsl:text>Download Sourcecode:</xsl:text>
+            </dt>
+            <dd class="col-6 col-lg-3">
+                <a href="javascript:void(0);" class="text-light badge badge-success" data-toggle="popover">
+                    <xsl:attribute name="data-content">
+                        <xsl:choose>
+                            <xsl:when test="c:kind = 'git'">
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                    <!--first step-->
+                                    <xsl:text>Clone the content:</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="git clone </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                            <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                            <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-clone')"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                    <!--second step-->
+                                    <xsl:choose>
+                                        <xsl:when test="c:revision/c:id">
+                                            <xsl:text>Then checkout the specific revision:</xsl:text>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>Then change directory:</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
+                                            <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                            <xsl:if test="c:revision/c:id">
+                                                <xsl:text disable-output-escaping="yes">; git checkout </xsl:text>
+                                                <xsl:value-of select="substring(c:revision/c:id, 1, 8)"/>
+                                            </xsl:if>
+                                            <xsl:if test="c:sub-directory">
+                                                <xsl:text disable-output-escaping="yes">; cd </xsl:text>
+                                                <xsl:value-of select="c:sub-directory"/>
+                                            </xsl:if>
+                                            <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-checkout')"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                                <!--second step-->
-                                <xsl:choose>
-                                    <xsl:when test="c:revision/c:id">
-                                        <xsl:text>Then checkout the specific revision:</xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text>Then change directory:</xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
-                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
-                                        <xsl:if test="c:revision/c:id">
-                                            <xsl:text disable-output-escaping="yes">; git checkout </xsl:text>
-                                            <xsl:value-of select="substring(c:revision/c:id, 1, 8)"/>
-                                        </xsl:if>
-                                        <xsl:if test="c:sub-directory">
-                                            <xsl:text disable-output-escaping="yes">; cd </xsl:text>
-                                            <xsl:value-of select="c:sub-directory"/>
-                                        </xsl:if>
-                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-checkout')"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                            </xsl:when>
+                            <xsl:when test="c:kind = 'hg'">
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                    <!--first step-->
+                                    <xsl:text>Clone the content:</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="hg clone </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                            <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                            <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-clone')"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                    <!--second step-->
+                                    <xsl:choose>
+                                        <xsl:when test="c:revision/c:id">
+                                            <xsl:text>Then revert to the specific revision:</xsl:text>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>Then change directory:</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-revert" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
+                                            <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                            <xsl:if test="c:revision/c:id">
+                                                <xsl:text disable-output-escaping="yes">; hg revert -r </xsl:text>
+                                                <xsl:value-of select="c:revision/c:id"/>
+                                            </xsl:if>
+                                            <xsl:if test="c:sub-directory">
+                                                <xsl:text disable-output-escaping="yes">; cd </xsl:text>
+                                                <xsl:value-of select="c:sub-directory"/>
+                                            </xsl:if>
+                                            <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                            <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                        </xsl:when>
-                        <xsl:when test="c:kind = 'hg'">
-                            <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
-                                <!--first step-->
-                                <xsl:text>Clone the content:</xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="hg clone </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes"> </xsl:text>
-                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
-                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-clone')"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                            </xsl:when>
+                            <xsl:when test="c:kind = 'svn'">
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                    <!--first step-->
+                                    <xsl:text>Clone the content:</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;input type="text" id="svn-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="svn checkout </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                            <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                            <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#svn-checkout')"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                    <!--second step-->
+                                    <xsl:choose>
+                                        <xsl:when test="c:revision/c:id">
+                                            <xsl:text>Then revert to the specific revision:</xsl:text>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>Then change directory:</xsl:text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-revert" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
+                                            <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
+                                            <xsl:if test="c:revision/c:id">
+                                                <xsl:text disable-output-escaping="yes">; svn update -r </xsl:text>
+                                                <xsl:value-of select="c:revision/c:id"/>
+                                            </xsl:if>
+                                            <xsl:if test="c:sub-directory">
+                                                <xsl:text disable-output-escaping="yes">; cd </xsl:text>
+                                                <xsl:value-of select="c:sub-directory"/>
+                                            </xsl:if>
+                                            <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
+                                            <xsl:value-of select="c:repository"/>
+                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                                <!--second step-->
-                                <xsl:choose>
-                                    <xsl:when test="c:revision/c:id">
-                                        <xsl:text>Then revert to the specific revision:</xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text>Then change directory:</xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-revert" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
-                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
-                                        <xsl:if test="c:revision/c:id">
-                                            <xsl:text disable-output-escaping="yes">; hg revert -r </xsl:text>
-                                            <xsl:value-of select="c:revision/c:id"/>
-                                        </xsl:if>
-                                        <xsl:if test="c:sub-directory">
-                                            <xsl:text disable-output-escaping="yes">; cd </xsl:text>
-                                            <xsl:value-of select="c:sub-directory"/>
-                                        </xsl:if>
-                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                    <!--first step-->
+                                    <xsl:text disable-output-escaping="yes">Download the archive: &lt;br/> &lt;a href="</xsl:text>
+                                    <xsl:value-of select="c:repository"/>
+                                    <xsl:text disable-output-escaping="yes">" title="Download archive"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-desktop-download" style="margin-right: 0.1rem; height: 0.7rem;"></xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#desktop-download">&lt;/use></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                    <xsl:value-of select="c:repository"/>
+                                    <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
                                 <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                            <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                        </xsl:when>
-                        <xsl:when test="c:kind = 'svn'">
-                            <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
-                                <!--first step-->
-                                <xsl:text>Clone the content:</xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="svn-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="svn checkout </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes"> </xsl:text>
-                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
-                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#svn-checkout')"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                                <!--second step-->
-                                <xsl:choose>
-                                    <xsl:when test="c:revision/c:id">
-                                        <xsl:text>Then revert to the specific revision:</xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text>Then change directory:</xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-revert" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
-                                        <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
-                                        <xsl:if test="c:revision/c:id">
-                                            <xsl:text disable-output-escaping="yes">; svn update -r </xsl:text>
-                                            <xsl:value-of select="c:revision/c:id"/>
-                                        </xsl:if>
-                                        <xsl:if test="c:sub-directory">
-                                            <xsl:text disable-output-escaping="yes">; cd </xsl:text>
-                                            <xsl:value-of select="c:sub-directory"/>
-                                        </xsl:if>
-                                        <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
-                                        <xsl:value-of select="c:repository"/>
-                                        <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                            <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
-                                <!--first step-->
-                                <xsl:text disable-output-escaping="yes">Download the archive: &lt;br/> &lt;a href="</xsl:text>
-                                <xsl:value-of select="c:repository"/>
-                                <xsl:text disable-output-escaping="yes">" title="Download archive"></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-desktop-download" style="margin-right: 0.1rem; height: 0.7rem;"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#desktop-download">&lt;/use></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                <xsl:value-of select="c:repository"/>
-                                <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
-                            <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:attribute>
-                <small>
-                    <xsl:call-template name="includeOcticon">
-                        <xsl:with-param name="name" select="'arrow-down'"/>
-                    </xsl:call-template>
-                </small>
-                <xsl:text>get the code</xsl:text>
-            </a>
-        </dd>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'arrow-down'"/>
+                        </xsl:call-template>
+                    </small>
+                    <xsl:text>get the code</xsl:text>
+                </a>
+            </dd>
+        </xsl:if>
     </xsl:template>
 
     <!--natures-->
