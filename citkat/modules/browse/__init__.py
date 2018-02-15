@@ -24,8 +24,8 @@ class Browse(object):
             name = name[0]
             version = self.xpath_entity_version(doc)
             if version:
-                name += ' (' + version[0] + ')'
-        return name
+                return {'name': name, 'version': version[0]}
+        return {'name': name, 'version': ''}
 
 
 titles = {'project': 'Project Versions',
@@ -44,7 +44,11 @@ def browse(entity):
     b = Browse()
     for itm in glob(safe_join(getcwd(), entity, '*.xml')):
         try:
-            listing[itm.split('/')[-1]] = b.get_name(entity, itm.split('/')[-1])
+            res = b.get_name(entity, itm.split('/')[-1])
+            if not res['name'] in listing:
+                listing[res['name']] = dict()
+            listing[res['name']][res['version']] = '/'.join(itm.split('/')[-2:])
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', itm, e)
+    print(listing)
     return render_template('browse.html', **locals())
