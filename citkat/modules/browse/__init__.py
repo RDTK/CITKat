@@ -50,5 +50,4 @@ def browse(entity):
             listing[res['name']][res['version']] = '/'.join(itm.split('/')[-2:])
         except XMLSyntaxError as e:
             current_app.logger.warning('Syntax error in catalog file "%s": \n%s', itm, e)
-    print(listing)
     return render_template('browse.html', **locals())
