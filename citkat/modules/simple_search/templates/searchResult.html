@@ -3,12 +3,47 @@
 <h1>{{ title }}</h1>
     {% if results and search_term %}
     <dl>
-        {% for (key, nested_dict) in results|dictsort %}
-        <dt>{{ key }}:</dt>
+        {% for (recipe_type, nested_dict) in results|dictsort %}
+        <dt>{{ recipe_type }}:</dt>
         <dd>
             <ul>
-                {% for (key, value) in nested_dict|dictsort(false, 'value') %}
-                    <li><a href="/{{ key }}">{{ value }}</a></li>
+                {% for (name, versions) in nested_dict|dictsort(false, 'key') %}
+                <li>
+                    {% if '' not in versions.keys() and versions.keys()|length > 1 %}
+                    <div id="m{{ loop.index }}" data-children=".item">
+                        <div class="item">
+                            <a data-toggle="collapse"
+                               data-parent="m{{ loop.index }}"
+                               href="#m{{ loop.index }}-versions"
+                               aria-expanded="false"
+                               aria-controls="m{{ loop.index }}-versions">
+                                {{ name }} -
+                                <small>
+                                    <span class="badge badge-pill badge-secondary text-light">
+                                        {{ versions.keys()|length }}
+                                    </span>
+                                </small>
+                                versions
+                            </a>
+                            <div id="m{{ loop.index }}-versions" class="collapse"
+                                 role="tabpanel">
+                                <ul>
+                                    {% for (version, url) in versions|dictsort(false, 'key') %}
+                                    <li><a href="../../{{ url }}">{{ version }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    {% for (version, url) in versions|dictsort(false, 'key') %}
+                    <a href="../../{{ url }}">
+                        {{ name }}
+                        {% if version %} ({{ version }}){% endif %}
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                </li>
                 {% endfor %}
             </ul>
         {% endfor %}

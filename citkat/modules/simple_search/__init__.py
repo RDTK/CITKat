@@ -84,19 +84,22 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
                 search_results = xpath_search(doc, searchstring=search_term)
                 for i in search_results:
                     name = xpath_name(i)
+                    version = xpath_version(i)
                     recipe_type = i.tag[2 + len(ns['c']):]
                     if _titles[recipe_type] not in results:
                         results[_titles[recipe_type]] = dict()
                     if name:
                         name = name[0]
-                        version = xpath_version(i)
-                        if version:
-                            name += ' (' + version[0] + ')'
                     else:
                         name = xpath_filename(i)[0]
                     fs_path = f.split('/')
                     path = fs_path[-2] + '/' + fs_path[-1]
-                    results[_titles[recipe_type]][path] = name
+                    if _titles[recipe_type] in results and name not in results[_titles[recipe_type]]:
+                        results[_titles[recipe_type]][name] = dict()
+                    if version:
+                        results[_titles[recipe_type]][name][version[0]] = path
+                    else:
+                        results[_titles[recipe_type]][name][''] = path
                     break
             else:
                 title = "Error: Empty Search String."

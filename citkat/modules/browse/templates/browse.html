@@ -2,9 +2,9 @@
 {% block content %}
 <h1>{{ title }}:</h1>
 <ul>
-    {% for (key, value) in listing|dictsort(false, 'key') %}
+    {% for (name, versions) in listing|dictsort(false, 'key') %}
     <li>
-        {% if '' not in value.keys() and value.keys()|length > 1 %}
+        {% if '' not in versions.keys() and versions.keys()|length > 1 %}
         <div id="m{{ loop.index }}" data-children=".item">
             <div class="item">
                 <a data-toggle="collapse"
@@ -12,10 +12,10 @@
                    href="#m{{ loop.index }}-versions"
                    aria-expanded="false"
                    aria-controls="m{{ loop.index }}-versions">
-                    {{ key }} -
+                    {{ name }} -
                     <small>
                         <span class="badge badge-pill badge-secondary text-light">
-                            {{ value.keys()|length }}
+                            {{ versions.keys()|length }}
                         </span>
                     </small>
                     versions
@@ -23,18 +23,18 @@
                 <div id="m{{ loop.index }}-versions" class="collapse"
                      role="tabpanel">
                     <ul>
-                        {% for (key2, value2) in value|dictsort(false, 'key') %}
-                        <li><a href="../../{{ value2 }}">{{ key2 }}</a></li>
+                        {% for (version, url) in versions|dictsort(false, 'key') %}
+                        <li><a href="../../{{ url }}">{{ version }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
         </div>
         {% else %}
-        {% for (key2, value2) in value|dictsort(false, 'key') %}
-        <a href="../../{{ value2 }}">
-            {{ key }}
-            {% if key2 %} ({{key2}}){% endif %}
+        {% for (version, url) in versions|dictsort(false, 'key') %}
+        <a href="../../{{ url }}">
+            {{ name }}
+            {% if version %} ({{ version }}){% endif %}
         </a>
         {% endfor %}
         {% endif %}

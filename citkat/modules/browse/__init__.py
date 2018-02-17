@@ -1,5 +1,4 @@
 from glob import glob
-from collections import OrderedDict
 
 from flask import Blueprint, render_template, safe_join, current_app
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
