@@ -40,7 +40,7 @@
                             {% for version in backlinks_items[type][name].keys() %}
                             {% if not version == 'filename_wo_version' %}
                             <a href="{{ backlinks_items[type][name][version] }}">
-                                {{ name }}{% if version %} - {{ version }}{% endif %}
+                                {{ name }}{% if version %} ({{ version }}){% endif %}
                             </a>
                             {% endif %}
                             {% endfor %}
