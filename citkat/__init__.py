@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, redirect, render_template
 from os import environ
 
@@ -12,7 +11,20 @@ from citkat.modules.simple_search import simple_search_blueprint
 from citkat.modules.static_xml import static_xml_blueprint
 from citkat.modules.gen_menu_items import gen_menu_items_blueprint
 
+from logging import WARN, Formatter
+from logging.handlers import RotatingFileHandler
+
 citkat = Flask(__name__)
+
+if 'LOG_FILENAME' in environ and not citkat.debug:
+    handler = RotatingFileHandler(
+        environ['LOG_FILENAME'], maxBytes=10000000, backupCount=10)
+    handler.setLevel(WARN)
+    handler.setFormatter(
+        Formatter(
+            "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s"
+        ))
+    citkat.logger.addHandler(handler)
 
 if 'CONTENT_PATH' in environ:
     citkat.config['content-directory'] = environ['CONTENT_PATH']
@@ -25,10 +37,6 @@ citkat.register_blueprint(include_xml_jinja2_blueprint)
 citkat.register_blueprint(simple_search_blueprint)
 citkat.register_blueprint(markdown_content_blueprint)
 citkat.register_blueprint(get_versions_blueprint)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'  # create in-memory database
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = SQLAlchemy()
-# db.init_app(app)
 
 
 @citkat.route('/')
@@ -39,13 +47,13 @@ def home():
 @citkat.errorhandler(404)
 def not_found(warning):
     title = '404 Not Found'
-    return render_template('layout.html', **locals()), 404
+    return render_template('layout.html', warning=True, title=title), 404
 
 
 @citkat.errorhandler(500)
-def not_found(error):
+def internal_error(error):
     title = '500 Internal Server Error'
-    return render_template('layout.html', **locals()), 500
+    return render_template('layout.html', error=True, title=title), 500
 
 
 @citkat.after_request
@@ -63,14 +71,14 @@ def add_headers(r):
     # manipulate content type for XSL files, so Chrome won't complain:
     try:
         if r.response.file.name.endswith('.xsl'):
-            r.headers["Content-Type"] = "text/xsl; charset=utf-8"  # Chrome accepts this type for XSL files
+            r.headers[
+                "Content-Type"] = "text/xsl; charset=utf-8"  # Chrome accepts this type for XSL files
     except AttributeError:
         pass
     return r
 
 
 def develop():
-    from os import getcwd
-    # citkat.config['content-directory'] = getcwd() + '/../content'  # TODO: remove this line for production release
-    citkat.config['no-caching'] = True  # for developer preview of CITKat content, disable all caching
+    # for developer preview of CITKat content, disable all caching
+    citkat.config['no-caching'] = True
     citkat.run(host='localhost')  # bind to localhost
