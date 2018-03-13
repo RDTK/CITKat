@@ -1479,16 +1479,16 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </div>
         </xsl:if>
         <xsl:if test="local-name() = 'distribution'">
-            <div class="card ">
+            <div class="card">
                 <div class="card-header">
-                    <h3>
+                    <h5>
                         <xsl:call-template name="includeOcticon">
                             <xsl:with-param name="name" select="'repo-clone'"/>
                         </xsl:call-template>
                         <xsl:text disable-output-escaping="yes">Replication</xsl:text>
-                    </h3>
+                    </h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body hideContent">
                     <xsl:if test="c:dependencies/c:system/c:dependency">
                         <h5>
                             <xsl:call-template name="includeOcticon">
