@@ -1,3 +1,7 @@
+/**
+ * Replace anker elements href with type attribute by specific values from the 
+ * doc.
+ */
 function linkParams() {
   var catalog = document.querySelector('#catalog');
   var type = catalog.getAttribute('type');
@@ -10,8 +14,10 @@ function linkParams() {
     paramString = document.location.search;
   }
   if (paramString !== '') {
-    Array.prototype.slice.call(catalog.querySelectorAll('.ref'), 0).forEach(function (elem) {
-      elem.setAttribute('href', elem.getAttribute('href') + paramString)
-    });
+    Array.prototype.slice.call(catalog.querySelectorAll('.ref'), 0).forEach(
+      function (elem) {
+        elem.setAttribute('href', elem.getAttribute('href') + paramString);
+      }
+    );
   }
 }
