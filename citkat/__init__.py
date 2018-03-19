@@ -16,13 +16,18 @@ from logging.handlers import RotatingFileHandler
 
 citkat = Flask(__name__)
 
-if 'LOG_FILENAME' in environ and not citkat.debug:
+LOG_FILENAME = '/tmp/citcat.log'
+
+if 'LOG_FILENAME' in environ:
+    LOG_FILENAME = environ['LOG_FILENAME']
+
+if not citkat.debug:
     handler = RotatingFileHandler(
-        environ['LOG_FILENAME'], maxBytes=10000000, backupCount=10)
+        LOG_FILENAME, maxBytes=1048576, backupCount=10)
     handler.setLevel(WARN)
     handler.setFormatter(
         Formatter(
-            "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s"
+            "[%(asctime)s] %(levelname)s {%(pathname)s:%(lineno)d} - %(message)s"
         ))
     citkat.logger.addHandler(handler)
 
@@ -46,14 +51,14 @@ def home():
 
 @citkat.errorhandler(404)
 def not_found(warning):
-    title = '404 Not Found'
-    return render_template('layout.html', warning=True, title=title), 404
+    title = '404 Page Not Found.'
+    return render_template('layout.html', warning=title, title=title), 404
 
 
 @citkat.errorhandler(500)
 def internal_error(error):
-    title = '500 Internal Server Error'
-    return render_template('layout.html', error=True, title=title), 500
+    title = '500 Internal Server Error.'
+    return render_template('layout.html', error=title, title=title), 500
 
 
 @citkat.after_request
