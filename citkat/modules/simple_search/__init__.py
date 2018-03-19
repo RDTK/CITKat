@@ -1,4 +1,3 @@
-from collections import OrderedDict
 from glob import glob
 
 from flask import Blueprint, request, render_template, current_app
@@ -7,8 +6,11 @@ from re import escape
 
 from os import getcwd
 
-simple_search_blueprint = Blueprint(name='simple_search', import_name=__name__, template_folder='templates',
-                                    url_prefix='/search')
+simple_search_blueprint = Blueprint(
+    name='simple_search',
+    import_name=__name__,
+    template_folder='templates',
+    url_prefix='/search')
 
 
 @simple_search_blueprint.route('/keyword/<string:keyword>')
@@ -24,33 +26,41 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
     :return:
     """
     # TODO: highlight search result?
-    ns = {'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat',
-          'r': 'http://exslt.org/regular-expressions'}
+    ns = {
+        'c': 'https://toolkit.cit-ec.uni-bielefeld.de/CITKat',
+        'r': 'http://exslt.org/regular-expressions'
+    }
     xpath_search = ''
     term = ''
 
-    _titles = {'project': 'Project',
-               'distribution': 'System',
-               'experiment': 'Experiment',
-               'dataset': 'Dataset',
-               'hardware': 'Hardware',
-               'person': 'Person'}
+    _titles = {
+        'project': 'Project',
+        'distribution': 'System',
+        'experiment': 'Experiment',
+        'dataset': 'Dataset',
+        'hardware': 'Hardware',
+        'person': 'Person'
+    }
 
     if keyword:
-        xpath_search = XPath("/c:catalog/child::node()/c:keywords/c:keyword[r:test(., $searchstring, 'i')]/../..",
-                             namespaces=ns)
+        xpath_search = XPath(
+            "/c:catalog/child::node()/c:keywords/c:keyword[r:test(., $searchstring, 'i')]/../..",
+            namespaces=ns)
         term = 'keyword '
     elif access:
-        xpath_search = XPath("/c:catalog/child::node()[r:test(@access, $searchstring, 'i')]",
-                             namespaces=ns)
+        xpath_search = XPath(
+            "/c:catalog/child::node()[r:test(@access, $searchstring, 'i')]",
+            namespaces=ns)
         term = 'access '
     elif license:
-        xpath_search = XPath("/c:catalog/child::node()/c:license[r:test(., $searchstring, 'i')]/..",
-                             namespaces=ns)
+        xpath_search = XPath(
+            "/c:catalog/child::node()/c:license[r:test(., $searchstring, 'i')]/..",
+            namespaces=ns)
         term = 'license '
     elif nature:
-        xpath_search = XPath("/c:catalog/child::node()/c:natures/c:nature[r:test(., $searchstring, 'i')]/../..",
-                             namespaces=ns)
+        xpath_search = XPath(
+            "/c:catalog/child::node()/c:natures/c:nature[r:test(., $searchstring, 'i')]/../..",
+            namespaces=ns)
         term = 'nature '
     elif lang:
         xpath_search = XPath(
@@ -63,7 +73,9 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
             namespaces=ns)
         term = 'SCM kind '
     else:
-        xpath_search = XPath("/c:catalog[r:test(.//*, $searchstring, 'i')]/child::node()", namespaces=ns)
+        xpath_search = XPath(
+            "/c:catalog[r:test(.//*, $searchstring, 'i')]/child::node()",
+            namespaces=ns)
     xpath_name = XPath('@name', namespaces=ns)
     xpath_version = XPath('@version', namespaces=ns)
     xpath_filename = XPath('c:filename/text()', namespaces=ns)
@@ -75,7 +87,8 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
         parser = XMLParser(remove_blank_text=True)
         try:
             doc = parse(f, parser=parser)
-            if keyword or access or license or nature or lang or scm or ('s' in request.args and request.args['s']):
+            if keyword or access or license or nature or lang or scm or (
+                    's' in request.args and request.args['s']):
                 search_term = keyword or access or license or nature or lang or scm or request.args['s']
                 title = "Search result for " + term + "'" + search_term + "':"
                 # emulate full text search with regexp and escape special chars:
@@ -104,5 +117,6 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
             else:
                 title = "Error: Empty Search String."
         except XMLSyntaxError as e:
-            current_app.logger.warning('Syntax error in catalog file "%s": \n%s', f, e)
+            current_app.logger.warning(
+                'Syntax error in catalog file "%s": \n%s', f, e)
     return render_template('searchResult.html', **locals())
