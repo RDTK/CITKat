@@ -272,28 +272,49 @@
                 <!--embed video-->
                 <xsl:apply-templates select="child::node()/c:resource[@type = 'video']" mode="catalog"/>
 
-
                 <!--other resources-->
                 <div class="card-columns" id="resources">
-                    <xsl:if test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
+                    <xsl:choose>
+                        <xsl:when test="not(child::node()/c:resource[not(@type = 'img') and not(@type = 'video')])">
                             <div class="card ">
                                 <div class="card-header">
                                     <h5>
                                         <xsl:call-template name="includeOcticon">
                                             <xsl:with-param name="name" select="'link-external'"/>
                                         </xsl:call-template>
-                                        <xsl:text>Resources</xsl:text></h5>
+                                        <xsl:text>Resources</xsl:text>
+                                    </h5>
                                 </div>
                                 <div class="card-body">
                                     <dl>
-                                        <xsl:apply-templates
-                                                select="child::node()/c:resource[not(@type = 'img')
-                                                        and not(@type = 'video')]"
-                                                mode="catalog"/>
+                                        <dt>
+                                            <xsl:call-template name="includeOcticon">
+                                                <xsl:with-param name="name" select="'alert'"/>
+                                            </xsl:call-template>
+                                            <xsl:text>No additional resources available in this recipe.</xsl:text>
+                                        </dt>
                                     </dl>
                                 </div>
                             </div>
-                    </xsl:if>
+                        </xsl:when>
+                        <xsl:when test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
+                            <div class="card ">
+                                <div class="card-header">
+                                    <h5>
+                                        <xsl:call-template name="includeOcticon">
+                                            <xsl:with-param name="name" select="'link-external'"/>
+                                        </xsl:call-template>
+                                        <xsl:text>Resources</xsl:text>
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <dl>
+                                        <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img')                                                        and not(@type = 'video')]" mode="catalog"/>
+                                    </dl>
+                                </div>
+                            </div>
+                        </xsl:when>
+                    </xsl:choose>
                     <!--extends-->
                     <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
                     <!--Related Persons-->
