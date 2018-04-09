@@ -46,9 +46,30 @@ class NpmInstall(Command):
             exit(1)
 
 
+class SpriteGeneration(Command):
+    description = 'Generate sprites, must be called after NpmInstall'
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        svgstore_path = 'citkat/static/node_modules/svgstore-cli/bin/svgstore'
+        call([
+            svgstore_path,
+            '-o=citkat/static/node_modules/octicons/build/sprite.octicons.svg',
+            'citkat/static/node_modules/octicons/build/svg/*.svg'
+        ])
+
+
 class develop(_develop):
     def run(self):
         self.run_command('NpmInstall')
+        self.run_command('SpriteGeneration')
         _develop.run(self)
 
 
@@ -60,7 +81,7 @@ class clean(_clean):
 
 
 class build(_build):
-    sub_commands = _build.sub_commands + [('NpmInstall', None)]
+    sub_commands = _build.sub_commands + [('NpmInstall', None)] + [('SpriteGeneration', None)]
 
 
 setup(
@@ -84,6 +105,7 @@ setup(
         'clean': clean,
         'bdist_egg': bdist_egg,
         'NpmInstall': NpmInstall,
+        'SpriteGeneration': SpriteGeneration,
     },
     entry_points={
         'console_scripts': [

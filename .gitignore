@@ -1,6 +1,7 @@
 node_modules/
 *.py.orig
 /.idea
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -69,3 +70,6 @@ docs/_build/
 /build
 /ez_setup.py
 /*.egg-info
+
+
+.eslintrc.json
