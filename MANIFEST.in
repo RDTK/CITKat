@@ -6,4 +6,4 @@ recursive-include citkat/static *
 recursive-exclude citkat/static *.json
 recursive-exclude citkat/static .npmrc
 prune citkat/static/node_modules
-recursive-include citkat/static/node_modules */dist/jquery.slim.min.js */dist/js/bootstrap.min.js */dist/umd/popper.min.js */dist/css/bootstrap*.min.css */marked.min.js */build/sprite.octicons.svg */build/octicons.min.css
+recursive-include citkat/static/node_modules */dist/jquery.slim.min.js */dist/js/bootstrap.min.js */dist/umd/popper.min.js */dist/css/bootstrap*.min.css */marked.min.js */build/sprite.octicons.svg
