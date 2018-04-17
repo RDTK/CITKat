@@ -274,6 +274,7 @@
 
                 <!--other resources-->
                 <div class="card-columns" id="resources">
+                    <xsl:if test="c:project">
                     <xsl:choose>
                         <xsl:when test="not(child::node()/c:resource[not(@type = 'img') and not(@type = 'video')])">
                             <div class="card ">
@@ -309,12 +310,15 @@
                                 </div>
                                 <div class="card-body">
                                     <dl>
-                                        <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img')                                                        and not(@type = 'video')]" mode="catalog"/>
+                                            <xsl:apply-templates 
+                                                select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]" 
+                                                mode="catalog"/>
                                     </dl>
                                 </div>
                             </div>
                         </xsl:when>
                     </xsl:choose>
+                    </xsl:if>
                     <!--extends-->
                     <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
                     <!--Related Persons-->
