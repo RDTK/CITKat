@@ -81,7 +81,7 @@ class clean(_clean):
 
 
 class build(_build):
-    sub_commands = _build.sub_commands + [('NpmInstall', None)] + [('SpriteGeneration', None)]
+    sub_commands = [('NpmInstall', None)] + [('SpriteGeneration', None)] + _build.sub_commands
 
 
 setup(
@@ -97,7 +97,8 @@ setup(
         'flask>=0.12.2',
         'flask_restful>=0.3.6',
         'lxml>=4.1.1',
-        'markdown>=2.6.10'
+        'markdown>=2.6.10',
+        # 'flask_assets>=0.12'
     ],
     cmdclass={
         'build': build,

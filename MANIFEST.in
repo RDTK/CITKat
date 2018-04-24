@@ -1,6 +1,6 @@
 recursive-include citkat/templates *
-recursive-include citkat/modules */static/*
-recursive-include citkat/modules */static/*/*
+recursive-include citkat/modules */static/js/*
+recursive-include citkat/modules */static/css/*
 recursive-include citkat/modules */templates/*
 recursive-include citkat/static *
 recursive-exclude citkat/static *.json
