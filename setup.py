@@ -22,6 +22,7 @@ def which(program):
 class bdist_egg(_bdist_egg):
     def run(self):
         self.run_command('NpmInstall')
+        self.run_command('SpriteGeneration')
         _bdist_egg.run(self)
 
 
