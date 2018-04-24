@@ -215,7 +215,7 @@
                             <div class="card-header">
                                 <h3>
                                     <xsl:call-template name="includeOcticon">
-                                        <xsl:with-param name="name" select="'file-text'"/>
+                                        <xsl:with-param name="name" select="'file'"/>
                                     </xsl:call-template>
                                     <xsl:text disable-output-escaping="yes">General Information</xsl:text>
                                 </h3>
