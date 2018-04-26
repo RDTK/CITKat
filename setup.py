@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from distutils import dir_util
 from setuptools import setup, Command, find_packages
-from subprocess import call
+from subprocess import call, PIPE, Popen, check_output
 import os
 from distutils.command.build import build as _build
 from setuptools.command.bdist_egg import bdist_egg as _bdist_egg
@@ -22,6 +22,7 @@ def which(program):
 class bdist_egg(_bdist_egg):
     def run(self):
         self.run_command('NpmInstall')
+        self.run_command('LibreJS')
         self.run_command('SpriteGeneration')
         _bdist_egg.run(self)
 
@@ -67,9 +68,30 @@ class SpriteGeneration(Command):
         ])
 
 
+class LibreJS(Command):
+    description = 'Collect all license information'
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        cmd = ('citkat/static/node_modules/npm-license/bin/npm-license',
+               '-e=json', '--start=citkat/static/')
+        npm_license = Popen(cmd, stdout=PIPE)
+        file_cmd = ('tee', 'citkat/static/licenses.json')
+        check_output(file_cmd, stdin=npm_license.stdout)
+        npm_license.wait()
+
+
 class develop(_develop):
     def run(self):
         self.run_command('NpmInstall')
+        self.run_command('LibreJS')
         self.run_command('SpriteGeneration')
         _develop.run(self)
 
@@ -82,7 +104,9 @@ class clean(_clean):
 
 
 class build(_build):
-    sub_commands = [('NpmInstall', None)] + [('SpriteGeneration', None)] + _build.sub_commands
+    sub_commands = [('NpmInstall', None)] + [('LibreJS', None)] + [
+        ('SpriteGeneration', None)
+    ] + _build.sub_commands
 
 
 setup(
@@ -107,6 +131,7 @@ setup(
         'clean': clean,
         'bdist_egg': bdist_egg,
         'NpmInstall': NpmInstall,
+        'LibreJS': LibreJS,
         'SpriteGeneration': SpriteGeneration,
     },
     entry_points={

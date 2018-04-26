@@ -2,6 +2,7 @@ node_modules/
 *.py.orig
 /.idea
 .vscode/
+licenses.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
