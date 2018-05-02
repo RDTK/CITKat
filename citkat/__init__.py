@@ -10,6 +10,7 @@ from citkat.modules.markdown_content import markdown_content_blueprint
 from citkat.modules.simple_search import simple_search_blueprint
 from citkat.modules.static_xml import static_xml_blueprint
 from citkat.modules.gen_menu_items import gen_menu_items_blueprint
+from citkat.modules.librejs import librejs_blueprint
 
 from logging import WARN, Formatter
 from logging.handlers import RotatingFileHandler
@@ -42,6 +43,7 @@ citkat.register_blueprint(include_xml_jinja2_blueprint)
 citkat.register_blueprint(simple_search_blueprint)
 citkat.register_blueprint(markdown_content_blueprint)
 citkat.register_blueprint(get_versions_blueprint)
+citkat.register_blueprint(librejs_blueprint)
 
 
 @citkat.route('/')
@@ -52,7 +54,7 @@ def home():
 @citkat.errorhandler(404)
 def not_found(warning):
     title = '404 Page Not Found.'
-    return render_template('layout.html', warning=title, title=title), 404
+    return render_template('layout.html', warning=warning, title=title), 404
 
 
 @citkat.errorhandler(500)

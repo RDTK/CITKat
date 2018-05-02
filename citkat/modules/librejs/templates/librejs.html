@@ -1,0 +1,17 @@
+{% extends "layout.html" %} {% block content %}
+<h1>{{ title }}</h1>
+
+
+
+
+<dl>
+    {% for name in data %}
+    {% if not 'citkat' in name %}
+    <dt>{{ name.split('@')[0] }}</dt>
+    <dd>Version: {{ name.split('@')[1] }}</dd> 
+    <dd>License: {{ data[name]['licenses'] }}</dd>
+    <dd>Repository: <a href='{{ data[name]['repository'] }}'>{{ data[name]['repository'] }}</a></dd>
+    {% endif %}
+    {% endfor %}
+</dl>
+{% endblock %}

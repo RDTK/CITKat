@@ -83,7 +83,7 @@ class LibreJS(Command):
         cmd = ('citkat/static/node_modules/npm-license/bin/npm-license',
                '-e=json', '--start=citkat/static/')
         npm_license = Popen(cmd, stdout=PIPE)
-        file_cmd = ('tee', 'citkat/static/licenses.json')
+        file_cmd = ('tee', 'citkat/modules/librejs/licenses.json')
         check_output(file_cmd, stdin=npm_license.stdout)
         npm_license.wait()
 
