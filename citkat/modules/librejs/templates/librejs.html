@@ -9,7 +9,7 @@
     {% if not 'citkat' in name %}
     <dt>{{ name.split('@')[0] }}</dt>
     <dd>Version: {{ name.split('@')[1] }}</dd> 
-    <dd>License: {{ data[name]['licenses'] }}</dd>
+    <dd>License: <a href="https://opensource.org/licenses/{{ data[name]['licenses'] }}">{{ data[name]['licenses'] }}</a></dd>
     <dd>Repository: <a href='{{ data[name]['repository'] }}'>{{ data[name]['repository'] }}</a></dd>
     {% endif %}
     {% endfor %}
