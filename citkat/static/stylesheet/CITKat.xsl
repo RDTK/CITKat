@@ -275,49 +275,49 @@
                 <!--other resources-->
                 <div class="card-columns" id="resources">
                     <xsl:if test="c:project">
-                    <xsl:choose>
-                        <xsl:when test="not(child::node()/c:resource[not(@type = 'img') and not(@type = 'video')])">
-                            <div class="card ">
-                                <div class="card-header">
-                                    <h5>
-                                        <xsl:call-template name="includeOcticon">
-                                            <xsl:with-param name="name" select="'link-external'"/>
-                                        </xsl:call-template>
-                                        <xsl:text>Resources</xsl:text>
-                                    </h5>
-                                </div>
-                                <div class="card-body">
-                                    <dl>
-                                        <dt>
+                        <xsl:choose>
+                            <xsl:when test="not(child::node()/c:resource[not(@type = 'img') and not(@type = 'video')])">
+                                <div class="card ">
+                                    <div class="card-header">
+                                        <h5>
                                             <xsl:call-template name="includeOcticon">
-                                                <xsl:with-param name="name" select="'alert'"/>
+                                                <xsl:with-param name="name" select="'link-external'"/>
                                             </xsl:call-template>
-                                            <xsl:text>No additional resources available in this recipe.</xsl:text>
-                                        </dt>
-                                    </dl>
+                                            <xsl:text>Resources</xsl:text>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <dl>
+                                            <dt>
+                                                <xsl:call-template name="includeOcticon">
+                                                    <xsl:with-param name="name" select="'alert'"/>
+                                                </xsl:call-template>
+                                                <xsl:text>No additional resources available in this recipe.</xsl:text>
+                                            </dt>
+                                        </dl>
+                                    </div>
                                 </div>
-                            </div>
-                        </xsl:when>
-                        <xsl:when test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
-                            <div class="card ">
-                                <div class="card-header">
-                                    <h5>
-                                        <xsl:call-template name="includeOcticon">
-                                            <xsl:with-param name="name" select="'link-external'"/>
-                                        </xsl:call-template>
-                                        <xsl:text>Resources</xsl:text>
-                                    </h5>
-                                </div>
-                                <div class="card-body">
-                                    <dl>
+                            </xsl:when>
+                            <xsl:when test="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]">
+                                <div class="card ">
+                                    <div class="card-header">
+                                        <h5>
+                                            <xsl:call-template name="includeOcticon">
+                                                <xsl:with-param name="name" select="'link-external'"/>
+                                            </xsl:call-template>
+                                            <xsl:text>Resources</xsl:text>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <dl>
                                             <xsl:apply-templates 
                                                 select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]" 
                                                 mode="catalog"/>
-                                    </dl>
+                                        </dl>
+                                    </div>
                                 </div>
-                            </div>
-                        </xsl:when>
-                    </xsl:choose>
+                            </xsl:when>
+                        </xsl:choose>
                     </xsl:if>
                     <!--extends-->
                     <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
@@ -829,7 +829,7 @@ document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.
 document.body.querySelector('[data-markdown=true]').removeAttribute('style');
 ]]>
                 </script>
-            </xsl:when>
+            </xsl:when> 
             <xsl:otherwise>
                 <div style="white-space: pre-line;">
                     <xsl:value-of select="." disable-output-escaping="yes"/>
@@ -1585,11 +1585,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                     <xsl:choose>
                                         <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
                                             <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends software-properties-common&#xa;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends \&#xa;    software-properties-common&#xa;</xsl:text>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends software-properties-common&#xa;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends \&#xa;    software-properties-common&#xa;</xsl:text>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:if>
@@ -1606,14 +1606,14 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                 <xsl:choose>
                                     <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
                                         <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
-                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends </xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends \&#xa;    </xsl:text>
                                         <!--<xsl:text disable-output-escaping="yes">$ sudo apt-get install &#45;&#45;no-install-recommends \&#xa;</xsl:text>-->
                                         <xsl:for-each select="c:dependency">
                                             <xsl:sort/>
                                             <!--<xsl:text disable-output-escaping="yes">    </xsl:text>-->
                                             <xsl:value-of select="."/>
                                             <xsl:if test="position() != last()">
-                                                <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                                <xsl:text disable-output-escaping="yes"> \&#xa;    </xsl:text>
                                             </xsl:if>
                                             <!--<xsl:if test="position() != last()">-->
                                                 <!--<xsl:text disable-output-escaping="yes"> \&#xa;</xsl:text>-->
@@ -1622,14 +1622,14 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
-                                        <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends </xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends \&#xa;    </xsl:text>
                                         <!--<xsl:text disable-output-escaping="yes">$ sudo apt-get install &#45;&#45;no-install-recommends \&#xa;</xsl:text>-->
                                         <xsl:for-each select="c:dependency">
                                             <xsl:sort/>
                                             <!--<xsl:text disable-output-escaping="yes">    </xsl:text>-->
                                             <xsl:value-of select="."/>
                                             <xsl:if test="position() != last()">
-                                                <xsl:text disable-output-escaping="yes"> </xsl:text>
+                                                <xsl:text disable-output-escaping="yes"> \&#xa;    </xsl:text>
                                             </xsl:if>
                                             <!--<xsl:if test="position() != last()">-->
                                             <!--<xsl:text disable-output-escaping="yes"> \&#xa;</xsl:text>-->
@@ -1667,8 +1667,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:when test="@name">
                         <xsl:value-of select="@name"/>
                         <xsl:if test="@version">
-                            <xsl:text disable-output-escaping="yes"> - </xsl:text>
+                            <xsl:text disable-output-escaping="yes"> (</xsl:text>
                             <xsl:value-of select="@version"/>
+                            <xsl:text>)</xsl:text>
                         </xsl:if>
                     </xsl:when>
                     <xsl:otherwise>
