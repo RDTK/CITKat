@@ -119,11 +119,10 @@ setup(
     author_email='mwiechmann@techfak.uni-bielefeld.de',
     url='https://opensource.cit-ec.de/projects/citk/repository/citkat',
     install_requires=[
-        'flask>=0.12.2',
+        'flask>=1.0.2',
         'flask_restful>=0.3.6',
-        'lxml>=4.1.1',
-        'markdown>=2.6.10',
-        # 'flask_assets>=0.12'
+        'lxml>=4.2.1',
+        'markdown>=2.6.11',
     ],
     cmdclass={
         'build': build,
