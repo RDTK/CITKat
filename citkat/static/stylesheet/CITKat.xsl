@@ -322,7 +322,7 @@
                     <!--extends-->
                     <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
                     <!--Related Persons-->
-                    <xsl:if test="child::node()/c:relation[@type = 'person']">
+                    <xsl:if test="child::node()/c:relation[@type = 'person'] or /c:catalog/@gdpr">
                             <div class="card">
                                 <div class="card-header">
                                     <h5>
@@ -337,12 +337,33 @@
                                             <xsl:text>s</xsl:text>
                                         </xsl:if>
                                         <xsl:text disable-output-escaping="yes">:</xsl:text>
+                                        <xsl:if test="/c:catalog/@gdpr">
+                                            
+                                            <a href="#" class="badge badge-pill badge-info text-light" style="float:right;">
+                                                <small>
+                                                    <xsl:call-template name="includeOcticon">
+                                                        <xsl:with-param name="name" select="'shield'"/>
+                                                    </xsl:call-template>
+                                                    <xsl:text>GDPR compliant</xsl:text>
+                                                </small>
+                                            </a>
+                                        </xsl:if>
                                     </h5>
                                 </div>
                                 <div class="card-body">
+                                    <xsl:choose>
+                                        <xsl:when test="child::node()/c:relation[@type = 'person']">
+                                            <xsl:if test="/c:catalog/@gdpr">
+                                                <xsl:text>This list may incomplete in order to be compliant to the EU's GDPR.</xsl:text>
+                                            </xsl:if>
                                     <ul class="persons">
                                         <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="person"/>
                                     </ul>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <text>Either there are currently no involved persons known or they did not aggree to the GDPR Opt-In.</text>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
                                 </div>
                             </div>
                     </xsl:if>
