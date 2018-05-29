@@ -49,27 +49,27 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
         term = 'keyword '
     elif access:
         xpath_search = XPath(
-            "/c:catalog/child::node()[r:test(@access, $searchstring, 'i')]",
+            "/c:catalog/child::node()[translate(@access, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = translate($searchstring, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]",
             namespaces=ns)
         term = 'access '
     elif license:
         xpath_search = XPath(
-            "/c:catalog/child::node()/c:license[r:test(., $searchstring, 'i')]/..",
+            "/c:catalog/child::node()/c:license[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = translate($searchstring, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]/..",
             namespaces=ns)
         term = 'license '
     elif nature:
         xpath_search = XPath(
-            "/c:catalog/child::node()/c:natures/c:nature[r:test(., $searchstring, 'i')]/../..",
+            "/c:catalog/child::node()/c:natures/c:nature[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = translate($searchstring, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]/../..",
             namespaces=ns)
         term = 'nature '
     elif lang:
         xpath_search = XPath(
-            "/c:catalog/child::node()/c:programmingLanguages/c:language[r:test(., $searchstring, 'i')]/../..",
+            "/c:catalog/child::node()/c:programmingLanguages/c:language[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = translate($searchstring, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]/../..",
             namespaces=ns)
         term = 'programming language '
     elif scm:
         xpath_search = XPath(
-            "/c:catalog/child::node()/c:scm/c:kind[r:test(., $searchstring, 'i')]/../..",
+            "/c:catalog/child::node()/c:scm/c:kind[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = translate($searchstring, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]/../..",
             namespaces=ns)
         term = 'SCM kind '
     else:
@@ -91,9 +91,11 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
                     's' in request.args and request.args['s']):
                 search_term = keyword or access or license or nature or lang or scm or request.args['s']
                 title = "Search result for " + term + "'" + search_term + "':"
+                if not (access or license or nature or lang or scm):
                 # emulate full text search with regexp and escape special chars:
                 search_term = '\W+(?:\w+\W+){0,6}?'.join(
-                    (lambda x: '\w?' + escape(x) + '\w?')(x) for x in search_term.split(' '))
+                        (lambda x: '\w?' + escape(x) + '\w?')(x)
+                        for x in search_term.split(' '))
                 search_results = xpath_search(doc, searchstring=search_term)
                 for i in search_results:
                     name = xpath_name(i)
