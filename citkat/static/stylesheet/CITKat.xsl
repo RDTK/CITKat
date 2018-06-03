@@ -240,8 +240,8 @@
                                     <xsl:apply-templates select="child::node()/@access" mode="catalog"/>
                                     <!--languages-->
                                     <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="catalog"/>
-                                    <!--license-->
-                                    <xsl:apply-templates select="child::node()/c:license" mode="catalog"/>
+                                    <!--licenses-->
+                                    <xsl:apply-templates select="child::node()/c:licenses" mode="catalog"/>
                                     <!--natures-->
                                     <xsl:apply-templates select="child::node()/c:natures" mode="catalog"/>
                                     <!--keywords-->
@@ -908,15 +908,20 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     </xsl:template>
 
     <!--licenses-->
-    <xsl:template match="c:license" mode="catalog">
+    <xsl:template match="c:licenses" mode="catalog">
         <xsl:call-template name="log_template_info"/>
         <dt class="col-6 col-lg-3">
             <xsl:call-template name="includeOcticon">
                 <xsl:with-param name="name" select="'law'"/>
             </xsl:call-template>
-            <xsl:text disable-output-escaping="yes">License: </xsl:text>
+            <xsl:text disable-output-escaping="yes">License</xsl:text>
+            <xsl:if test="count(c:license) > 1">
+              <xsl:text disable-output-escaping="yes">s</xsl:text>
+            </xsl:if>
+            <xsl:text disable-output-escaping="yes">: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
+            <xsl:for-each select="c:license">
             <a>
                 <xsl:attribute name="href">
                     <xsl:text>/search/license/</xsl:text>
@@ -958,6 +963,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
+                <xsl:if test="position() != last()">
+                    <xsl:text> </xsl:text>
+                </xsl:if>
+            </xsl:for-each>
         </dd>
     </xsl:template>
 
