@@ -227,9 +227,9 @@
                                             <xsl:apply-templates select="child::node()/c:description" mode="catalog"/>
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <p>
+                                            <div>
                                                 <xsl:text disable-output-escaping="yes">No description provided yet.</xsl:text>
-                                            </p>
+                                            </div>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </div>
@@ -1710,7 +1710,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Generate Distribution</xsl:text>
         </h5>
-        <p>
+        <div>
             <xsl:text>Now, please use our distribution tool chain as explained in the tutorials section Bootstrapping
                 and Installing. Read and execute these instructions carefully. You will need to bootstrap the
             </xsl:text>
@@ -1734,7 +1734,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:text>. If you changed your prefix from </xsl:text>
             <code>$HOME/citk</code>
             <xsl:text> to something else, please keep that in mind.</xsl:text>
-        </p>
+        </div>
         <pre>
             <code class="shell">
                 <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator \&#xa;    --on-error=continue \&#xa;    -d $HOME/citk/dist/distributions/</xsl:text>
@@ -1779,16 +1779,16 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:text disable-output-escaping="yes">Replication Information</xsl:text>
         </h3>
         <div>
-            <p>Please replicate the associated system iCub Ball Tracking-s1 as described in the Replicate System
+            <div>Please replicate the associated system iCub Ball Tracking-s1 as described in the Replicate System
                 Section, see Linked System Version. After installing the system, run the following CI Job on your local
                 Jenkins instance in order to execute the experiment:
                 <code id="">
                     <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                     <xsl:text disable-output-escaping="yes">-*</xsl:text>
                 </code>
-            </p>
-            <p>Please also compare your results to the Linked CI Job.</p>
-            <p>
+            </div>
+            <div>Please also compare your results to the Linked CI Job.</div>
+            <div>
                 <strong>
                     <xsl:text disable-output-escaping="yes">Alternatively </xsl:text>
                 </strong>
@@ -1796,7 +1796,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     experiment manually. Remember, if you changed your prefix from </xsl:text>
                 <code>$HOME/citk</code>
                 <xsl:text> to something else, change the code accordingly.</xsl:text>
-            </p>
+            </div>
             <pre>
                 <code class="bash">
                     <xsl:text disable-output-escaping="yes">#!/bin/bash&#xa;</xsl:text>
@@ -1810,14 +1810,14 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <h5>
                 <xsl:text disable-output-escaping="yes">Make the Experiment Fail:</xsl:text>
             </h5>
-            <p>
+            <div>
                 <xsl:text disable-output-escaping="yes">In order to prove the simplicity of the FSMT approach you may again start the experiment by executing the last command. </xsl:text>
                 <strong>
                     <xsl:text>This </xsl:text>
                 </strong>
                 <xsl:text disable-output-escaping="yes">time please close one of the camera images, the experiment will be
                 instantaneously stopped and marked as failed.</xsl:text>
-            </p>
+            </div>
         </div>
     </xsl:template>
 </xsl:stylesheet>

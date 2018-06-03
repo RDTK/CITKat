@@ -15,7 +15,7 @@
                 {{ include_additional_menu_items() }}
             </ul>
             <form class="form-inline my-2 my-lg-0" method="get" action="/search">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="s">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="s"></input>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" hidden="true">Search</button>
             </form>
         </div>
@@ -23,7 +23,6 @@
     </nav>
     <div class="container">
         {% if error %}
-        <p>
         <div class='alert alert-danger' role='alert'>
             <h4>
                 <svg class='octicon octicon-alert' version='1.1' xmlns="http://www.w3.org/2000/svg"
@@ -33,10 +32,8 @@
                 {{ title | safe }}
             </h4>
         </div>
-        </p>
         {% endif %}
         {% if warning %}
-        <p>
         <div class='alert alert-warning' role='alert'>
             <h4>
                 <svg class='octicon octicon-alert' version='1.1' xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +43,6 @@
                 {{ warning | safe }}
             </h4>
         </div>
-        </p>
         {% endif %}
         {% block content %}{{ content }}{% endblock %}
     </div>
