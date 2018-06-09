@@ -1404,7 +1404,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:with-param name="name" select="'code'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
-            <xsl:if test="count(c:language) > 1">s</xsl:if>
+            <xsl:if test="count(c:language) > 1">
+                <xsl:text>s</xsl:text>
+            </xsl:if>
             <xsl:text disable-output-escaping="yes">: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
