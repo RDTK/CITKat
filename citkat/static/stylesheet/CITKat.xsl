@@ -970,7 +970,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             <xsl:text disable-output-escaping="yes">: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
-            <xsl:for-each select="c:license">
+            <xsl:apply-templates select="c:license" mode="catalog" />
+        </dd>
+    </xsl:template>
+
+    <!--single license-->
+    <xsl:template match="c:license" mode="catalog">
+        <xsl:call-template name="log_template_info"/>
             <a>
                 <xsl:attribute name="href">
                     <xsl:text>/search/license/</xsl:text>
@@ -988,7 +994,8 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:text>bottom</xsl:text>
                 </xsl:attribute>
                 <xsl:choose>
-                    <xsl:when test=". = '-unknown-' or . = 'unknown'">
+                <xsl:when test="contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'unknown') or 
+                                contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'todo')">
                         <xsl:attribute name="class">
                             <xsl:text>badge badge-danger text-light</xsl:text>
                         </xsl:attribute>
@@ -1015,8 +1022,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:if test="position() != last()">
                     <xsl:text> </xsl:text>
                 </xsl:if>
-            </xsl:for-each>
-        </dd>
     </xsl:template>
 
     <!--keywords-->
