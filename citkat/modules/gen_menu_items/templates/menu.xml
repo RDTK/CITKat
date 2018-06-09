@@ -7,7 +7,7 @@
         {% else %}
             {% for key in itm.keys() %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/{{ key }}/" id="{{ key }}Dropdown" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" href="javascript:void()" id="{{ key }}Dropdown" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">{{ key }}</a>
                     <div class="dropdown-menu" aria-labelledby="{{ key }}Dropdown">
                         {% for subitm in itm[key] %}
@@ -19,7 +19,7 @@
         {% endif %}
     {% endfor %}
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="/browse/" id="BrowseDropdown" data-toggle="dropdown"
+        <a class="nav-link dropdown-toggle" href="javascript:void()" id="BrowseDropdown" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">Browse</a>
         <div class="dropdown-menu" aria-labelledby="BrowseDropdown">
             <a class="dropdown-item" href="/browse/distribution/">System Versions</a>
