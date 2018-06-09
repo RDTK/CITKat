@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable"
-                exclude-result-prefixes="c arr">
-    <xsl:output method="html" indent="no" media-type="text/html" version="5.0"
-                encoding="UTF-8" doctype-system="about:legacy-compat"
-                cdata-section-elements="script" />
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:c="https://toolkit.cit-ec.uni-bielefeld.de/CITKat" xmlns:arr="array:variable" version="1.0" exclude-result-prefixes="c arr">
+    <xsl:output method="html" indent="no" media-type="text/html" version="5.0" encoding="UTF-8" doctype-system="about:legacy-compat" cdata-section-elements="script"/>
     <!--root template-->
     <xsl:template match="/">
         <html>
@@ -92,15 +87,7 @@
     <xsl:template name="capitalizeFirstLetter">
         <xsl:param name="in"/>
         <xsl:message>INFO: Calling 'capitalizeFirstLetter' template</xsl:message>
-        <xsl:value-of
-                select="concat(
-                          translate(
-                            substring($in, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                          ),
-                          substring(
-                            $in, 2, string-length($in)-1
-                          )
-                        )"/>
+        <xsl:value-of select="concat(translate(substring($in, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), substring($in, 2, string-length($in) - 1))"/>
     </xsl:template>
 
     <!--head-->
@@ -204,10 +191,7 @@
                     <xsl:if test="child::node()/@version and not(c:person)">
                         <span>
                             <xsl:text disable-output-escaping="yes"> </xsl:text>
-                            <button class="btn btn-light dropdown-toggle" type="button" id="versionsDropdown"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    style="font-size: 1.5rem; line-height: 1.2rem; vertical-align: bottom;"
-                                    title="Show other versions">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="versionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1.5rem; line-height: 1.2rem; vertical-align: bottom;" title="Show other versions">
                                 <xsl:call-template name="includeOcticon">
                                     <xsl:with-param name="name" select="'versions'"/>
                                 </xsl:call-template>
@@ -329,16 +313,14 @@
                                     </div>
                                     <div class="card-body">
                                         <dl>
-                                            <xsl:apply-templates 
-                                                select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]" 
-                                                mode="catalog"/>
+                                            <xsl:apply-templates select="child::node()/c:resource[not(@type = 'img') and not(@type = 'video')]" mode="catalog"/>
                                         </dl>
                                     </div>
                                 </div>
                             </xsl:when>
                         </xsl:choose>
                     </xsl:if>
-                    <xsl:if test="child::node()/c:licenses and count(child::node()/c:licenses/c:license) > 1">
+                    <xsl:if test="child::node()/c:licenses and count(child::node()/c:licenses/c:license) &gt; 1">
                         <div class="card hideContent">
                             <div class="card-header">
                                 <h5>
@@ -353,7 +335,7 @@
                             </div>
                         </div>
                     </xsl:if>
-                    <xsl:if test="child::node()/c:programmingLanguages and count(child::node()/c:programmingLanguages/c:language) > 1">
+                    <xsl:if test="child::node()/c:programmingLanguages and count(child::node()/c:programmingLanguages/c:language) &gt; 1">
                         <div class="card hideContent">
                             <div class="card-header">
                                 <h5>
@@ -382,7 +364,7 @@
                                         <xsl:call-template name="capitalizeFirstLetter">
                                             <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
                                         </xsl:call-template>
-                                        <xsl:if test="count(child::node()/c:relation[@type = 'person']) > 1">
+                                        <xsl:if test="count(child::node()/c:relation[@type = 'person']) &gt; 1">
                                             <xsl:text>s</xsl:text>
                                         </xsl:if>
                                         <xsl:text disable-output-escaping="yes">:</xsl:text>
@@ -405,9 +387,9 @@
                                             <xsl:if test="/c:catalog/@gdpr">
                                                 <xsl:text>This list may incomplete in order to be compliant to the EU's GDPR.</xsl:text>
                                             </xsl:if>
-                                    <ul class="persons">
-                                        <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="person"/>
-                                    </ul>
+                                            <ul class="persons">
+                                                <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="person"/>
+                                            </ul>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <text>Either there are currently no involved persons known or they did not aggree to the GDPR Opt-In.</text>
@@ -423,7 +405,7 @@
                             <xsl:call-template name="capitalizeFirstLetter">
                                 <xsl:with-param name="in" select="child::node()/c:relation[@type = 'publication']/@type"/>
                             </xsl:call-template>
-                            <xsl:if test="count(child::node()/c:relation[@type = 'publication']) > 1">
+                            <xsl:if test="count(child::node()/c:relation[@type = 'publication']) &gt; 1">
                                 <xsl:text>s</xsl:text>
                             </xsl:if>
                             <xsl:text disable-output-escaping="yes">:</xsl:text>
@@ -506,8 +488,7 @@
     <xsl:template name="navbar-browseDropdown">
         <xsl:param name="type"/>
         <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle" href="/browse/" id="BrowseDropdown"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="/browse/" id="BrowseDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <xsl:text>Browse</xsl:text>
                 <span class="sr-only">
                     <xsl:text> (current)</xsl:text>
@@ -626,7 +607,7 @@
     <xsl:template name="imgCarousel">
         <xsl:message>INFO: Calling 'imgCaroussel' template</xsl:message>
         <div id="carouselImgs" class="carousel slide card" data-ride="carousel" style="border: none;">
-            <xsl:if test="count(child::node()/c:resource[@type = 'img']) > 1">
+            <xsl:if test="count(child::node()/c:resource[@type = 'img']) &gt; 1">
                 <ol class="carousel-indicators">
                     <xsl:for-each select="child::node()/c:resource[@type = 'img']">
                         <xsl:element name="li">
@@ -673,7 +654,7 @@
                     </xsl:element>
                 </xsl:for-each>
             </div>
-            <xsl:if test="count(child::node()/c:resource[@type = 'img']) > 1">
+            <xsl:if test="count(child::node()/c:resource[@type = 'img']) &gt; 1">
                 <a class="carousel-control-prev" href="#carouselImgs" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"/>
                     <span class="sr-only">Previous</span>
@@ -878,7 +859,7 @@
                 <div style="white-space: pre-line;" data-markdown="true">
                     <xsl:value-of select="." disable-output-escaping="yes"/>
                 </div>
-                <script src="/static/node_modules/marked/marked.min.js"></script>
+                <script src="/static/node_modules/marked/marked.min.js"/>
                 <script><![CDATA[
 // add +3 to the heading level of Markdown text
 var renderer = new marked.Renderer();
@@ -936,9 +917,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:value-of select="."/>
                 </xsl:attribute>
                 <xsl:attribute name="title">
-                    <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                    <xsl:text disable-output-escaping="yes">Search for other &lt;strong&gt;</xsl:text>
                     <xsl:value-of select="."/>
-                    <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                    <xsl:text disable-output-escaping="yes">&lt;/strong&gt; recipes</xsl:text>
                 </xsl:attribute>
                 <xsl:attribute name="data-toggle">
                     <xsl:text>tooltip</xsl:text>
@@ -964,64 +945,63 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:with-param name="name" select="'law'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">License</xsl:text>
-            <xsl:if test="count(c:license) > 1">
+            <xsl:if test="count(c:license) &gt; 1">
               <xsl:text disable-output-escaping="yes">s</xsl:text>
             </xsl:if>
             <xsl:text disable-output-escaping="yes">: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
-            <xsl:apply-templates select="c:license" mode="catalog" />
+            <xsl:apply-templates select="c:license" mode="catalog"/>
         </dd>
     </xsl:template>
 
     <!--single license-->
     <xsl:template match="c:license" mode="catalog">
         <xsl:call-template name="log_template_info"/>
-            <a>
-                <xsl:attribute name="href">
-                    <xsl:text>/search/license/</xsl:text>
+        <a>
+            <xsl:attribute name="href">
+                <xsl:text>/search/license/</xsl:text>
+                <xsl:value-of select="."/>
+            </xsl:attribute>
+            <xsl:attribute name="title">
+                <xsl:text disable-output-escaping="yes">Search for other &lt;strong&gt;</xsl:text>
+                <xsl:value-of select="."/>
+                <xsl:text disable-output-escaping="yes">&lt;/strong&gt; recipes</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="data-toggle">
+                <xsl:text>tooltip</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="data-placement">
+                <xsl:text>bottom</xsl:text>
+            </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'unknown') or contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'todo')">
+                    <xsl:attribute name="class">
+                        <xsl:text>badge badge-danger text-light</xsl:text>
+                    </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'alert'"/>
+                        </xsl:call-template>
+                    </small>
                     <xsl:value-of select="."/>
-                </xsl:attribute>
-                <xsl:attribute name="title">
-                    <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="class">
+                        <xsl:text>badge badge-info text-light</xsl:text>
+                    </xsl:attribute>
+                    <small>
+                        <xsl:call-template name="includeOcticon">
+                            <xsl:with-param name="name" select="'tag'"/>
+                        </xsl:call-template>
+                    </small>
                     <xsl:value-of select="."/>
-                    <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
-                </xsl:attribute>
-                <xsl:attribute name="data-toggle">
-                    <xsl:text>tooltip</xsl:text>
-                </xsl:attribute>
-                <xsl:attribute name="data-placement">
-                    <xsl:text>bottom</xsl:text>
-                </xsl:attribute>
-                <xsl:choose>
-                <xsl:when test="contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'unknown') or 
-                                contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'todo')">
-                        <xsl:attribute name="class">
-                            <xsl:text>badge badge-danger text-light</xsl:text>
-                        </xsl:attribute>
-                        <small>
-                            <xsl:call-template name="includeOcticon">
-                                <xsl:with-param name="name" select="'alert'"/>
-                            </xsl:call-template>
-                        </small>
-                        <xsl:value-of select="."/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:attribute name="class">
-                            <xsl:text>badge badge-info text-light</xsl:text>
-                        </xsl:attribute>
-                        <small>
-                            <xsl:call-template name="includeOcticon">
-                                <xsl:with-param name="name" select="'tag'"/>
-                            </xsl:call-template>
-                        </small>
-                        <xsl:value-of select="."/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </a>
-                <xsl:if test="position() != last()">
-                    <xsl:text> </xsl:text>
-                </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
+        </a>
+        <xsl:if test="position() != last()">
+            <xsl:text> </xsl:text>
+        </xsl:if>
     </xsl:template>
 
     <!--keywords-->
@@ -1032,7 +1012,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:with-param name="name" select="'tag'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Keyword</xsl:text>
-            <xsl:if test="count(c:keyword) > 1">s</xsl:if>
+            <xsl:if test="count(c:keyword) &gt; 1">s</xsl:if>
             <xsl:text disable-output-escaping="yes">: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
@@ -1043,9 +1023,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:value-of select="."/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
-                        <xsl:text disable-output-escaping="yes">Search for other recipes with keyword &lt;strong></xsl:text>
+                        <xsl:text disable-output-escaping="yes">Search for other recipes with keyword &lt;strong&gt;</xsl:text>
                         <xsl:value-of select="."/>
-                        <xsl:text disable-output-escaping="yes">&lt;/strong></xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong&gt;</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="data-toggle">
                         <xsl:text>tooltip</xsl:text>
@@ -1091,9 +1071,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                             <xsl:value-of select="c:kind"/>
                         </xsl:attribute>
                         <xsl:attribute name="title">
-                            <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                            <xsl:text disable-output-escaping="yes">Search for other &lt;strong&gt;</xsl:text>
                             <xsl:value-of select="c:kind"/>
-                            <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                            <xsl:text disable-output-escaping="yes">&lt;/strong&gt; recipes</xsl:text>
                         </xsl:attribute>
                         <xsl:attribute name="data-toggle">
                             <xsl:text>tooltip</xsl:text>
@@ -1165,25 +1145,25 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                     <xsl:attribute name="data-content">
                         <xsl:choose>
                             <xsl:when test="c:kind = 'git'">
-                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"&gt;</xsl:text>
                                     <!--first step-->
                                     <xsl:text>Clone the content:</xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"&gt;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="git clone </xsl:text>
                                             <xsl:value-of select="c:repository"/>
                                             <xsl:text disable-output-escaping="yes"> </xsl:text>
                                             <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                             <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                             <xsl:value-of select="c:repository"/>
-                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-clone')"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">"/&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-clone')"&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"&gt;</xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy"&gt;&lt;/use&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                                     <!--second step-->
                                     <xsl:choose>
                                         <xsl:when test="c:revision/c:id">
@@ -1193,7 +1173,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                             <xsl:text>Then change directory:</xsl:text>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"&gt;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">&lt;input type="text" id="git-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
                                             <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                             <xsl:if test="c:revision/c:id">
@@ -1206,37 +1186,37 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                             </xsl:if>
                                             <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                             <xsl:value-of select="c:repository"/>
-                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-checkout')"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">"/&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#git-checkout')"&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"&gt;</xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy"&gt;&lt;/use&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                             </xsl:when>
                             <xsl:when test="c:kind = 'hg'">
-                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"&gt;</xsl:text>
                                     <!--first step-->
                                     <xsl:text>Clone the content:</xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"&gt;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-clone" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="hg clone </xsl:text>
                                             <xsl:value-of select="c:repository"/>
                                             <xsl:text disable-output-escaping="yes"> </xsl:text>
                                             <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                             <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                             <xsl:value-of select="c:repository"/>
-                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-clone')"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">"/&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-clone')"&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"&gt;</xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy"&gt;&lt;/use&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                                     <!--second step-->
                                     <xsl:choose>
                                         <xsl:when test="c:revision/c:id">
@@ -1246,7 +1226,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                             <xsl:text>Then change directory:</xsl:text>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"&gt;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-revert" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
                                             <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                             <xsl:if test="c:revision/c:id">
@@ -1259,37 +1239,37 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                             </xsl:if>
                                             <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                             <xsl:value-of select="c:repository"/>
-                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">"/&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"&gt;</xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy"&gt;&lt;/use&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                             </xsl:when>
                             <xsl:when test="c:kind = 'svn'">
-                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"&gt;</xsl:text>
                                     <!--first step-->
                                     <xsl:text>Clone the content:</xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"&gt;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">&lt;input type="text" id="svn-checkout" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="svn checkout </xsl:text>
                                             <xsl:value-of select="c:repository"/>
                                             <xsl:text disable-output-escaping="yes"> </xsl:text>
                                             <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                             <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                             <xsl:value-of select="c:repository"/>
-                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#svn-checkout')"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">"/&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#svn-checkout')"&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"&gt;</xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy"&gt;&lt;/use&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                                     <!--second step-->
                                     <xsl:choose>
                                         <xsl:when test="c:revision/c:id">
@@ -1299,7 +1279,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                             <xsl:text>Then change directory:</xsl:text>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;div class="input-group"&gt;</xsl:text>
                                         <xsl:text disable-output-escaping="yes">&lt;input type="text" id="hg-revert" class="form-control" readonly="true" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;' value="cd </xsl:text>
                                             <xsl:value-of select="/c:catalog/child::node()/c:filename"/>
                                             <xsl:if test="c:revision/c:id">
@@ -1312,30 +1292,30 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                             </xsl:if>
                                             <xsl:text disable-output-escaping="yes">" aria-label="Clone this repository at </xsl:text>
                                             <xsl:value-of select="c:repository"/>
-                                            <xsl:text disable-output-escaping="yes">"/></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"></xsl:text>
-                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy">&lt;/use></xsl:text>
-                                                <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
-                                            <xsl:text disable-output-escaping="yes">&lt;/button></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;/span></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                            <xsl:text disable-output-escaping="yes">"/&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;span class="input-group-btn"&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;button title="Copy to clipboard" aria-label="Copy to clipboard" class="btn btn-secondary" data-copied-hint="Copied!" type="button" onclick="copyToClipboard('input#hg-revert')"&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-clippy"&gt;</xsl:text>
+                                                    <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#clippy"&gt;&lt;/use&gt;</xsl:text>
+                                                <xsl:text disable-output-escaping="yes">&lt;/svg&gt;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">&lt;/button&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;/span&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"></xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;div class="clone-popover"&gt;</xsl:text>
                                     <!--first step-->
-                                    <xsl:text disable-output-escaping="yes">Download the archive: &lt;br/> &lt;a href="</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">Download the archive: &lt;br/&gt; &lt;a href="</xsl:text>
                                     <xsl:value-of select="c:repository"/>
-                                    <xsl:text disable-output-escaping="yes">" title="Download archive"></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-desktop-download" style="margin-right: 0.1rem; height: 0.7rem;"></xsl:text>
-                                        <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#desktop-download">&lt;/use></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/svg></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">" title="Download archive"&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-desktop-download" style="margin-right: 0.1rem; height: 0.7rem;"&gt;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">&lt;use xlink:href="#desktop-download"&gt;&lt;/use&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/svg&gt;</xsl:text>
                                     <xsl:value-of select="c:repository"/>
-                                    <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
-                                    <xsl:text disable-output-escaping="yes">&lt;/a></xsl:text>
-                                <xsl:text disable-output-escaping="yes">&lt;/div></xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/a&gt;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">&lt;/a&gt;</xsl:text>
+                                <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
@@ -1358,7 +1338,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:with-param name="name" select="'gear'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Nature</xsl:text>
-            <xsl:if test="count(c:nature) > 1">s</xsl:if>
+            <xsl:if test="count(c:nature) &gt; 1">s</xsl:if>
             <xsl:text disable-output-escaping="yes">: </xsl:text>
         </dt>
         <dd class="col-6 col-lg-3">
@@ -1369,9 +1349,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:value-of select="."/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
-                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong&gt;</xsl:text>
                         <xsl:value-of select="."/>
-                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong&gt; recipes</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="data-toggle">
                         <xsl:text>tooltip</xsl:text>
@@ -1404,7 +1384,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:with-param name="name" select="'code'"/>
             </xsl:call-template>
             <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
-            <xsl:if test="count(c:language) > 1">
+            <xsl:if test="count(c:language) &gt; 1">
                 <xsl:text>s</xsl:text>
             </xsl:if>
             <xsl:text disable-output-escaping="yes">: </xsl:text>
@@ -1417,9 +1397,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                         <xsl:value-of select="."/>
                     </xsl:attribute>
                     <xsl:attribute name="title">
-                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong></xsl:text>
+                        <xsl:text disable-output-escaping="yes">Search for other &lt;strong&gt;</xsl:text>
                         <xsl:value-of select="."/>
-                        <xsl:text disable-output-escaping="yes">&lt;/strong> recipes</xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;/strong&gt; recipes</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="data-toggle">
                         <xsl:text>tooltip</xsl:text>
@@ -1455,8 +1435,8 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </mask>
             </defs>
             <g transform="translate(21,21)">
-                <xsl:apply-templates select="c:license" mode="chart" />
-                <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"></circle>
+                <xsl:apply-templates select="c:license" mode="chart"/>
+                <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"/>
             </g>
         </svg>
     </xsl:template>
@@ -1472,8 +1452,8 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </mask>
             </defs>
             <g transform="translate(21, 21)">
-                <xsl:apply-templates select="c:language" mode="chart" />
-                <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"></circle>
+                <xsl:apply-templates select="c:language" mode="chart"/>
+                <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"/>
             </g>
         </svg>
     </xsl:template>
@@ -1482,37 +1462,37 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <xsl:template match="c:license | c:language" mode="chart">
         <xsl:call-template name="log_template_info"/>
         <xsl:variable name="offset">
-            <xsl:value-of select="1 - sum(preceding-sibling::*/@count) div sum(../*/@count)" />
+            <xsl:value-of select="1 - sum(preceding-sibling::*/@count) div sum(../*/@count)"/>
         </xsl:variable>
         <xsl:variable name="numPreceding">
-            <xsl:value-of select="count(preceding-sibling::*) mod count($colors)" />
+            <xsl:value-of select="count(preceding-sibling::*) mod count($colors)"/>
         </xsl:variable>
         <circle mask="url(#centrehole)" class="donut-segment" cx="0" cy="0" r="15.91549430918954" fill="transparent" stroke-width="5">
             <xsl:attribute name="stroke">
-                <xsl:value-of select="$colors[@num = $numPreceding]" />
+                <xsl:value-of select="$colors[@num = $numPreceding]"/>
             </xsl:attribute>
             <xsl:attribute name="stroke-dasharray">
-                <xsl:value-of select="(@count div sum(../*/@count)) * 100" />
+                <xsl:value-of select="(@count div sum(../*/@count)) * 100"/>
                 <xsl:text disable-output-escaping="yes"> </xsl:text>
-                <xsl:value-of select="(1 - @count div sum(../*/@count)) * 100" />
+                <xsl:value-of select="(1 - @count div sum(../*/@count)) * 100"/>
             </xsl:attribute>
             <xsl:attribute name="stroke-dashoffset">
-                <xsl:value-of select="($offset + 0.25) * 100 mod 100" />
+                <xsl:value-of select="($offset + 0.25) * 100 mod 100"/>
             </xsl:attribute>
             <xsl:attribute name="class">
                 <xsl:text disable-output-escaping="yes">donut-segment </xsl:text>
-                <xsl:value-of select="local-name()" />
+                <xsl:value-of select="local-name()"/>
                 <xsl:text disable-output-escaping="yes">-</xsl:text>
-                <xsl:value-of select="$numPreceding" />
+                <xsl:value-of select="$numPreceding"/>
             </xsl:attribute>
         </circle>
         <text style="font-size: 3px; " text-anchor="middle" stroke="rgba(0,0,0,0)" fill="rgba(0,0,0,0)">
             <tspan style="font-weight: 900; ">
-                <xsl:value-of select="." />
+                <xsl:value-of select="."/>
             </tspan>
             <tspan x="0%" y="15%" style="font-size: 2px; ">
                 <xsl:text disable-output-escaping="yes">Quantity: </xsl:text>
-                <xsl:value-of select="@count" />
+                <xsl:value-of select="@count"/>
             </tspan>
         </text>
     </xsl:template>
@@ -1565,8 +1545,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
 		</xsl:variable>
         <xsl:if test="not(preceding-sibling::*[. = $actualNode])">
             <li>
-                <a class="badge badge-secondary text-light" href="javascript:void(0);"
-                   data-toggle="tooltip" data-placement="bottom" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;'>
+                <a class="badge badge-secondary text-light" href="javascript:void(0);" data-toggle="tooltip" data-placement="bottom" style="font-family: &quot;SFMono-Regular&quot;, Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace;">
                     <xsl:attribute name="title">
                         <xsl:value-of select="@role"/>
                     </xsl:attribute>
@@ -1574,8 +1553,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </a>
                 <xsl:for-each select="following-sibling::*[. = $actualNode]">
                     <xsl:text disable-output-escaping="yes"> </xsl:text>
-                    <a class="badge badge-secondary text-light" href="javascript:void(0);"
-                       data-toggle="tooltip" data-placement="bottom" style='font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;'>
+                    <a class="badge badge-secondary text-light" href="javascript:void(0);" data-toggle="tooltip" data-placement="bottom" style="font-family: &quot;SFMono-Regular&quot;, Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace;">
                         <xsl:attribute name="title">
                             <xsl:value-of select="@role"/>
                         </xsl:attribute>
@@ -1654,9 +1632,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                 <xsl:apply-templates select="c:dependencies/c:directDependency" mode="dependency">
                                     <xsl:sort/>
                                 </xsl:apply-templates>
-                                <xsl:apply-templates
-                                        select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']"
-                                        mode="catalog"/>
+                                <xsl:apply-templates select="c:relation[@type = 'experiment'] | c:relation[@type = 'dataset']" mode="catalog"/>
                             </ul>
                         </div>
                     </div>
@@ -1743,36 +1719,47 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                 <xsl:if test="c:repository">
                                     <xsl:choose>
                                         <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends \&#xa;    software-properties-common&#xa;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get update
+</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends \
+    software-properties-common
+</xsl:text>
                                         </xsl:when>
                                         <xsl:otherwise>
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
-                                            <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends \&#xa;    software-properties-common&#xa;</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt update
+</xsl:text>
+                                            <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends \
+    software-properties-common
+</xsl:text>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:if>
                                 <xsl:for-each select="c:repository">
                                     <xsl:text disable-output-escaping="yes">$ sudo add-apt-repository "</xsl:text>
                                     <xsl:value-of select="normalize-space(.)"/>
-                                    <xsl:text disable-output-escaping="yes">"&#xa;</xsl:text>
+                                    <xsl:text disable-output-escaping="yes">"
+</xsl:text>
                                     <xsl:if test="@gpgkey">
                                         <xsl:text disable-output-escaping="yes">$ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com </xsl:text>
                                         <xsl:value-of select="@gpgkey"/>
-                                        <xsl:text disable-output-escaping="yes">&#xa;</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">
+</xsl:text>
                                     </xsl:if>
                                 </xsl:for-each>
                                 <xsl:choose>
                                     <xsl:when test="(@version = '14.04') or (@version = 'trusty')">
-                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get update&#xa;</xsl:text>
-                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends \&#xa;    </xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get update
+</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt-get install --no-install-recommends \
+    </xsl:text>
                                         <!--<xsl:text disable-output-escaping="yes">$ sudo apt-get install &#45;&#45;no-install-recommends \&#xa;</xsl:text>-->
                                         <xsl:for-each select="c:dependency">
                                             <xsl:sort/>
                                             <!--<xsl:text disable-output-escaping="yes">    </xsl:text>-->
                                             <xsl:value-of select="."/>
                                             <xsl:if test="position() != last()">
-                                                <xsl:text disable-output-escaping="yes"> \&#xa;    </xsl:text>
+                                                <xsl:text disable-output-escaping="yes"> \
+    </xsl:text>
                                             </xsl:if>
                                             <!--<xsl:if test="position() != last()">-->
                                                 <!--<xsl:text disable-output-escaping="yes"> \&#xa;</xsl:text>-->
@@ -1780,15 +1767,18 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                                         </xsl:for-each>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <xsl:text disable-output-escaping="yes">$ sudo apt update&#xa;</xsl:text>
-                                        <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends \&#xa;    </xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt update
+</xsl:text>
+                                        <xsl:text disable-output-escaping="yes">$ sudo apt install --no-install-recommends \
+    </xsl:text>
                                         <!--<xsl:text disable-output-escaping="yes">$ sudo apt-get install &#45;&#45;no-install-recommends \&#xa;</xsl:text>-->
                                         <xsl:for-each select="c:dependency">
                                             <xsl:sort/>
                                             <!--<xsl:text disable-output-escaping="yes">    </xsl:text>-->
                                             <xsl:value-of select="."/>
                                             <xsl:if test="position() != last()">
-                                                <xsl:text disable-output-escaping="yes"> \&#xa;    </xsl:text>
+                                                <xsl:text disable-output-escaping="yes"> \
+    </xsl:text>
                                             </xsl:if>
                                             <!--<xsl:if test="position() != last()">-->
                                             <!--<xsl:text disable-output-escaping="yes"> \&#xa;</xsl:text>-->
@@ -1875,9 +1865,15 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         </div>
         <pre>
             <code class="shell">
-                <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator \&#xa;    --on-error=continue \&#xa;    -d $HOME/citk/dist/distributions/</xsl:text>
+                <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator \
+    --on-error=continue \
+    -d $HOME/citk/dist/distributions/</xsl:text>
                 <xsl:value-of select="c:filename"/>
-                <xsl:text disable-output-escaping="yes">.distribution \&#xa;    -m toolkit \&#xa;    -u YOUR_USERNAME \&#xa;    -p YOUR_PASSWORD \&#xa;    -D toolkit.volume=$HOME/citk/systems</xsl:text>
+                <xsl:text disable-output-escaping="yes">.distribution \
+    -m toolkit \
+    -u YOUR_USERNAME \
+    -p YOUR_PASSWORD \
+    -D toolkit.volume=$HOME/citk/systems</xsl:text>
             </code>
         </pre>
     </xsl:template>
@@ -1897,12 +1893,12 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             </strong>
             <xsl:text disable-output-escaping="yes"> indicating the following on the command line:</xsl:text>
             <pre>
-                <code class="shell">> FSMT RUN WAS SUCCESSFUL</code>
+                <code class="shell">&gt; FSMT RUN WAS SUCCESSFUL</code>
             </pre>
             <xsl:text disable-output-escaping="yes">In case an experiment fails, i.e., evaluation criteria are not met,
                 FSMT reports:</xsl:text>
             <pre>
-                <code class="shell">> FSMT RUN FAILED</code>
+                <code class="shell">&gt; FSMT RUN FAILED</code>
             </pre>
             <xsl:text disable-output-escaping="yes">This result is based on evaluation scripts and methods that are
                 usually distributed alongside an associated system distribution. Thus, the applied metrics are </xsl:text>
@@ -1937,12 +1933,18 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
             </div>
             <pre>
                 <code class="bash">
-                    <xsl:text disable-output-escaping="yes">#!/bin/bash&#xa;</xsl:text>
-                    <xsl:text disable-output-escaping="yes">export DISPLAY=:0.0&#xa;</xsl:text>
-                    <xsl:text disable-output-escaping="yes">export prefix="$HOME/citk"  # you may have to change this!&#xa;</xsl:text>
-                    <xsl:text disable-output-escaping="yes">export PYTHONPATH=$prefix/lib/python2.7/site-packages/&#xa;</xsl:text>
-                    <xsl:text disable-output-escaping="yes">export PATH=$prefix/bin/:$PATH&#xa;</xsl:text>
-                    <xsl:text disable-output-escaping="yes">fsmt $prefix/etc/fsmt-experiments/icub-nightly/icub-nightly-balltracking.scxml  # TODO: must be replaced by xsl val&#xa;</xsl:text>
+                    <xsl:text disable-output-escaping="yes">#!/bin/bash
+</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export DISPLAY=:0.0
+</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export prefix="$HOME/citk"  # you may have to change this!
+</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export PYTHONPATH=$prefix/lib/python2.7/site-packages/
+</xsl:text>
+                    <xsl:text disable-output-escaping="yes">export PATH=$prefix/bin/:$PATH
+</xsl:text>
+                    <xsl:text disable-output-escaping="yes">fsmt $prefix/etc/fsmt-experiments/icub-nightly/icub-nightly-balltracking.scxml  # TODO: must be replaced by xsl val
+</xsl:text>
                 </code>
             </pre>
             <h5>
