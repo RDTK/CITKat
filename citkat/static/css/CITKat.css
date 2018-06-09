@@ -232,3 +232,25 @@ dd {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+svg {
+    shape-rendering: geometricPrecision;
+}
+
+circle.donut-segment:hover {
+    stroke-width: 7; 
+    transition: stroke-width 0.3s ease-out;
+}
+
+circle.donut-segment:hover + text {
+    fill: #000;
+    transition: fill 0.3s ease-out;
+}
+
+circle.donut-segment {
+    transition: stroke-width 0.2s ease-in;
+}
+
+circle.donut-segment + text {
+    transition: fill 0.2s ease-in;
+}

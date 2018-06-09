@@ -25,6 +25,9 @@
     <xsl:template match="text()" mode="catalog"/>
     <xsl:template match="text()" mode="dependency"/>
     <xsl:template match="text()" mode="gendist"/>
+    <xsl:template match="text()" mode="chart"/>
+    <xsl:template match="text()" mode="chartLicenses"/>
+    <xsl:template match="text()" mode="chartLanguages"/>
 
     <!--variables section-->
     <xsl:variable name="redmineRecipesRepository"><!--/wo trailing slash-->
@@ -37,6 +40,22 @@
         <arr:item name="xl">(min-width: 1200px)</arr:item>
     </arr:array>
     <xsl:variable name="mediaQueries" select="document('')/*/arr:array[@name = 'mediaQueries']/*"/>
+    <arr:array name="colors">
+        <arr:item num="0" name="Yellow 300">#FFF176</arr:item>
+        <arr:item num="1" name="Purple 300">#BA68C8</arr:item>
+        <arr:item num="2" name="Light Green 300">#AED581</arr:item>
+        <arr:item num="3" name="Pink 300">#F06292</arr:item>
+        <arr:item num="4" name="Light Blue 300">#4FC3F7</arr:item>
+        <arr:item num="5" name="Green 300">#81C784</arr:item>
+        <arr:item num="6" name="Deep Purple 300">#9575CD</arr:item>
+        <arr:item num="7" name="Teal 300">#4DB6AC</arr:item>
+        <arr:item num="8" name="Blue 300">#64B5F6</arr:item>
+        <arr:item num="9" name="Lime 300">#DCE775</arr:item>
+        <arr:item num="10" name="Indigo 300">#7986CB</arr:item>
+        <arr:item num="11" name="Red 300">#E57373</arr:item>
+        <arr:item num="12" name="Cyan 300">#4DD0E1</arr:item>
+    </arr:array>
+    <xsl:variable name="colors" select="document('')/*/arr:array[@name = 'colors']/*"/>
     <xsl:variable name="includeHead">
         <xsl:copy-of select="document('/static/templates/head.xml')/child::node()/*"/>
     </xsl:variable>
@@ -318,6 +337,36 @@
                                 </div>
                             </xsl:when>
                         </xsl:choose>
+                    </xsl:if>
+                    <xsl:if test="child::node()/c:licenses and count(child::node()/c:licenses/c:license) > 1">
+                        <div class="card hideContent">
+                            <div class="card-header">
+                                <h5>
+                                    <xsl:call-template name="includeOcticon">
+                                        <xsl:with-param name="name" select="'law'"/>
+                                    </xsl:call-template>
+                                    <xsl:text>License Statistics</xsl:text>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <xsl:apply-templates select="child::node()/c:licenses" mode="chartLicenses"/>
+                            </div>
+                        </div>
+                    </xsl:if>
+                    <xsl:if test="child::node()/c:programmingLanguages and count(child::node()/c:programmingLanguages/c:language) > 1">
+                        <div class="card hideContent">
+                            <div class="card-header">
+                                <h5>
+                                    <xsl:call-template name="includeOcticon">
+                                        <xsl:with-param name="name" select="'code'"/>
+                                    </xsl:call-template>
+                                    <xsl:text>Programming Language Statistics</xsl:text>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="chartLanguages"/>
+                            </div>
+                        </div>
                     </xsl:if>
                     <!--extends-->
                     <xsl:apply-templates select="child::node()/c:extends" mode="catalog"/>
@@ -1386,6 +1435,79 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </xsl:if>
             </xsl:for-each>
         </dd>
+    </xsl:template>
+
+    <!--donut chart-->
+    <xsl:template match="c:licenses" mode="chartLicenses">
+        <xsl:call-template name="log_template_info"/>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+            <defs>
+                <mask id="centrehole">
+                    <rect x="-100%" y="-100%" width="200%" height="200%" fill="white"/>
+                    <circle cx="0" cy="0" r="15.91549430918954" fill="black"/>
+                </mask>
+            </defs>
+            <g transform="translate(21,21)">
+                <xsl:apply-templates select="c:license" mode="chart" />
+                <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"></circle>
+            </g>
+        </svg>
+    </xsl:template>
+
+    <!--donut chart-->
+    <xsl:template match="c:programmingLanguages" mode="chartLanguages">
+        <xsl:call-template name="log_template_info"/>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+            <defs>
+                <mask id="centrehole">
+                    <rect x="-100%" y="-100%" width="200%" height="200%" fill="white"/>
+                    <circle cx="0" cy="0" r="15.91549430918954" fill="black"/>
+                </mask>
+            </defs>
+            <g transform="translate(21, 21)">
+                <xsl:apply-templates select="c:language" mode="chart" />
+                <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"></circle>
+            </g>
+        </svg>
+    </xsl:template>
+
+    <!--donut chart segment-->
+    <xsl:template match="c:license | c:language" mode="chart">
+        <xsl:call-template name="log_template_info"/>
+        <xsl:variable name="offset">
+            <xsl:value-of select="1 - sum(preceding-sibling::*/@count) div sum(../*/@count)" />
+        </xsl:variable>
+        <xsl:variable name="numPreceding">
+            <xsl:value-of select="count(preceding-sibling::*) mod count($colors)" />
+        </xsl:variable>
+        <circle mask="url(#centrehole)" class="donut-segment" cx="0" cy="0" r="15.91549430918954" fill="transparent" stroke-width="5">
+            <xsl:attribute name="stroke">
+                <xsl:value-of select="$colors[@num = $numPreceding]" />
+            </xsl:attribute>
+            <xsl:attribute name="stroke-dasharray">
+                <xsl:value-of select="(@count div sum(../*/@count)) * 100" />
+                <xsl:text disable-output-escaping="yes"> </xsl:text>
+                <xsl:value-of select="(1 - @count div sum(../*/@count)) * 100" />
+            </xsl:attribute>
+            <xsl:attribute name="stroke-dashoffset">
+                <xsl:value-of select="($offset + 0.25) * 100 mod 100" />
+            </xsl:attribute>
+            <xsl:attribute name="class">
+                <xsl:text disable-output-escaping="yes">donut-segment </xsl:text>
+                <xsl:value-of select="local-name()" />
+                <xsl:text disable-output-escaping="yes">-</xsl:text>
+                <xsl:value-of select="$numPreceding" />
+            </xsl:attribute>
+        </circle>
+        <text style="font-size: 3px; " text-anchor="middle" stroke="rgba(0,0,0,0)" fill="rgba(0,0,0,0)">
+            <tspan style="font-weight: 900; ">
+                <xsl:value-of select="." />
+            </tspan>
+            <tspan x="0%" y="15%" style="font-size: 2px; ">
+                <xsl:text disable-output-escaping="yes">Quantity: </xsl:text>
+                <xsl:value-of select="@count" />
+            </tspan>
+        </text>
     </xsl:template>
 
     <!--linked fragments-->
