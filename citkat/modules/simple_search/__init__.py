@@ -92,8 +92,8 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
                 search_term = keyword or access or license or nature or lang or scm or request.args['s']
                 title = "Search result for " + term + "'" + search_term + "':"
                 if not (access or license or nature or lang or scm):
-                # emulate full text search with regexp and escape special chars:
-                search_term = '\W+(?:\w+\W+){0,6}?'.join(
+                    # emulate full text search with regexp and escape special chars:
+                    search_term = '\W+(?:\w+\W+){0,6}?'.join(
                         (lambda x: '\w?' + escape(x) + '\w?')(x)
                         for x in search_term.split(' '))
                 search_results = xpath_search(doc, searchstring=search_term)
