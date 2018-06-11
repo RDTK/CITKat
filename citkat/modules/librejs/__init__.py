@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort
-from json import load
-from pkg_resources import resource_stream
+from json import loads
+from pkg_resources import resource_string
 
 librejs_blueprint = Blueprint(
     name='librejs',
@@ -13,8 +13,8 @@ librejs_blueprint = Blueprint(
 def librejs_page():
     title = 'JavaScript Licenses'
     try:
-        data = load(resource_stream(__name__, 'licenses.json'))
-    except FileNotFoundError as e:
+        data = loads(resource_string(__name__, 'licenses.json').decode('utf8'))
+    except FileNotFoundError:
         warning = "<code>licenses.json</code> not in the servers file system."
         return abort(404, warning)
     return render_template('librejs.html', **locals())
