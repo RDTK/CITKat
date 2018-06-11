@@ -19,6 +19,7 @@
 })();
 ]]>
     </script>
+    <script src="/static/node_modules/whatwg-fetch/fetch.js"></script>
     <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="/static/css/github.min.css"></link>
     <link rel="stylesheet" href="/static/css/CITKat.css"></link>

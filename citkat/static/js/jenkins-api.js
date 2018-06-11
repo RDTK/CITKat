@@ -15,21 +15,15 @@
     return params;
   }
 
-  /**
-     * Load JSON via XMLHTTP request.
-     * @param {string} url The URL.
-     * @param {function} callback The callback that handles the response.
-     */
-  function loadJSON(url, callback) {
-    var request = new XMLHttpRequest();
-    request.overrideMimeType('application/json');
-    request.open('GET', url, true);
-    request.onreadystatechange = function () {
-      if (request.readyState === 4 && request.status === 200) {
-        callback(request.responseText);
-      }
-    };
-    request.send(null);
+  function loadJenkinsData(url) {
+    fetch(url,
+      { cache: 'default' })
+      .then(function (response) {
+        return response.json();
+      }).then(function (responseJSON) {
+        // do something
+        console.log(responseJSON);
+      });
   }
 
   var params = getQueryParams(document.location.search);
