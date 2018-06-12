@@ -1,28 +1,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
-    <script><![CDATA[
-// Fix for IE10 on Windows Phone 8 only:
-// https://getbootstrap.com/docs/4.0/getting-started/browsers-devices/#internet-explorer-10-in-windows-phone-8
-// Copyright 2014-2017 The Bootstrap Authors
-// Copyright 2014-2017 Twitter, Inc.
-// Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-(function () {
-  if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-    var msViewportStyle = document.createElement('style');
-    msViewportStyle.appendChild(
-      document.createTextNode(
-        '@-ms-viewport{width:auto!important}'
-      )
-    );
-    document.head.appendChild(msViewportStyle)
-  }
-})();
-]]>
-    </script>
-    <script src="/static/node_modules/whatwg-fetch/fetch.js"></script>
     <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="/static/css/github.min.css"></link>
     <link rel="stylesheet" href="/static/css/CITKat.css"></link>
+    <script src="/static/node_modules/whatwg-fetch/fetch.js"></script>
+    <script src="/static/js/octicons.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png"></link>
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png"></link>
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png"></link>
