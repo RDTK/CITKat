@@ -54,7 +54,7 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
         term = 'access '
     elif license:
         xpath_search = XPath(
-            "/c:catalog/child::node()/c:licenses/c:license[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = translate($searchstring, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]/..",
+            "/c:catalog/child::node()/c:licenses/c:license[translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz') = translate($searchstring, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')]/../..",
             namespaces=ns)
         term = 'license '
     elif nature:
