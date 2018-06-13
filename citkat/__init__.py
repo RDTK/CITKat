@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request
 from os import environ
 
 from citkat.modules.browse import browse_blueprint
@@ -12,25 +12,8 @@ from citkat.modules.static_xml import static_xml_blueprint
 from citkat.modules.gen_menu_items import gen_menu_items_blueprint
 from citkat.modules.librejs import librejs_blueprint
 
-from logging import WARN, Formatter
-from logging.handlers import RotatingFileHandler
 
 citkat = Flask(__name__)
-
-LOG_FILENAME = '/tmp/citcat.log'
-
-if 'LOG_FILENAME' in environ:
-    LOG_FILENAME = environ['LOG_FILENAME']
-
-if not citkat.debug:
-    handler = RotatingFileHandler(
-        LOG_FILENAME, maxBytes=1048576, backupCount=10)
-    handler.setLevel(WARN)
-    handler.setFormatter(
-        Formatter(
-            "[%(asctime)s] %(levelname)s {%(pathname)s:%(lineno)d} - %(message)s"
-        ))
-    citkat.logger.addHandler(handler)
 
 if 'CONTENT_PATH' in environ:
     citkat.config['content-directory'] = environ['CONTENT_PATH']
@@ -53,6 +36,7 @@ def home():
 
 @citkat.errorhandler(404)
 def not_found(warning):
+    citkat.logger.error('404 Page not found: %s', (request.path))
     title = '404 Page Not Found.'
     return render_template('layout.html', warning=warning, title=title), 404
 
