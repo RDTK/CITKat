@@ -321,7 +321,7 @@
                         </xsl:choose>
                     </xsl:if>
                     <xsl:if test="child::node()/c:licenses and count(child::node()/c:licenses/c:license) &gt; 1">
-                        <div class="card hideContent">
+                        <div class="card">
                             <div class="card-header">
                                 <h5>
                                     <xsl:call-template name="includeOcticon">
@@ -330,13 +330,15 @@
                                     <xsl:text>License Statistics</xsl:text>
                                 </h5>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body hideContent">
+                                <div class="chart">
                                 <xsl:apply-templates select="child::node()/c:licenses" mode="chartLicenses"/>
                             </div>
                         </div>
+                        </div>
                     </xsl:if>
                     <xsl:if test="child::node()/c:programmingLanguages and count(child::node()/c:programmingLanguages/c:language) &gt; 1">
-                        <div class="card hideContent">
+                        <div class="card">
                             <div class="card-header">
                                 <h5>
                                     <xsl:call-template name="includeOcticon">
@@ -345,9 +347,11 @@
                                     <xsl:text>Programming Language Statistics</xsl:text>
                                 </h5>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body hideContent">
+                                <div class="chart">
                                 <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="chartLanguages"/>
                             </div>
+                        </div>
                         </div>
                     </xsl:if>
                     <!--extends-->
