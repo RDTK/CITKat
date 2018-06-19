@@ -1440,6 +1440,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <!--donut chart-->
     <xsl:template match="c:natures | c:licenses | c:programmingLanguages" mode="chart">
         <xsl:call-template name="log_template_info"/>
+        <div>
+            <xsl:attribute name="id">
+                <xsl:value-of select="local-name()" />
+            </xsl:attribute>
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 42 42" class="donut">
             <defs>
                 <mask id="centrehole">
@@ -1448,10 +1452,21 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 </mask>
             </defs>
             <g transform="translate(21, 21)">
-                <xsl:apply-templates select="c:language" mode="chart"/>
+                    <xsl:apply-templates select="node()" mode="chartSegment"/>
                 <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"/>
             </g>
         </svg>
+        </div>
+        <script><![CDATA[
+//workaround for Firefox's bad namespace handling: remove SVG from DOM, re-append it.
+if (navigator.userAgent.indexOf("Firefox/") > -1) {
+    var chartDiv = document.getElementById(']]><xsl:value-of select="local-name()" /><![CDATA[');
+    var chartHTML = chartDiv.innerHTML;
+    chartDiv.innerHTML = '';
+    chartDiv.innerHTML = chartHTML;
+}
+]]>
+        </script>
     </xsl:template>
 
     <!--donut chart segment-->
