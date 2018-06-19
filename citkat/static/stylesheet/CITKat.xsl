@@ -319,8 +319,7 @@
                             </xsl:when>
                         </xsl:choose>
                     </xsl:if>
-                    <xsl:if test="child::node()/c:natures and count(child::node()/c:natures/c:nature) &gt; 1">
-                        <div class="card hideContent">
+                    <xsl:if test="child::node()/c:natures and count(child::node()/c:natures/c:nature) &gt; 1 and child::node()/c:natures/c:nature/@count">
                             <div class="card-header">
                                 <h5>
                                     <xsl:call-template name="includeOcticon">
@@ -334,8 +333,7 @@
                             </div>
                         </div>
                     </xsl:if>
-                    <xsl:if test="child::node()/c:licenses and count(child::node()/c:licenses/c:license) &gt; 1">
-                        <div class="card hideContent">
+                    <xsl:if test="child::node()/c:licenses and count(child::node()/c:licenses/c:license) &gt; 1 and child::node()/c:licenses/c:license/@count">
                             <div class="card-header">
                                 <h5>
                                     <xsl:call-template name="includeOcticon">
@@ -349,8 +347,7 @@
                             </div>
                         </div>
                     </xsl:if>
-                    <xsl:if test="child::node()/c:programmingLanguages and count(child::node()/c:programmingLanguages/c:language) &gt; 1">
-                        <div class="card hideContent">
+                    <xsl:if test="child::node()/c:programmingLanguages and count(child::node()/c:programmingLanguages/c:language) &gt; 1 and child::node()/c:programmingLanguages/c:language/@count">
                             <div class="card-header">
                                 <h5>
                                     <xsl:call-template name="includeOcticon">
