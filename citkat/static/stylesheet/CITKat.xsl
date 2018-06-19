@@ -988,7 +988,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
                 <xsl:text>bottom</xsl:text>
             </xsl:attribute>
             <xsl:choose>
-                <xsl:when test="contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'unknown') or contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'todo')">
+                <xsl:when test="contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'unknown') or contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'todo') or contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'none')">
                     <xsl:attribute name="class">
                         <xsl:text>badge badge-danger text-light</xsl:text>
                     </xsl:attribute>
