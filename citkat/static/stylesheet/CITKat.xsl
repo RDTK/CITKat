@@ -374,14 +374,10 @@
                                         <xsl:call-template name="includeOcticon">
                                             <xsl:with-param name="name" select="'person'"/>
                                         </xsl:call-template>
-                                        <xsl:text disable-output-escaping="yes">Involved </xsl:text>
-                                        <xsl:call-template name="capitalizeFirstLetter">
-                                            <xsl:with-param name="in" select="child::node()/c:relation[@type = 'person']/@type"/>
-                                        </xsl:call-template>
-                                        <xsl:if test="count(child::node()/c:relation[@type = 'person']) &gt; 1">
+                                        <xsl:text disable-output-escaping="yes">Involved Person</xsl:text>
+                                        <xsl:if test="count(child::node()/c:relation[@type = 'person']) &gt; 1 or not(child::node()/c:relation[@type = 'person'])">
                                             <xsl:text>s</xsl:text>
                                         </xsl:if>
-                                        <xsl:text disable-output-escaping="yes">:</xsl:text>
                                         <xsl:if test="/c:catalog/@gdpr">
                                             <a href="#" class="badge badge-pill badge-info text-light" style="float:right;">
                                                 <small>
