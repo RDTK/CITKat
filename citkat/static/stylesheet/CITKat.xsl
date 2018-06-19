@@ -21,8 +21,7 @@
     <xsl:template match="text()" mode="dependency"/>
     <xsl:template match="text()" mode="gendist"/>
     <xsl:template match="text()" mode="chart"/>
-    <xsl:template match="text()" mode="chartLicenses"/>
-    <xsl:template match="text()" mode="chartLanguages"/>
+    <xsl:template match="text()" mode="chartSegment"/>
 
     <!--variables section-->
     <xsl:variable name="redmineRecipesRepository"><!--/wo trailing slash-->
@@ -320,8 +319,23 @@
                             </xsl:when>
                         </xsl:choose>
                     </xsl:if>
+                    <xsl:if test="child::node()/c:natures and count(child::node()/c:natures/c:nature) &gt; 1">
+                        <div class="card hideContent">
+                            <div class="card-header">
+                                <h5>
+                                    <xsl:call-template name="includeOcticon">
+                                        <xsl:with-param name="name" select="'gear'"/>
+                                    </xsl:call-template>
+                                    <xsl:text>Nature Statistics</xsl:text>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <xsl:apply-templates select="child::node()/c:natures" mode="chart"/>
+                            </div>
+                        </div>
+                    </xsl:if>
                     <xsl:if test="child::node()/c:licenses and count(child::node()/c:licenses/c:license) &gt; 1">
-                        <div class="card">
+                        <div class="card hideContent">
                             <div class="card-header">
                                 <h5>
                                     <xsl:call-template name="includeOcticon">
@@ -330,15 +344,13 @@
                                     <xsl:text>License Statistics</xsl:text>
                                 </h5>
                             </div>
-                            <div class="card-body hideContent">
-                                <div class="chart">
-                                <xsl:apply-templates select="child::node()/c:licenses" mode="chartLicenses"/>
+                            <div class="card-body">
+                                <xsl:apply-templates select="child::node()/c:licenses" mode="chart"/>
                             </div>
-                        </div>
                         </div>
                     </xsl:if>
                     <xsl:if test="child::node()/c:programmingLanguages and count(child::node()/c:programmingLanguages/c:language) &gt; 1">
-                        <div class="card">
+                        <div class="card hideContent">
                             <div class="card-header">
                                 <h5>
                                     <xsl:call-template name="includeOcticon">
@@ -347,11 +359,9 @@
                                     <xsl:text>Programming Language Statistics</xsl:text>
                                 </h5>
                             </div>
-                            <div class="card-body hideContent">
-                                <div class="chart">
-                                <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="chartLanguages"/>
+                            <div class="card-body">
+                                <xsl:apply-templates select="child::node()/c:programmingLanguages" mode="chart"/>
                             </div>
-                        </div>
                         </div>
                     </xsl:if>
                     <!--extends-->
@@ -373,7 +383,6 @@
                                         </xsl:if>
                                         <xsl:text disable-output-escaping="yes">:</xsl:text>
                                         <xsl:if test="/c:catalog/@gdpr">
-                                            
                                             <a href="#" class="badge badge-pill badge-info text-light" style="float:right;">
                                                 <small>
                                                     <xsl:call-template name="includeOcticon">
@@ -884,7 +893,7 @@ document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.
 document.body.querySelector('[data-markdown=true]').removeAttribute('style');
 ]]>
                 </script>
-            </xsl:when> 
+            </xsl:when>
             <xsl:otherwise>
                 <div style="white-space: pre-line;">
                     <xsl:value-of select="." disable-output-escaping="yes"/>
@@ -1429,24 +1438,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     </xsl:template>
 
     <!--donut chart-->
-    <xsl:template match="c:licenses" mode="chartLicenses">
-        <xsl:call-template name="log_template_info"/>
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 42 42" class="donut">
-            <defs>
-                <mask id="centrehole">
-                    <rect x="-100%" y="-100%" width="200%" height="200%" fill="white"/>
-                    <circle cx="0" cy="0" r="15.91549430918954" fill="black"/>
-                </mask>
-            </defs>
-            <g transform="translate(21,21)">
-                <xsl:apply-templates select="c:license" mode="chart"/>
-                <circle class="donut-hole" cx="0" cy="0" r="15.91549430918954" fill="transparent"/>
-            </g>
-        </svg>
-    </xsl:template>
-
-    <!--donut chart-->
-    <xsl:template match="c:programmingLanguages" mode="chartLanguages">
+    <xsl:template match="c:natures | c:licenses | c:programmingLanguages" mode="chart">
         <xsl:call-template name="log_template_info"/>
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 42 42" class="donut">
             <defs>
@@ -1463,7 +1455,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     </xsl:template>
 
     <!--donut chart segment-->
-    <xsl:template match="c:license | c:language" mode="chart">
+    <xsl:template match="c:nature | c:license | c:language" mode="chartSegment">
         <xsl:call-template name="log_template_info"/>
         <xsl:variable name="offset">
             <xsl:value-of select="1 - sum(preceding-sibling::*/@count) div sum(../*/@count)"/>
