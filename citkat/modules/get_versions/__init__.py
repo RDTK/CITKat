@@ -23,7 +23,7 @@ class GetVersions(Resource):
         :param recipe_type:
         :return: list of dicts with version as key and filepath as value
         """
-        original_file_path_wo_suffix = safe_join(recipe_type, filename_wo_suffix)
+        original_file_path_wo_suffix = safe_join(current_app.config['catalog-directory'], recipe_type, filename_wo_suffix)
         parser = XMLParser(remove_blank_text=True)
         try:
             actual_doc = parse(original_file_path_wo_suffix + '.xml', parser=parser)
@@ -41,7 +41,7 @@ class GetVersions(Resource):
 
         return_list = []
         if actual_version:
-            for file_path in glob(safe_join(recipe_type, filename_wo_version) + '-*.xml'):
+            for file_path in glob(safe_join(current_app.config['catalog-directory'], recipe_type, filename_wo_version) + '-*.xml'):
                 try:
                     doc = parse(file_path, parser=parser)
                     if self.xpath_has_other_versions(doc, version=actual_version,
