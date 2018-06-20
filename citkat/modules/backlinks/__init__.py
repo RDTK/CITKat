@@ -1,5 +1,5 @@
 from glob import glob
-from flask import Blueprint, current_app, render_template
+from flask import Blueprint, current_app, render_template, safe_join
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 
 backlinks_blueprint = Blueprint(name='backlinks', import_name=__name__, url_prefix='/api/backlinks',
@@ -28,7 +28,7 @@ def gen_backlinks_page(recipe_type, filename_wo_suffix):
 
     _parser = XMLParser(remove_blank_text=True)
 
-    for file_path in glob('*/*.xml'):
+    for file_path in glob(safe_join(current_app.config['catalog-directory'], '*/*.xml')):
         try:
             _doc = parse(file_path, parser=_parser)
             if _xpath_relation_contains(_doc, filename_wo_suffix=filename_wo_suffix) \
