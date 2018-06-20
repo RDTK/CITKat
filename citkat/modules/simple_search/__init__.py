@@ -4,8 +4,6 @@ from flask import Blueprint, request, render_template, current_app
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 from re import escape
 
-from os import getcwd
-
 simple_search_blueprint = Blueprint(
     name='simple_search',
     import_name=__name__,
@@ -83,7 +81,7 @@ def search(keyword='', access='', license='', nature='', lang='', scm=''):
     search_term = ''
     title = ''
 
-    for f in glob(getcwd() + '/*/*.xml'):
+    for f in glob(current_app.config['catalog-directory'] + '/*/*.xml'):
         parser = XMLParser(remove_blank_text=True)
         try:
             doc = parse(f, parser=parser)

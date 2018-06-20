@@ -2,7 +2,6 @@ from glob import glob
 
 from flask import Blueprint, render_template, safe_join, current_app
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
-from os import getcwd
 
 browse_blueprint = Blueprint(
     name='browse',
@@ -21,7 +20,7 @@ class Browse(object):
 
     def get_name(self, entity, file):
         parser = XMLParser(remove_blank_text=True)
-        doc = parse(safe_join(entity, file), parser=parser)
+        doc = parse(safe_join(current_app.config['catalog-directory'], entity, file), parser=parser)
         name = self.xpath_entity_name(doc)
         if not name:
             name = file[:-4]
@@ -49,7 +48,7 @@ def browse(entity):
     title = 'Browse ' + titles[entity[:-1]]
     listing = dict()
     b = Browse()
-    for itm in glob(safe_join(getcwd(), entity, '*.xml')):
+    for itm in glob(safe_join(current_app.config['catalog-directory'], entity, '*.xml')):
         try:
             res = b.get_name(entity, itm.split('/')[-1])
             if not res['name'] in listing:
