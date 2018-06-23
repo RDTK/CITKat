@@ -882,7 +882,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:with-param name="name" select="'lock'"/>
       </xsl:call-template>
       <span>
-        <xsl:text disable-output-escaping="yes">Ac&#173;cess: </xsl:text>
+        <xsl:text disable-output-escaping="yes">Ac&#xAD;cess: </xsl:text>
       </span>
     </dt>
     <dd class="col-6 col-lg-3">
@@ -933,10 +933,10 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
       <span>
         <xsl:choose>
           <xsl:when test="count(c:license) &gt; 1">
-            <xsl:text disable-output-escaping="yes">Li&#173;cens&#173;es</xsl:text>
+            <xsl:text disable-output-escaping="yes">Li&#xAD;cens&#xAD;es</xsl:text>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:text disable-output-escaping="yes">Li&#173;cense</xsl:text>
+            <xsl:text disable-output-escaping="yes">Li&#xAD;cense</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:text disable-output-escaping="yes">: </xsl:text>
@@ -1002,7 +1002,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:with-param name="name" select="'tag'"/>
       </xsl:call-template>
       <span>
-        <xsl:text disable-output-escaping="yes">Key&#173;word</xsl:text>
+        <xsl:text disable-output-escaping="yes">Key&#xAD;word</xsl:text>
         <xsl:if test="count(c:keyword) &gt; 1">s</xsl:if>
         <xsl:text disable-output-escaping="yes">: </xsl:text>
       </span>
@@ -1052,7 +1052,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:with-param name="name" select="'repo'"/>
       </xsl:call-template>
       <span>
-        <xsl:text disable-output-escaping="yes">Source con&#173;trol: </xsl:text>
+        <xsl:text disable-output-escaping="yes">Source con&#xAD;trol: </xsl:text>
       </span>
     </dt>
     <dd class="col-6 col-lg-3">
@@ -1118,7 +1118,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
           <xsl:with-param name="name" select="'clock'"/>
         </xsl:call-template>
         <span>
-          <xsl:text disable-output-escaping="yes">Most re&#173;cent ac&#173;tiv&#173;i&#173;ty: </xsl:text>
+          <xsl:text disable-output-escaping="yes">Most re&#xAD;cent ac&#xAD;tiv&#xAD;i&#xAD;ty: </xsl:text>
         </span>
       </dt>
       <dd class="col-6 col-lg-3">
@@ -1133,7 +1133,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
           <xsl:with-param name="name" select="'desktop-download'"/>
         </xsl:call-template>
         <span>
-          <xsl:text>Down&#173;load source code:</xsl:text>
+          <xsl:text>Down&#xAD;load source code:</xsl:text>
         </span>
       </dt>
       <dd class="col-6 col-lg-3">
@@ -1333,7 +1333,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:with-param name="name" select="'gear'"/>
       </xsl:call-template>
       <span>
-        <xsl:text disable-output-escaping="yes">Na&#173;ture</xsl:text>
+        <xsl:text disable-output-escaping="yes">Na&#xAD;ture</xsl:text>
         <xsl:if test="count(c:nature) &gt; 1">s</xsl:if>
         <xsl:text disable-output-escaping="yes">: </xsl:text>
       </span>
@@ -1380,7 +1380,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
         <xsl:with-param name="name" select="'code'"/>
       </xsl:call-template>
       <span>
-        <xsl:text disable-output-escaping="yes">Pro&#173;gram&#173;ming Lan&#173;guage</xsl:text>
+        <xsl:text disable-output-escaping="yes">Pro&#xAD;gram&#xAD;ming Lan&#xAD;guage</xsl:text>
         <xsl:if test="count(c:language) &gt; 1">
           <xsl:text>s</xsl:text>
         </xsl:if>
