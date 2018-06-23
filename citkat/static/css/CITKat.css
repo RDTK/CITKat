@@ -124,6 +124,11 @@ ol.carousel-indicators > li {
     column-count: 1;
 }
 
+.chartContainer {
+    width: 90%;
+    margin: auto;
+}
+
 @media (min-width: 768px) {
     .card-columns {
         column-count: 2;
@@ -139,6 +144,10 @@ ol.carousel-indicators > li {
     .popover {
         width: 720px;
     }
+
+    .chartContainer {
+        width: 80%;
+    }
 }
 
 @media (min-width: 992px) {
@@ -151,6 +160,10 @@ ol.carousel-indicators > li {
 
     .popover {
         width: 940px;
+    }
+
+    .chartContainer {
+        width: 60%;
     }
 }
 
@@ -165,6 +178,10 @@ ol.carousel-indicators > li {
     .popover {
         width: 1100px;
     }
+
+    .chartContainer {
+        width: 50%;
+}
 }
 
 label {

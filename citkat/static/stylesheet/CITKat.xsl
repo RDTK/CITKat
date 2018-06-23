@@ -1404,7 +1404,7 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
   <!--donut chart-->
   <xsl:template match="c:natures | c:licenses | c:programmingLanguages" mode="chart">
     <xsl:call-template name="log_template_info"/>
-    <div>
+    <div class="chartContainer">
       <xsl:attribute name="id">
         <xsl:value-of select="local-name()"/>
       </xsl:attribute>
