@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template
 from os import environ, getcwd
 
 from citkat.modules.browse import browse_blueprint
@@ -42,7 +42,6 @@ def home():
 
 @citkat.errorhandler(404)
 def not_found(warning):
-    citkat.logger.error('404 Page not found: %s', (request.path))
     title = '404 Page Not Found.'
     return render_template('layout.html', warning=warning, title=title), 404
 
@@ -65,13 +64,13 @@ def add_headers(r):
         r.headers['Pragma'] = 'no-cache'
         r.headers['Expires'] = '0'
         r.headers['Cache-Control'] = 'public, max-age=0'
-    # manipulate content type for XSL files, so Chrome won't complain:
-    try:
-        if r.response.file.name.endswith('.xsl'):
-            r.headers[
-                "Content-Type"] = "text/xsl; charset=utf-8"  # Chrome accepts this type for XSL files
-    except AttributeError:
-        pass
+        # manipulate content type for XSL files, so Chrome won't complain:
+        try:
+            if r.response.file.name.endswith('.xsl'):
+                r.headers[
+                    "Content-Type"] = "text/xsl; charset=utf-8"  # Chrome accepts this type for XSL files
+        except AttributeError:
+            pass
     return r
 
 
