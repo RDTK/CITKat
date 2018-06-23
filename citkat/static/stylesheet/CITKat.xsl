@@ -881,7 +881,9 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
       <xsl:call-template name="includeOcticon">
         <xsl:with-param name="name" select="'lock'"/>
       </xsl:call-template>
-      <xsl:text disable-output-escaping="yes">Access: </xsl:text>
+      <span>
+        <xsl:text disable-output-escaping="yes">Ac&#173;cess: </xsl:text>
+      </span>
     </dt>
     <dd class="col-6 col-lg-3">
       <a>
@@ -928,11 +930,17 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
       <xsl:call-template name="includeOcticon">
         <xsl:with-param name="name" select="'law'"/>
       </xsl:call-template>
-      <xsl:text disable-output-escaping="yes">License</xsl:text>
-      <xsl:if test="count(c:license) &gt; 1">
-        <xsl:text disable-output-escaping="yes">s</xsl:text>
-      </xsl:if>
-      <xsl:text disable-output-escaping="yes">: </xsl:text>
+      <span>
+        <xsl:choose>
+          <xsl:when test="count(c:license) &gt; 1">
+            <xsl:text disable-output-escaping="yes">Li&#173;cens&#173;es</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text disable-output-escaping="yes">Li&#173;cense</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text disable-output-escaping="yes">: </xsl:text>
+      </span>
     </dt>
     <dd class="col-6 col-lg-3">
       <xsl:apply-templates select="c:license" mode="catalog"/>
@@ -989,13 +997,15 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
   <!--keywords-->
   <xsl:template match="c:keywords" mode="catalog">
     <xsl:call-template name="log_template_info"/>
-    <dt class="col-6 col-lg-3 text-truncate">
+    <dt class="col-6 col-lg-3">
       <xsl:call-template name="includeOcticon">
         <xsl:with-param name="name" select="'tag'"/>
       </xsl:call-template>
-      <xsl:text disable-output-escaping="yes">Keyword</xsl:text>
-      <xsl:if test="count(c:keyword) &gt; 1">s</xsl:if>
-      <xsl:text disable-output-escaping="yes">: </xsl:text>
+      <span>
+        <xsl:text disable-output-escaping="yes">Key&#173;word</xsl:text>
+        <xsl:if test="count(c:keyword) &gt; 1">s</xsl:if>
+        <xsl:text disable-output-escaping="yes">: </xsl:text>
+      </span>
     </dt>
     <dd class="col-6 col-lg-3">
       <xsl:for-each select="c:keyword">
@@ -1037,11 +1047,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
     <dt class="w-100">
       <hr/>
     </dt>
-    <dt class="col-6 col-lg-3 text-truncate">
+    <dt class="col-6 col-lg-3">
       <xsl:call-template name="includeOcticon">
         <xsl:with-param name="name" select="'repo'"/>
       </xsl:call-template>
-      <xsl:text disable-output-escaping="yes">Source control: </xsl:text>
+      <span>
+        <xsl:text disable-output-escaping="yes">Source con&#173;trol: </xsl:text>
+      </span>
     </dt>
     <dd class="col-6 col-lg-3">
       <xsl:choose>
@@ -1101,11 +1113,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
       </xsl:choose>
     </dd>
     <xsl:if test="c:revision">
-      <dt class="col-6 col-lg-3 text-truncate">
+      <dt class="col-6 col-lg-3">
         <xsl:call-template name="includeOcticon">
           <xsl:with-param name="name" select="'clock'"/>
         </xsl:call-template>
-        <xsl:text disable-output-escaping="yes">Most recent activity: </xsl:text>
+        <span>
+          <xsl:text disable-output-escaping="yes">Most re&#173;cent ac&#173;tiv&#173;i&#173;ty: </xsl:text>
+        </span>
       </dt>
       <dd class="col-6 col-lg-3">
         <span class="date">
@@ -1114,11 +1128,13 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
       </dd>
     </xsl:if>
     <xsl:if test="c:repository">
-      <dt class="col-6 col-lg-3 text-truncate">
+      <dt class="col-6 col-lg-3">
         <xsl:call-template name="includeOcticon">
           <xsl:with-param name="name" select="'desktop-download'"/>
         </xsl:call-template>
-        <xsl:text>Download Sourcecode:</xsl:text>
+        <span>
+          <xsl:text>Down&#173;load source code:</xsl:text>
+        </span>
       </dt>
       <dd class="col-6 col-lg-3">
         <a href="javascript:void(0);" class="text-light badge badge-success" data-toggle="popover">
@@ -1316,9 +1332,11 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
       <xsl:call-template name="includeOcticon">
         <xsl:with-param name="name" select="'gear'"/>
       </xsl:call-template>
-      <xsl:text disable-output-escaping="yes">Nature</xsl:text>
-      <xsl:if test="count(c:nature) &gt; 1">s</xsl:if>
-      <xsl:text disable-output-escaping="yes">: </xsl:text>
+      <span>
+        <xsl:text disable-output-escaping="yes">Na&#173;ture</xsl:text>
+        <xsl:if test="count(c:nature) &gt; 1">s</xsl:if>
+        <xsl:text disable-output-escaping="yes">: </xsl:text>
+      </span>
     </dt>
     <dd class="col-6 col-lg-3">
       <xsl:for-each select="c:nature">
@@ -1357,15 +1375,17 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
   <!--programming languages-->
   <xsl:template match="c:programmingLanguages" mode="catalog">
     <xsl:call-template name="log_template_info"/>
-    <dt class="col-6 col-lg-3 text-truncate">
+    <dt class="col-6 col-lg-3">
       <xsl:call-template name="includeOcticon">
         <xsl:with-param name="name" select="'code'"/>
       </xsl:call-template>
-      <xsl:text disable-output-escaping="yes">Programming Language</xsl:text>
-      <xsl:if test="count(c:language) &gt; 1">
-        <xsl:text>s</xsl:text>
-      </xsl:if>
-      <xsl:text disable-output-escaping="yes">: </xsl:text>
+      <span>
+        <xsl:text disable-output-escaping="yes">Pro&#173;gram&#173;ming Lan&#173;guage</xsl:text>
+        <xsl:if test="count(c:language) &gt; 1">
+          <xsl:text>s</xsl:text>
+        </xsl:if>
+        <xsl:text disable-output-escaping="yes">: </xsl:text>
+      </span>
     </dt>
     <dd class="col-6 col-lg-3">
       <xsl:for-each select="c:language">
