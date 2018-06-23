@@ -367,10 +367,6 @@
                   <xsl:call-template name="includeOcticon">
                     <xsl:with-param name="name" select="'person'"/>
                   </xsl:call-template>
-                  <xsl:text disable-output-escaping="yes">Involved Person</xsl:text>
-                  <xsl:if test="count(child::node()/c:relation[@type = 'person']) &gt; 1 or not(child::node()/c:relation[@type = 'person'])">
-                    <xsl:text>s</xsl:text>
-                  </xsl:if>
                   <xsl:if test="/c:catalog/@gdpr">
                     <a href="#" class="badge badge-pill badge-info text-light" style="float:right;">
                       <small>
@@ -380,6 +376,10 @@
                         <xsl:text>GDPR compliant</xsl:text>
                       </small>
                     </a>
+                  </xsl:if>
+                  <xsl:text disable-output-escaping="yes">Involved Person</xsl:text>
+                  <xsl:if test="count(child::node()/c:relation[@type = 'person']) &gt; 1 or not(child::node()/c:relation[@type = 'person'])">
+                    <xsl:text>s</xsl:text>
                   </xsl:if>
                 </h5>
               </div>
@@ -1588,12 +1588,12 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
               <xsl:call-template name="includeOcticon">
                 <xsl:with-param name="name" select="'package'"/>
               </xsl:call-template>
-              <xsl:text disable-output-escaping="yes">Direct dependencies:</xsl:text>
               <small>
                 <span class="badge badge-pill badge-info text-light" style="float:right;">
                   <xsl:value-of select="count(c:dependencies/c:directDependency)"/>
                 </span>
               </small>
+              <xsl:text disable-output-escaping="yes">Direct dependencies</xsl:text>
             </h5>
           </div>
           <div class="card-body hideContent">

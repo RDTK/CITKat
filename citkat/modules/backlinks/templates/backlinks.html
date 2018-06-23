@@ -4,26 +4,22 @@
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                  class="octicon octicon-link">
                 <use xlink:href="#link"/>
-            </svg>
-            {% if recipe_type == 'person' %}
-            Person involved in:
-            {% else %}
-            Recipe used by:
-            {% endif %}
-            <small>
+            </svg><small>
                 <span class="badge badge-pill badge-info" style="float: right;">{{ count }}</span>
             </small>
             {% if err_count %}
             <small>
-                <a style="float: right; color: red;" href="#backlinks"
-                   title="{{ err_count }} doublette(s) found! See server log for more details">
-                    <svg style=" " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                         version="1.1"
-                         class="octicon octicon-issue-opened">
-                        <use xlink:href="#issue-opened"/>
+                <a style="float: right; color: red;" href="#backlinks" title="{{ err_count }} doublette(s) found! See server log for more details">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="octicon octicon-issue-opened">
+                        <use xlink:href="#issue-opened" />
                     </svg>
                 </a>
             </small>
+            {% endif %}
+            {% if recipe_type == 'person' %}
+            Person involved in
+            {% else %}
+            Recipe used by
             {% endif %}
         </h5>
     </div>
