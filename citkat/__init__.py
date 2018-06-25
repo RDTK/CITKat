@@ -13,7 +13,7 @@ from citkat.modules.gen_menu_items import gen_menu_items_blueprint
 from citkat.modules.librejs import librejs_blueprint
 
 
-citkat = Flask(__name__)
+citkat = Flask(__name__, static_url_path='/static')
 
 if 'CONTENT_PATH' in environ:
     citkat.config['content-directory'] = environ['CONTENT_PATH']
@@ -71,6 +71,9 @@ def add_headers(r):
                     "Content-Type"] = "text/xsl; charset=utf-8"  # Chrome accepts this type for XSL files
         except AttributeError:
             pass
+    else:
+        del r.headers['Expires']
+        r.headers['Cache-Control'] = 'public, max-age=31536000'
     return r
 
 
