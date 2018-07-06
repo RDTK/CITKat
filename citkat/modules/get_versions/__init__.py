@@ -46,7 +46,8 @@ class GetVersions(Resource):
                     doc = parse(file_path, parser=parser)
                     if self.xpath_has_other_versions(doc, version=actual_version,
                                                      filename_wo_version=filename_wo_version):
-                        return_dict = {self.xpath_get_version(doc)[0]: '/' + file_path}
+                        path_list = file_path.split('/')
+                        return_dict = {self.xpath_get_version(doc)[0]: '/' + path_list[-2] + '/' + path_list[-1]}
                         return_list.append(return_dict)
                 except XMLSyntaxError as e:
                     current_app.logger.warning('Syntax error in catalog file "%s": \n%s', file_path, e)
