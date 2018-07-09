@@ -1,6 +1,6 @@
 from os import listdir
-from flask import Blueprint, current_app, render_template
-from os.path import isfile, join, isdir
+from flask import Blueprint, current_app, render_template, safe_join
+from os.path import isfile, isdir
 
 gen_menu_items_blueprint = Blueprint(name='gen_menu_items', import_name=__name__, url_prefix='/menu',
                                      template_folder='templates')
@@ -17,12 +17,13 @@ def gen_menu_items():
     menu_items = []
     content_root = current_app.config['content-directory']
     for itm in listdir(content_root):
-        if isfile(join(content_root, itm)) and not itm == 'Home.md':  # and not itm == 'About.md':
+        path = safe_join(content_root, itm)
+        if isfile(path) and not itm == 'Home.md':  # and not itm == 'About.md':
             menu_items.append(itm[:-3])
-        elif isdir(join(content_root, itm)):
+        elif isdir(path):
             directory = {itm: []}
-            for subitm in listdir(join(content_root, itm)):
-                if isfile(join(content_root, itm, subitm)):
+            for subitm in listdir(path):
+                if isfile(safe_join(path, subitm)):
                     directory[itm].append(subitm[:-3])
             directory[itm] = sorted(directory[itm])
             menu_items.append(directory)
