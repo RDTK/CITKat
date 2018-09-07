@@ -1852,14 +1852,13 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
     <pre>
       <code class="shell">
         <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator \
-    --on-error=continue \
-    -d $HOME/citk/dist/distributions/</xsl:text>
-        <xsl:value-of select="c:filename"/>
-        <xsl:text disable-output-escaping="yes">.distribution \
-    -m toolkit \
+    generate
     -u YOUR_USERNAME \
     -p YOUR_PASSWORD \
-    -D toolkit.volume=$HOME/citk/systems</xsl:text>
+    -D toolkit.volume=$HOME/citk/systems
+    $HOME/citk/dist/distributions/</xsl:text>
+        <xsl:value-of select="c:filename"/>
+        <xsl:text disable-output-escaping="yes">.distribution</xsl:text>
       </code>
     </pre>
   </xsl:template>
