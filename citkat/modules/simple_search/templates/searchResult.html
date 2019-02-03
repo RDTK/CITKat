@@ -13,10 +13,10 @@
                     <div id="{{ recipe_type }}{{ loop.index }}" data-children=".item">
                         <div class="item">
                             <a data-toggle="collapse"
-                               data-parent="{{ recipe_type }}{{ loop.index }}"
+                               data-parent="#{{ recipe_type }}{{ loop.index }}"
                                href="#{{ recipe_type }}{{ loop.index }}-versions"
                                aria-expanded="false"
-                               aria-controls="{{ recipe_type }}{{ loop.index }}-versions">
+                               aria-controls="#{{ recipe_type }}{{ loop.index }}-versions">
                                 {{ name }} -
                                 <small>
                                     <span class="badge badge-pill badge-secondary text-light">

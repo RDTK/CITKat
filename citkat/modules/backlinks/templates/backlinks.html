@@ -45,10 +45,10 @@
                         <div id="{{ backlinks_items[type][name].filename_wo_version }}" data-children=".item">
                             <div class="item">
                                 <a data-toggle="collapse"
-                                   data-parent="{{ backlinks_items[type][name].filename_wo_version }}"
+                                   data-parent="#{{ backlinks_items[type][name].filename_wo_version }}"
                                    href="#{{ backlinks_items[type][name].filename_wo_version }}-versions"
                                    aria-expanded="false"
-                                   aria-controls="{{ backlinks_items[type][name].filename_wo_version }}-versions">
+                                   aria-controls="#{{ backlinks_items[type][name].filename_wo_version }}-versions">
                                     {{ name }} -
                                     <small>
                                         <span class="badge badge-pill badge-secondary text-light">
