@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="/static/css/github.min.css"></link>
     <link rel="stylesheet" href="/static/css/CITKat.css"></link>
-    <script src="/static/node_modules/whatwg-fetch/fetch.js"></script>
+    <script src="/static/node_modules/whatwg-fetch/dist/fetch.umd.js"></script>
     <script src="/static/js/octicons.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png"></link>
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png"></link>
