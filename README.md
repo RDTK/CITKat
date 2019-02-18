@@ -159,7 +159,7 @@ source /var/www/.env/bin/activate
 pip uninstall citkat
 cd $HOME
 rm -rf $HOME/citk.citkat
-git clone --branch <DESIRED_VERSION_TAG> https://opensource.cit-ec.de/git/citk.citkat.git
+git clone --branch <DESIRED_VERSION_TAG> https://github.com/RDTK/CITKat.git
 ./setup.py install
 systemctl start uwsgi@citkat
 ```
