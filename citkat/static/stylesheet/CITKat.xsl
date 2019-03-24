@@ -387,14 +387,14 @@
                 <xsl:choose>
                   <xsl:when test="child::node()/c:relation[@type = 'person']">
                     <xsl:if test="/c:catalog/@gdpr">
-                      <xsl:text>This list may incomplete in order to be compliant to the EU's GDPR.</xsl:text>
+                      <xsl:text>This list may be incomplete in order to be compliant to the EU's GDPR.</xsl:text>
                     </xsl:if>
                     <ul class="persons">
                       <xsl:apply-templates select="child::node()/c:relation[@type = 'person']" mode="person"/>
                     </ul>
                   </xsl:when>
                   <xsl:otherwise>
-                    <text>Either there are currently no involved persons known or they did not aggree to the GDPR Opt-In.</text>
+                    <text>Either there are currently no involved persons known or they did not agree to the GDPR Opt-In.</text>
                   </xsl:otherwise>
                 </xsl:choose>
               </div>
