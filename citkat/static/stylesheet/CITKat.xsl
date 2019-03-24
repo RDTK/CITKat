@@ -1128,8 +1128,6 @@ document.body.querySelector('[data-markdown=true]').removeAttribute('style');
       </dd>
     </xsl:if>
     <xsl:if test="c:repository">
-      <dt class="w-100">
-      </dt>
       <dt class="col-6 col-lg-3">
         <xsl:call-template name="includeOcticon">
           <xsl:with-param name="name" select="'desktop-download'"/>
