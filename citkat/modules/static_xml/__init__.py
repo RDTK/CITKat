@@ -1,4 +1,5 @@
-from flask import Blueprint, safe_join, request, send_from_directory, current_app
+from flask import Blueprint, request, send_from_directory, current_app
+from werkzeug.utils import safe_join
 
 static_xml_blueprint = Blueprint(name='static_xml', import_name=__name__)
 
