@@ -1,4 +1,5 @@
-from flask import Blueprint, Markup, render_template, abort, current_app, safe_join
+from flask import Blueprint, Markup, render_template, abort, current_app
+from werkzeug.utils import safe_join
 from markdown import Markdown
 # from markdown_blockdiag import BlockdiagExtension
 

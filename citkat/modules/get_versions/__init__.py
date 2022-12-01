@@ -1,5 +1,6 @@
 from glob import glob
-from flask import Blueprint, current_app, safe_join
+from flask import Blueprint, current_app
+from werkzeug.utils import safe_join
 from flask_restful import Resource, Api
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 

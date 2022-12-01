@@ -1,5 +1,6 @@
 from glob import glob
-from flask import Blueprint, current_app, render_template, safe_join
+from flask import Blueprint, current_app, render_template
+from werkzeug.utils import safe_join
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
 
 backlinks_blueprint = Blueprint(name='backlinks', import_name=__name__, url_prefix='/api/backlinks',

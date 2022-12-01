@@ -1,7 +1,8 @@
 from glob import glob
 
-from flask import Blueprint, render_template, safe_join, current_app
+from flask import Blueprint, render_template, current_app
 from lxml.etree import XPath, XMLParser, parse, XMLSyntaxError
+from werkzeug.utils import safe_join
 
 browse_blueprint = Blueprint(
     name='browse',

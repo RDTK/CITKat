@@ -1,5 +1,6 @@
 from os import listdir
-from flask import Blueprint, current_app, render_template, safe_join
+from flask import Blueprint, current_app, render_template
+from werkzeug.utils import safe_join
 from os.path import isfile, isdir
 
 gen_menu_items_blueprint = Blueprint(name='gen_menu_items', import_name=__name__, url_prefix='/menu',
