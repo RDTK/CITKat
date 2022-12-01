@@ -1707,14 +1707,7 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
       <xsl:element name="a">
         <xsl:attribute name="data-toggle">collapse</xsl:attribute>
         <xsl:attribute name="data-parent">#systemDependencies</xsl:attribute>
-        <xsl:attribute name="aria-expanded">
-          <xsl:choose>
-            <xsl:when test="@version = '16.04'">
-              <xsl:text>true</xsl:text>
-            </xsl:when>
-            <xsl:when test="@version = 'xenial'">true</xsl:when>
-            <xsl:otherwise>false</xsl:otherwise>
-          </xsl:choose>
+        <xsl:attribute name="aria-expanded"><xsl:text>false</xsl:text>
         </xsl:attribute>
         <xsl:attribute name="href">
           <xsl:text disable-output-escaping="yes">#</xsl:text>
@@ -1741,9 +1734,6 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
         </xsl:attribute>
         <xsl:attribute name="class">
           <xsl:text>collapse</xsl:text>
-          <xsl:if test="(@version = '16.04') or (@version = 'xenial') or (count(../c:system) = 1)">
-            <xsl:text disable-output-escaping="yes"> show</xsl:text>
-          </xsl:if>
         </xsl:attribute>
         <xsl:attribute name="role">tabpanel</xsl:attribute>
         <pre>
