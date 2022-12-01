@@ -117,6 +117,26 @@
   </xsl:template>
   <!--footer-->
   <xsl:template name="footer">
+            <script src="/static/node_modules/marked/marked.min.js"/>
+        <script><![CDATA[
+// add +3 to the heading level of Markdown text
+var renderer = new marked.Renderer();
+renderer.heading = function(text, level, raw) {
+    return '<h'
+    + (level + 3)
+    + ' id="'
+    + this.options.headerPrefix
+    + raw.toLowerCase().replace(/[^\w]+/g, '-')
+    + '">'
+    + text
+    + '</h'
+    + (level + 3)
+    + '>\n';
+};
+
+document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.body.querySelector('[data-markdown=true]').textContent, { renderer: renderer });
+document.body.querySelector('[data-markdown=true]').removeAttribute('style');
+]]></script>
     <xsl:copy-of select="$includefooter"/>
     <script src="/static/js/linkParams.js"/>
     <script src="/static/js/oldAndroid.js"/>
@@ -846,26 +866,6 @@
         <div style="white-space: pre-line;" data-markdown="true">
           <xsl:value-of select="." disable-output-escaping="yes"/>
         </div>
-        <script src="/static/node_modules/marked/marked.min.js"/>
-        <script><![CDATA[
-// add +3 to the heading level of Markdown text
-var renderer = new marked.Renderer();
-renderer.heading = function(text, level, raw) {
-    return '<h'
-    + (level + 3)
-    + ' id="'
-    + this.options.headerPrefix
-    + raw.toLowerCase().replace(/[^\w]+/g, '-')
-    + '">'
-    + text
-    + '</h'
-    + (level + 3)
-    + '>\n';
-};
-
-document.body.querySelector('[data-markdown=true]').innerHTML = marked(document.body.querySelector('[data-markdown=true]').textContent, { renderer: renderer });
-document.body.querySelector('[data-markdown=true]').removeAttribute('style');
-]]></script>
       </xsl:when>
       <xsl:otherwise>
         <div style="white-space: pre-line;">
@@ -1675,6 +1675,15 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
           </h5>
         </div>
         <div class="card-body hideContent">
+          <xsl:if test="c:replication">
+            <h5>
+              <xsl:text disable-output-escaping="yes">Information:</xsl:text>
+            </h5>
+             <div style="white-space: pre-line;" data-markdown="true">
+               <xsl:value-of select="c:replication" disable-output-escaping="yes"/>
+            </div>
+           
+          </xsl:if>
           <xsl:if test="c:dependencies/c:system/c:dependency">
             <h5>
               <xsl:call-template name="includeOcticon">
