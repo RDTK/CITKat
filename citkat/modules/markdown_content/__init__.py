@@ -5,10 +5,10 @@ from markdown import Markdown
 
 markdown_content_blueprint = Blueprint(
     name='markdown_content', import_name=__name__, url_prefix='/content')
-# TODO: add custom template to include all meta informations
+# TODO: add custom template to include all meta information
 
 
-@markdown_content_blueprint.route('/<path:fullpath>/')
+@markdown_content_blueprint.route('/<path:fullpath>')
 def markdown_content(fullpath):
     if 'content-directory' not in current_app.config:
         warning = "<code>citkat.config['content-directory']</code> is not set!"
