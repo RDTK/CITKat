@@ -1861,9 +1861,18 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
       <xsl:text disable-output-escaping="yes">Generate Distribution</xsl:text>
     </h5>
     <div>
-      <xsl:text>Now, please use our distribution tool chain as explained in the tutorials section Bootstrapping
-                and Installing. Read and execute these instructions carefully. You will need to bootstrap the
-            </xsl:text>
+      <xsl:text>Now, please use the </xsl:text>
+      <code>build-generator</code>
+      <xsl:text> as explained in the </xsl:text>
+      <xsl:element name="a">
+        <xsl:attribute name="href">
+          <xsl:text disable-output-escaping="yes">
+            https://rdtk.github.io/documentation/getting_started/install.html
+          </xsl:text>
+        </xsl:attribute>
+        <xsl:text>RDTK tutorial</xsl:text>
+      </xsl:element>
+      <xsl:text>. Read and execute these instructions carefully. You will need to Generate the </xsl:text>
       <xsl:element name="a">
         <xsl:attribute name="href">
           <xsl:value-of select="$redmineRecipesRepository"/>
@@ -1881,18 +1890,16 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
           <xsl:text>.distribution</xsl:text>
         </code>
       </xsl:element>
-      <xsl:text>. If you changed your prefix from </xsl:text>
-      <code>$HOME/citk</code>
-      <xsl:text> to something else, please keep that in mind.</xsl:text>
+      <xsl:text>. </xsl:text>
     </div>
     <pre>
       <code class="shell">
-        <xsl:text disable-output-escaping="yes">$ $HOME/citk/jenkins/job-configurator \
-    generate
+        <xsl:text disable-output-escaping="yes">$ $RDTK_ROOT/build-generator \
+    generate \
     -u YOUR_USERNAME \
     -p YOUR_PASSWORD \
-    -D toolkit.volume=$HOME/citk/systems
-    $HOME/citk/dist/distributions/</xsl:text>
+    -D toolkit.volume=$RDTK_ROOT/volumes \
+    $RDTK_ROOT/citk/distributions/</xsl:text>
         <xsl:value-of select="c:filename"/>
         <xsl:text disable-output-escaping="yes">.distribution</xsl:text>
       </code>
