@@ -1866,9 +1866,7 @@ if (navigator.userAgent.indexOf("Firefox/") > -1) {
       <xsl:text> as explained in the </xsl:text>
       <xsl:element name="a">
         <xsl:attribute name="href">
-          <xsl:text disable-output-escaping="yes">
-            https://rdtk.github.io/documentation/getting_started/install.html
-          </xsl:text>
+          <xsl:text disable-output-escaping="yes">https://rdtk.github.io/documentation/getting_started/install.html</xsl:text>
         </xsl:attribute>
         <xsl:text>RDTK tutorial</xsl:text>
       </xsl:element>
